@@ -10,148 +10,18 @@ format:
     html: 
       toc: true
 editor: source
+filters:
+  - webr
 ---
-
-```{=html}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
-<style>
-  .CodeMirror pre {
-    background-color: unset !important;
-  }
-  .btn-webr {
-    background-color: #EEEEEE;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-</style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/r/r.js"></script>
-<script type="module">
-  import { WebR } from "https://webr.r-wasm.org/v0.1.0/webr.mjs";
-  globalThis.webR = new WebR({
-    SW_URL: "/"
-  });
-  await globalThis.webR.init();
-  globalThis.webRCodeShelter = await new globalThis.webR.Shelter();
-  document.querySelectorAll(".btn-webr").forEach((btn) => {
-    btn.innerText = "Run code";
-    btn.disabled = false;
-  });
-</script>
-```
-
-```{r}
-#| results: asis
-#| echo: false
-webr_counter = 0
-
-cat("importScripts('https://webr.r-wasm.org/v0.1.0/webr-worker.js');", file = "webr-worker.js")
-cat("importScripts('https://webr.r-wasm.org/v0.1.0/webr-serviceworker.js');", file = "webr-serviceworker.js")
-
-webr_editor = function(code = I(encodeString(code, quote = '`')), width, height) { 
-webr_counter <<- webr_counter + 1
-
-output = glue::glue('
-<button class="btn btn-default btn-webr" disabled type="button"  id="webr-run-button-{{ webr_counter }}">Loading webR...</button>
-<div id="webr-editor-{{ webr_counter }}"></div>
-<div id="webr-code-output-{{ webr_counter }}"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-{{ webr_counter }}");
-  const outputDiv = document.getElementById("webr-code-output-{{ webr_counter }}");
-  const editorDiv = document.getElementById("webr-editor-{{ webr_counter }}");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: {{code}},
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width={{width}}, height={{height}})");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * {{width}});
-            canvas.setAttribute("height", 2 * {{height}});
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-
-  await globalThis.webR.init();
-  runButton.innerText = "Run code";
-  runButton.disabled = false;
-</script>
-', .open = "{{", .close = "}}")
-}
-```
-
-```{r}
-#| echo: false
-knitr::knit_engines$set(webr = function(options) {
-  code = paste(options$code, collapse = "\n")
-  w = knitr::opts_current$get('fig.width') * 72
-  h = knitr::opts_current$get('fig.height') * 72
-  options$results = 'asis'
-  
-  form = webr_editor(code = I(encodeString(code, quote = '`')), width = w, height = h)
-  
-  form
-}
-)
-```
 
 Install the latest version of stringr with:
 
 ```{webr}
+webr::install("stringr")
+```
+
+```{webr}
+#| eval: false
 webr::install("stringr")
 library("stringr")
 ```
@@ -161,8 +31,11 @@ library("stringr")
 ### Compare two character vectors
 
 ```{webr}
+#| eval: false
 str_equal("a", "A")
 #> [1] FALSE
 str_equal("a", "A", ignore_case = TRUE)
 #> [1] TRUE
 ```
+
+
