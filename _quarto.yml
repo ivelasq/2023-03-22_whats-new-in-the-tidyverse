@@ -1,0 +1,31 @@
+project:
+  type: website
+
+website:
+  title: "What's new in the tidyverse"
+  site-url: "https://ivelasq.quarto.pub/whats-new-in-the-tidyverse"
+  description: "Talk for R-Ladies Rome"
+  twitter-card: 
+    creator: "@ivelasq3"
+    site: "@ivelasq3"
+  navbar:
+    pinned: true
+    right:
+      - text: "Home"
+        file: index.qmd
+      - about.qmd
+      - icon: github
+        href: https://github.com/ivelasq/2023-03-22_whats-new-in-the-tidyverse
+      - icon: twitter
+        href: https://twitter.com/ivelasq3
+format:
+  html:
+    theme: [litera, styles.scss]
+    highlight-style: zenburn
+    code-copy: true
+    code-overflow: wrap
+
+editor: source
+
+execute: 
+  freeze: auto

@@ -1,0 +1,16 @@
+---
+listing:
+  contents: posts
+  sort: "date desc"
+  type: grid
+  image-height: "200"
+  categories: true
+page-layout: full
+title-block-banner: false
+---
+
+```{r}
+#| eval: false
+tidyverse_packages(include_self = TRUE)
+```
+

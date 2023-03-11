@@ -1,0 +1,14 @@
+{
+  "hash": "e8d7c9831d8f3d02d90713a05b2faae0",
+  "result": {
+    "markdown": "---\ntitle: \"ggplot2\"\nsubtitle: \"linewidth\"\ncategory: \"ggplot2\"\ndate: 2022-11-07\n---\n\n\n## What is ggplot2?\n\n{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics.\n\n## What has changed?\n\nggplot 3.4.0 has been released. Install it with:\n\n```r\ninstall.packages(\"ggplot2\")\n```\n\n##\n\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(ggplot2)\nlibrary(dplyr)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\n\nAttaching package: 'dplyr'\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\nThe following objects are masked from 'package:stats':\n\n    filter, lag\n```\n:::\n\n::: {.cell-output .cell-output-stderr}\n```\nThe following objects are masked from 'package:base':\n\n    intersect, setdiff, setequal, union\n```\n:::\n:::\n\n`linewidth` will take over sizing of the width of lines—something that was earlier handled by `size`\n\n\n::: {.cell}\n\n```{.r .cell-code}\nggplot(airquality) + \n  geom_line(aes(Day, Temp, size = Month, group = Month)) + \n  scale_size(range = c(0.5, 3))\n```\n:::\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(ggplot2)\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, linewidth = Month, group = Month)) + \n  scale_linewidth(range = c(0.5, 3))\n```\n:::\n\n\n\nGet a deprecation warning\n\n\n::: {.cell}\n\n```{.r .cell-code}\nggplot(airquality) + \n  geom_line(aes(Day, Temp, size = Month, group = Month)) + \n  scale_size(range = c(0.5, 3))\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

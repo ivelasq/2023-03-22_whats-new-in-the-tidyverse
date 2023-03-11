@@ -1,0 +1,22 @@
+/*-- scss:defaults --*/
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&family=Fira+Sans:wght@300&display=swap');
+
+$font-family-serif: "Fira Sans" !default;
+$font-family-sans-serif: "Fira Sans", sans-serif !default;
+$font-family-monospace: "Fira Code", monospace, !default;
+
+// nav bar
+$navbar-bg: #1A162D !default;
+$navbar-fg: white !default;
+$navbar-hl: white !default;
+.navbar-title {
+  font-family: "Fira Code";
+}
+
+// heading
+
+h1.title {
+  font-family: "Fira Code";
+  font-size: 30px;
+}

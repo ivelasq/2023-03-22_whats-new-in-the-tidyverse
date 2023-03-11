@@ -1,0 +1,14 @@
+{
+  "hash": "a0932c9ba08c7d5a507b9c6bea176486",
+  "result": {
+    "markdown": "---\nlisting:\n  contents: posts\n  sort: \"date desc\"\n  type: grid\n  image-height: \"200\"\n  categories: true\npage-layout: full\ntitle-block-banner: false\n---\n\n::: {.cell}\n\n```{.r .cell-code}\ntidyverse_packages(include_self = TRUE)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

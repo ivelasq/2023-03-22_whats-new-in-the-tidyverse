@@ -1,0 +1,16 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: marquee
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/ivelasq3
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/ivelasq
+    - icon: github
+      text: Github
+      href: https://github.com/ivelasq
+---
