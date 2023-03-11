@@ -27,7 +27,6 @@ format:
     highlight-style: zenburn
     code-copy: true
     code-overflow: wrap
-    embed-resources: true
 
 editor: source
 
