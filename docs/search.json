@@ -1,10 +1,17 @@
 [
   {
-    "objectID": "posts/webr/index.html",
-    "href": "posts/webr/index.html",
-    "title": "webR with Quarto HTML Standalone Document Proof of Concept",
+    "objectID": "posts/stringr-new-str-funs/index.html",
+    "href": "posts/stringr-new-str-funs/index.html",
+    "title": "New str_* functions",
     "section": "",
-    "text": "The purpose of this document is to explore how WebR can be embedded in a Quarto Document for the purposes of teaching R.\n\nWebR Website: https://docs.r-wasm.org/webr/latest/\nWebR GitHub: https://github.com/r-wasm/webr/\n\n\n\n\nSee the https://github.com/coatless-r-n-d/webR-quarto-demos for source.\n\n\n\n\n\n\n\n\n\n\n\nNext, let’s look at a few features of the language\n\n\nWe’ll first start with the WebR team’s demo example or the statistician way of saying, “Hello world!”… Aka linear regression:\n\n\nLoading webR…\n\n\n\n\n\n\n\n\n\n\n\n\nEach WebR cell appears to be connected to each other. Thus, we can access the fit outcome:\n\n\nLoading webR…\n\n\n\n\n\n\n\n\n\n\n\nLoading webR…\n\n\n\n\n\n\n\n\n\n\n\n\nFor if-else statements, we have:\nif (...) {\n  # Statements for TRUE\n} else {\n  # Statements for FALSE\n}\n\n... denotes a condition (either TRUE or FALSE)\nIf TRUE, then run the statements inside {}\nElse, FALSE, carry on with your day.\n\nHow could we modify temperature to have the if statement print \"Hot!\"?\n\n\nLoading webR…\n\n\n\n\n\n\n\n\n\n\n\n\nGlancing at data frames yields:\n\n\nLoading webR…\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLoading webR…\n\n\n\n\n\n\n\n\n\n\n\nLoading webR…\n\n\n\n\n\n\n\n\n\n\n\n\nGraphing with base R\n\n\nLoading webR…\n\n\n\n\n\n\n\n\n\nMore advanced base R graphing…\n\n\nLoading webR…\n\n\n\n\n\n\n\n\n\n\n\n\nNext, we look at using ggplot2 graphics. By default, the ggplot2 package is not available as it is dependency heavy.\n\n\n\nPackage installation for `ggplot2` given by `webr::install(\"ggplot2\")`\n\nDownloading webR package: cli\nDownloading webR package: glue\nDownloading webR package: gtable\nDownloading webR package: isoband\nDownloading webR package: rlang\nDownloading webR package: lifecycle\nDownloading webR package: MASS\nDownloading webR package: lattice\nDownloading webR package: nlme\nDownloading webR package: Matrix\nDownloading webR package: mgcv\nDownloading webR package: farver\nDownloading webR package: labeling\nDownloading webR package: colorspace\nDownloading webR package: munsell\nDownloading webR package: R6\nDownloading webR package: RColorBrewer\nDownloading webR package: viridisLite\nDownloading webR package: scales\nDownloading webR package: fansi\nDownloading webR package: magrittr\nDownloading webR package: utf8\nDownloading webR package: vctrs\nDownloading webR package: pillar\nDownloading webR package: pkgconfig\nDownloading webR package: tibble\nDownloading webR package: withr\nDownloading webR package: ggplot2\n\n\n\nLoading webR…"
+    "text": "Install the latest version of stringr with:"
+  },
+  {
+    "objectID": "posts/stringr-new-str-funs/index.html#comparing-strings",
+    "href": "posts/stringr-new-str-funs/index.html#comparing-strings",
+    "title": "New str_* functions",
+    "section": "Comparing strings",
+    "text": "Comparing strings\n\nCompare two character vectors\n\n\nLoading webR…"
   },
   {
     "objectID": "index.html",
@@ -12,19 +19,5 @@
     "title": "What's new in the tidyverse",
     "section": "",
     "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "posts/stringr-new-str-funs/Untitled.html",
-    "href": "posts/stringr-new-str-funs/Untitled.html",
-    "title": "New str_* functions",
-    "section": "",
-    "text": "Install the latest version of stringr with:"
-  },
-  {
-    "objectID": "posts/stringr-new-str-funs/Untitled.html#comparing-strings",
-    "href": "posts/stringr-new-str-funs/Untitled.html#comparing-strings",
-    "title": "New str_* functions",
-    "section": "Comparing strings",
-    "text": "Comparing strings\n\nCompare two character vectors\n\n\nLoading webR…"
   }
 ]

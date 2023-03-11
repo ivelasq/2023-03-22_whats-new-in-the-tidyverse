@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/webr/index.html</loc>
-    <lastmod>2023-03-11T16:08:01.402Z</lastmod>
+    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/stringr-new-str-funs/index.html</loc>
+    <lastmod>2023-03-11T16:26:38.278Z</lastmod>
   </url>
   <url>
     <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/index.html</loc>
-    <lastmod>2023-03-11T16:24:21.132Z</lastmod>
+    <lastmod>2023-03-11T16:26:39.226Z</lastmod>
   </url>
   <url>
     <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/about.html</loc>
-    <lastmod>2023-03-11T16:08:02.769Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/stringr-new-str-funs/Untitled.html</loc>
-    <lastmod>2023-03-11T16:24:16.379Z</lastmod>
+    <lastmod>2023-03-11T16:26:39.786Z</lastmod>
   </url>
 </urlset>
