@@ -1,7 +1,7 @@
 ---
 title: "webR with Quarto HTML Standalone Document Proof of Concept"
 subtitle: "Experiments with an Interactive Quarto Document using webR v0.1.0"
-author: "James J Balamuta; modified by EEH"
+author: "JJB leaning heavily on webR authors"
 engine: knitr
 execute:
   echo: true
@@ -13,7 +13,7 @@ format:
 editor: source
 ---
 
-# Demo!
+# Demo
 
 ## Background
 
@@ -315,6 +315,3 @@ library("ggplot2")
 p = ggplot(mpg, aes(class, hwy))
 p + geom_boxplot()
 ```
-
-
-
