@@ -1,6 +1,8 @@
 [
   {
     "listing": "/index.html",
-    "items": []
+    "items": [
+      "/posts/stringr-new-str-funs/index.html"
+    ]
   }
 ]
