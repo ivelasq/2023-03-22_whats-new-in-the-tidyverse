@@ -11,6 +11,6 @@
     "href": "index.html",
     "title": "What's new in the tidyverse",
     "section": "",
-    "text": "webR with Quarto HTML Standalone Document Proof of Concept\n\n\n\n\n\n\nJJB leaning heavily on webR authors\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\nwebR with Quarto HTML Standalone Document Proof of Concept\n\n\n\n\n\n\nJJB leaning heavily on webR authors\n\n\n\n\n\n\n\n\nNo matching items"
   }
 ]
