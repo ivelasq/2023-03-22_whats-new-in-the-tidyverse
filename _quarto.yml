@@ -1,8 +1,6 @@
 project:
   type: website
   output-dir: docs
-  resources: 
-    - "*.js"
 
 website:
   title: "What's new in the tidyverse"
