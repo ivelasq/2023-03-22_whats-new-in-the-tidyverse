@@ -1,10 +1,45 @@
 [
   {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Install the newest versions of packages using pak:\n\npak::pak(c(\"tidyverse\", \"dplyr\", \"tidyr\", \"stringr\", \"purrr\", \"ggplot2\"))"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "What's new in the tidyverse",
     "section": "",
-    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidyverse 2.0.0\n\n\n\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/tidyverse-2-0-0/index.html",
+    "href": "posts/tidyverse-2-0-0/index.html",
+    "title": "tidyverse 2.0.0",
+    "section": "",
+    "text": "Install the latest version of the tidyverse with:\nLoad the tidyverse with:\nDid you notice?"
+  },
+  {
+    "objectID": "posts/tidyverse-2-0-0/index.html#welcome-to-the-core-tidyverse",
+    "href": "posts/tidyverse-2-0-0/index.html#welcome-to-the-core-tidyverse",
+    "title": "tidyverse 2.0.0",
+    "section": "Welcome to the core tidyverse",
+    "text": "Welcome to the core tidyverse\n\nlubridate!\n\n\n\n\n\n lubridate is now part of the core tidyverse! Loading the tidyverse automatically attaches lubridate, meaning that you do not have load it separately."
+  },
+  {
+    "objectID": "posts/tidyverse-2-0-0/index.html#conflicted-package",
+    "href": "posts/tidyverse-2-0-0/index.html#conflicted-package",
+    "title": "tidyverse 2.0.0",
+    "section": "conflicted package",
+    "text": "conflicted package\nYou may have noticed this message:\nℹ Use the conflicted package to force all conflicts to become errors\ntidyverse 2.0.0 now advertises the conflicted package.\nPackages can have conflicts (i.e., contain functions of the same name). Normally, the package loaded last “wins” and masks (overrides) the other function, resulting in confusing errors.\n\nlibrary(dplyr)\nlibrary(MASS)\n\n\nAttaching package: 'MASS'\n\n\nThe following object is masked from 'package:dplyr':\n\n    select\n\nselect\n\nfunction (obj) \nUseMethod(\"select\")\n<bytecode: 0x7fd0b7cf4c80>\n<environment: namespace:MASS>\n\n\nWith conflicted, you get an explicit error:\n\nlibrary(conflicted)\nlibrary(dplyr)\nlibrary(MASS)\n\nselect\n\nError:\n! [conflicted] select found in 2 packages.\nEither pick the one you want with `::`:\n• MASS::select\n• dplyr::select\nOr declare a preference with `conflicts_prefer()`:\n• `conflicts_prefer(MASS::select)`\n• `conflicts_prefer(dplyr::select)`\n\n\nIt asks you to either identify the namespace for each call:\n\ndplyr::select\n\nOr, declare a preference with conflicts_prefer():\n\nconflicts_prefer(dplyr::filter)\n\nThat way you know there’s a problem and how to resolve it."
+  },
+  {
+    "objectID": "posts/tidyverse-2-0-0/index.html#learn-more",
+    "href": "posts/tidyverse-2-0-0/index.html#learn-more",
+    "title": "tidyverse 2.0.0",
+    "section": "Learn more",
+    "text": "Learn more\n\ntidyverse blog: tidyverse 2.0.0\ntidyverse release notes"
   },
   {
     "objectID": "posts/stringr-new-str-funs/index.html",
