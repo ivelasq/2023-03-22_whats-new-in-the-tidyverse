@@ -1,0 +1,14 @@
+{
+  "hash": "502e1c32fb112c4819dd1c5c9b1a0faf",
+  "result": {
+    "markdown": "---\ntitle: \"About\"\nimage: profile.jpg\nabout:\n  template: marquee\n  links:\n    - icon: twitter\n      text: Twitter\n      href: https://twitter.com/ivelasq3\n    - icon: linkedin\n      text: LinkedIn\n      href: https://linkedin.com/in/ivelasq\n    - icon: github\n      text: Github\n      href: https://github.com/ivelasq\n---\n\n\nInstall the newest versions of packages using [pak](https://pak.r-lib.org/):\n\n\n::: {.cell}\n\n```{.r .cell-code}\npak::pak(c(\"tidyverse\", \"dplyr\", \"tidyr\", \"stringr\", \"purrr\", \"ggplot2\"))\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
