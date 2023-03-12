@@ -1,0 +1,122 @@
+---
+title: "Per-operation grouping"
+subtitle: "dplyr"
+categories:
+  - dplyr
+image: "per-operation.png"
+image-alt: "Text: Per-operation grouping, dplyr. An image of an example call using by."
+date: 2023-02-01
+---
+
+Install the latest version of dplyr with:
+
+```{r}
+#| eval: false
+install.packages("dplyr")
+```
+
+Load dplyr with:
+
+```{r}
+library(dplyr)
+```
+
+
+```{r}
+#| message: false
+library(dplyr)
+
+transactions <-
+  tibble::tribble(
+    ~company, ~year, ~revenue,
+         "A", 2019L,      20L,
+         "A", 2019L,      50L,
+         "A", 2020L,       4L,
+         "B", 2021L,      10L,
+         "B", 2023L,      12L,
+         "B", 2023L,      18L
+    )
+```
+
+
+Total yearly revenue of each company?
+
+```{r}
+#| message: false
+transactions %>% 
+  group_by(company, year) %>% 
+  summarize(revenue = sum(revenue))
+```
+
+```{r}
+#| message: false
+transactions %>% 
+  group_by(company, year,) %>% 
+  summarize(revenue = sum(revenue)) %>% 
+  ungroup()
+```
+
+```{r}
+#| message: false
+transactions %>% 
+  group_by(company, year,) %>% 
+  summarize(revenue = sum(revenue),
+            .groups = "drop")
+```
+
+Enter... datatable
+
+explain datatable
+by is specified alongside what you want to group
+you start with a bare data table and then do this and end up with a bare data table, rather than having a grouped data frame like in dplyr
+
+```{r}
+#| eval: false
+transactions[, .(revenue = sum(revenue)), by = .(company, year)]
+```
+
+what if you can put it in line with your summarize call?
+
+```{r}
+transactions %>% 
+  summarize(
+    revenue = sum(revenue), 
+    by = c(company, year)
+    )
+```
+no longer grouped by company on the way out
+
+1. .by is per-operation grouping
+2. group_by is persistent grouping
+
+bythe one operation (summarize) then drop off
+bare tibble -> transaction -> always get a bare tibble not a grouped data frame
+don't have to remember ungroup or specify groups = drop
+
+- show lines with more calls (mutate)
+
+use tidyselect unquoted column names inside `c()` or starts-with
+.by = all_of(c(""))
+by is just selection, does not create columns
+
+```{r}
+transactions %>% 
+  slice_max(revenue, n = 2, by = company)
+```
+
+mutate
+summarize
+filter
+slice_*
+
+what happens to group_by?
+
+it's not going away? not depricated or even superceded (discovered something better)
+
+you don't have to remember what will be taken off (outer most) and the order doesnt' matter
+be more explict 
+
+Learn more
+
+* https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/
+* [New features in dplyr 1.1.0, and an introduction to ivs](https://www.youtube.com/watch?v=9LAML4Nr1II&t=111s)
