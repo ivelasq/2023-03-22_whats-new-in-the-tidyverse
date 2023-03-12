@@ -14,3 +14,11 @@ about:
       text: Github
       href: https://github.com/ivelasq
 ---
+
+Install the newest versions of packages using [pak](https://pak.r-lib.org/):
+
+```{r}
+#| eval: false
+pak::pak(c("tidyverse", "dplyr", "tidyr", "stringr", "purrr", "ggplot2"))
+```
+
