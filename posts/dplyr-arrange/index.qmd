@@ -1,0 +1,47 @@
+---
+title: "dplyr 1.1.0"
+date: 2023-02-07
+image: "dplyr-pick-reframe-arrange.png"
+image-alt: "dplyr 1.1.0. Image of two benchmark comparisons arranging a vector in the old and new dplyr."
+categories:
+  - dplyr
+description: "dplyr 1.1.0 is waaaay faster at sorting character vectors."
+engine: knitr
+format:
+    html: 
+      toc: true
+editor: source
+---
+
+Install the newest version of dplyr with:
+
+```r
+install.packages("dplyr")
+```
+
+## What's new
+
+
+### arrange()
+
+```{r}
+#| message: false
+library(withr)
+library(dplyr)
+
+df <- tibble(x = stringi::stri_rand_strings(n = 5e5, length = 15))
+
+withr::with_options(list(dplyr.legacy_locale = TRUE),
+                    {
+                      bench::system_time(df %>% arrange(x))
+                    })
+
+bench::system_time(df %>% arrange(x))
+
+bench::system_time(df %>% arrange(x, locale = "fr"))
+```
+
+## Learn more
+
+* [tidyverse blog: dplyr 1.1.0: `pick()`, `reframe()`, and `arrange()`](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange)
+* [dplyr release notes](https://dplyr.tidyverse.org/news/index.html)

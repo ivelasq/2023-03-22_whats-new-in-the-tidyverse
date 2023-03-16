@@ -1,0 +1,14 @@
+{
+  "hash": "75a3be8cd89962f2827d36275ad7e5af",
+  "result": {
+    "markdown": "---\ntitle: \"dplyr 1.1.0\"\ndate: 2023-02-07\nimage: \"dplyr-arrange.png\"\nimage-alt: \"dplyr 1.1.0. Image of two benchmark comparisons arranging a vector in the old and new dplyr.\"\ncategories:\n  - dplyr\ndescription: \"dplyr 1.1.0 is waaaay faster at sorting character vectors.\"\nengine: knitr\nformat:\n    html: \n      toc: true\neditor: source\n---\n\n\nInstall the newest version of dplyr with:\n\n```r\ninstall.packages(\"dplyr:)\n```\n\n## What's new\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(withr)\nlibrary(dplyr)\n\ndf <- tibble(x = stringi::stri_rand_strings(n = 5e5, length = 15))\n\nwithr::with_options(list(dplyr.legacy_locale = TRUE),\n                    {\n                      bench::system_time(df %>% arrange(x))\n                    })\n```\n\n::: {.cell-output .cell-output-stdout}\n```\nprocess    real \n  3.87s   3.88s \n```\n:::\n\n```{.r .cell-code}\nbench::system_time(df %>% arrange(x))\n```\n\n::: {.cell-output .cell-output-stdout}\n```\nprocess    real \n  276ms   276ms \n```\n:::\n\n```{.r .cell-code}\nbench::system_time(df %>% arrange(x, locale = \"fr\"))\n```\n\n::: {.cell-output .cell-output-stdout}\n```\nprocess    real \n  297ms   297ms \n```\n:::\n:::\n\n\n## Learn more\n\n* [tidyverse blog: dplyr 1.1.0: `pick()`, `reframe()`, and `arrange()`](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange)\n* [dplyr release notes](https://dplyr.tidyverse.org/news/index.html)",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

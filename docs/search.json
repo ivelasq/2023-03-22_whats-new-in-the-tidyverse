@@ -46,7 +46,7 @@
     "href": "index.html",
     "title": "What's new in the tidyverse",
     "section": "",
-    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidyverse 2.0.0\n\n\n\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidyverse 2.0.0\n\n\n\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndplyr 1.1.0\n\n\n\ndplyr\n\n\n\ndplyr 1.1.0 is waaaay faster at sorting character vectors.\n\n\n\n\n\n\nFeb 7, 2023\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -54,5 +54,26 @@
     "title": "About",
     "section": "",
     "text": "Install the newest versions of packages using pak:\n\npak::pak(c(\"tidyverse\", \"dplyr\", \"tidyr\", \"stringr\", \"purrr\", \"ggplot2\"))"
+  },
+  {
+    "objectID": "posts/dplyr-arrange/index.html",
+    "href": "posts/dplyr-arrange/index.html",
+    "title": "dplyr 1.1.0",
+    "section": "",
+    "text": "Install the newest version of dplyr with:"
+  },
+  {
+    "objectID": "posts/dplyr-arrange/index.html#learn-more",
+    "href": "posts/dplyr-arrange/index.html#learn-more",
+    "title": "dplyr 1.1.0",
+    "section": "Learn more",
+    "text": "Learn more\n\ntidyverse blog: dplyr 1.1.0: pick(), reframe(), and arrange()\ndplyr release notes"
+  },
+  {
+    "objectID": "posts/dplyr-arrange/index.html#whats-new",
+    "href": "posts/dplyr-arrange/index.html#whats-new",
+    "title": "dplyr 1.1.0",
+    "section": "What’s new",
+    "text": "What’s new\n\nlibrary(withr)\nlibrary(dplyr)\n\ndf <- tibble(x = stringi::stri_rand_strings(n = 5e5, length = 15))\n\nwithr::with_options(list(dplyr.legacy_locale = TRUE),\n                    {\n                      bench::system_time(df %>% arrange(x))\n                    })\n\nprocess    real \n  3.87s   3.88s \n\nbench::system_time(df %>% arrange(x))\n\nprocess    real \n  276ms   276ms \n\nbench::system_time(df %>% arrange(x, locale = \"fr\"))\n\nprocess    real \n  297ms   297ms"
   }
 ]
