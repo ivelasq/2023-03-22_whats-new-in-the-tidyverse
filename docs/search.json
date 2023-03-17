@@ -74,7 +74,7 @@
     "href": "posts/ggplot2-linewidth/index.html#what-is-new",
     "title": "linewidth",
     "section": "What is new?",
-    "text": "What is new?\nggplot 3.4.0 has been released. Install it with:\ninstall.packages(\"ggplot2\")\n\nswitchr::switchTo(\"mynewlib\")\n\nlinewidth will take over sizing of the width of lines - something that was handled previously by size.\n\nBeforeAfter\n\n\n\nlibrary(ggplot2)\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, size = Month, group = Month)) + \n  scale_size(range = c(0.5, 3))\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n\n\n\n\n\n\n\n\nlibrary(ggplot2)\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, linewidth = Month, group = Month)) + \n  scale_linewidth(range = c(0.5, 3))\n\n\n\n\n\n\n\nYou will get a deprecation message if you try to use size when you should be using linewidth.\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, size = Month, group = Month)) + \n  scale_size(range = c(0.5, 3))"
+    "text": "What is new?\nggplot 3.4.0 has been released. Install it with:\ninstall.packages(\"ggplot2\")\nlinewidth will take over sizing of the width of lines - something that was handled previously by size.\n\nBeforeAfter\n\n\n\nlibrary(ggplot2,\n        lib.loc = new_lib)\n\nggplot(airquality) +\n  geom_line(aes(Day, Temp, size = Month, group = Month)) +\n  scale_size(range = c(0.5, 3))\n\n\n\n\n\n\n\nlibrary(ggplot2)\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, linewidth = Month, group = Month)) + \n  scale_linewidth(range = c(0.5, 3))\n\n\n\n\n\n\n\nYou will get a deprecation message if you try to use size when you should be using linewidth.\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, size = Month, group = Month)) + \n  scale_size(range = c(0.5, 3))\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead."
   },
   {
     "objectID": "posts/ggplot2-errors/index.html",
@@ -96,5 +96,12 @@
     "title": "Error messages",
     "section": "Learn more",
     "text": "Learn more\n\ntidyverse blog: ggplot 3.4.0\ntidyverse release notes"
+  },
+  {
+    "objectID": "posts/ggplot2-linewidth/index.html#learn-more",
+    "href": "posts/ggplot2-linewidth/index.html#learn-more",
+    "title": "linewidth",
+    "section": "Learn more",
+    "text": "Learn more\n\ntidyverse blog: ggplot2 3.4.0\nggplot2 release notes"
   }
 ]

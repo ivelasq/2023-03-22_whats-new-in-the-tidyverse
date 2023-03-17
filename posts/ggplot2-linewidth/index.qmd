@@ -21,11 +21,6 @@ ggplot 3.4.0 has been released. Install it with:
 install.packages("ggplot2")
 ```
 
-```{r}
-#| eval: false
-switchr::switchTo("mynewlib")
-```
-
 `linewidth` will take over sizing of the width of lines - something that was  handled previously by `size`.
 
 ::: {.panel-tabset}
@@ -33,20 +28,36 @@ switchr::switchTo("mynewlib")
 ## Before
 
 ```{r}
-#| message: false
-library(ggplot2)
+#| include: false
+new_lib <- tempfile()
+dir.create(new_lib)
 
-ggplot(airquality) + 
-  geom_line(aes(Day, Temp, size = Month, group = Month)) + 
+withr::with_libpaths(new = new_lib,
+                     install.packages("remotes"))
+withr::with_libpaths(new = new_lib,
+                     remotes::install_version("ggplot2", "3.3.6"))
+```
+
+```{r}
+library(ggplot2,
+        lib.loc = new_lib)
+
+ggplot(airquality) +
+  geom_line(aes(Day, Temp, size = Month, group = Month)) +
   scale_size(range = c(0.5, 3))
+```
+
+```{r}
+#| include: false
+unlink(new_lib, recursive = TRUE)
+unloadNamespace("ggplot2")
 ```
 
 ## After
 
 ```{r}
-#| eval: false
 #| include: false
-switchr::switchBack()
+library(ggplot2)
 ```
 
 ```{r}
@@ -66,3 +77,8 @@ ggplot(airquality) +
   geom_line(aes(Day, Temp, size = Month, group = Month)) + 
   scale_size(range = c(0.5, 3))
 ```
+
+## Learn more
+
+* [tidyverse blog: ggplot2 3.4.0](https://www.tidyverse.org/blog/2022/11/ggplot2-3-4-0/)
+* [ggplot2 release notes](https://ggplot2.tidyverse.org/news/index.html)
