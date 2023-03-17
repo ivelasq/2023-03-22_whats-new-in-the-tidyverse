@@ -1,0 +1,41 @@
+---
+title: "Error messages"
+subtitle: "ggplot2 3.4.0"
+categories:
+   - "ggplot2"
+image: "ggplot-errors.png"
+image-alt: "Text that says error messages ggplot2. An image of a line plot with lines of varying widths."
+description: "ggplot2 3.4.0 has improved error messages when running plots."
+date: 2022-11-07
+---
+
+## What is ggplot2?
+
+{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics.
+
+## What is new?
+
+ggplot 3.4.0 has been released. Install it with:
+
+```r
+install.packages("ggplot2")
+```
+
+### Better error messages
+
+```{r}
+#| error: true
+#| message: false
+
+library(ggplot2)
+library(dplyr)
+
+mtcars %>% 
+  ggplot(aes(x = cyl, y = hp)) +
+  geom_bar()
+```
+
+## Learn more
+
+* [tidyverse blog: ggplot 3.4.0](https://www.tidyverse.org/blog/2022/11/ggplot2-3-4-0/)
+* [tidyverse release notes](https://ggplot2.tidyverse.org/news/index.html)

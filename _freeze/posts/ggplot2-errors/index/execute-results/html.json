@@ -1,0 +1,14 @@
+{
+  "hash": "9aff47943a285cb08d355e2dfc2ebc90",
+  "result": {
+    "markdown": "---\ntitle: \"Error messages\"\nsubtitle: \"ggplot2 3.4.0\"\ncategories:\n   - \"ggplot2\"\nimage: \"ggplot-errors.png\"\nimage-alt: \"Text that says error messages ggplot2. An image of a line plot with lines of varying widths.\"\ndescription: \"ggplot2 3.4.0 improves error messages when running plots.\"\ndate: 2022-11-07\n---\n\n\n## What is ggplot2?\n\n{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics.\n\n## What is new?\n\nggplot 3.4.0 has been released. Install it with:\n\n```r\ninstall.packages(\"ggplot2\")\n```\n\n### Better error messages\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(ggplot2)\nlibrary(dplyr)\n\nmtcars %>% \n  ggplot(aes(x = cyl, y = hp)) +\n  geom_bar()\n```\n\n::: {.cell-output .cell-output-error}\n```\nError in `geom_bar()`:\n! Problem while computing stat.\nℹ Error occurred in the 1st layer.\nCaused by error in `setup_params()`:\n! `stat_count()` must only have an x or y aesthetic.\n```\n:::\n:::\n\n\n## Learn more\n\n* [tidyverse blog: ggplot 3.4.0](https://www.tidyverse.org/blog/2022/11/ggplot2-3-4-0/)\n* [tidyverse release notes](https://ggplot2.tidyverse.org/news/index.html)\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

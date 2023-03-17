@@ -1,0 +1,84 @@
+---
+title: "linewidth"
+subtitle: "ggplot2 3.4.0"
+categories:
+   - "ggplot2"
+image: "ggplot-linewidth.png"
+image-alt: "Text that says linewidth ggplot2. An image of a line plot with lines of varying widths."
+description: "ggplot2 3.4.0 introduces a new linewidth aesthetic."
+date: 2022-11-07
+---
+
+## What is ggplot2?
+
+{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics.
+
+## What is new?
+
+ggplot 3.4.0 has been released. Install it with:
+
+```r
+install.packages("ggplot2")
+```
+
+`linewidth` will take over sizing of the width of lines - something that was  handled previously by `size`.
+
+::: {.panel-tabset}
+
+## Before
+
+```{r}
+#| include: false
+new_lib <- tempfile()
+dir.create(new_lib)
+
+withr::with_libpaths(new = new_lib,
+                     install.packages("remotes"))
+withr::with_libpaths(new = new_lib,
+                     remotes::install_version("ggplot2", "3.3.6"))
+```
+
+```{r}
+library(ggplot2,
+        lib.loc = new_lib)
+
+ggplot(airquality) +
+  geom_line(aes(Day, Temp, size = Month, group = Month)) +
+  scale_size(range = c(0.5, 3))
+```
+
+```{r}
+#| include: false
+unlink(new_lib, recursive = TRUE)
+unloadNamespace("ggplot2")
+```
+
+## After
+
+```{r}
+#| include: false
+library(ggplot2)
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(airquality) + 
+  geom_line(aes(Day, Temp, linewidth = Month, group = Month)) + 
+  scale_linewidth(range = c(0.5, 3))
+```
+
+:::
+
+You will get a deprecation message if you try to use `size` when you should be using `linewidth`.
+
+```{r}
+ggplot(airquality) + 
+  geom_line(aes(Day, Temp, size = Month, group = Month)) + 
+  scale_size(range = c(0.5, 3))
+```
+
+## Learn more
+
+* [tidyverse blog: ggplot2 3.4.0](https://www.tidyverse.org/blog/2022/11/ggplot2-3-4-0/)
+* [ggplot2 release notes](https://ggplot2.tidyverse.org/news/index.html)
