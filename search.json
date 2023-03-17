@@ -7,13 +7,6 @@
     "text": "Install the newest versions of packages using pak:\n\npak::pak(c(\"tidyverse\", \"dplyr\", \"tidyr\", \"stringr\", \"purrr\", \"ggplot2\"))"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "What's new in the tidyverse",
-    "section": "",
-    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidyverse 2.0.0\n\n\n\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "posts/tidyverse-2-0-0/index.html",
     "href": "posts/tidyverse-2-0-0/index.html",
     "title": "tidyverse 2.0.0",
@@ -32,7 +25,7 @@
     "href": "posts/tidyverse-2-0-0/index.html#conflicted-package",
     "title": "tidyverse 2.0.0",
     "section": "conflicted package",
-    "text": "conflicted package\nYou may have noticed this message:\nℹ Use the conflicted package to force all conflicts to become errors\ntidyverse 2.0.0 now advertises the conflicted package.\nPackages can have conflicts (i.e., contain functions of the same name). Normally, the package loaded last “wins” and masks (overrides) the other function, resulting in confusing errors.\n\nlibrary(dplyr)\nlibrary(MASS)\n\n\nAttaching package: 'MASS'\n\n\nThe following object is masked from 'package:dplyr':\n\n    select\n\nselect\n\nfunction (obj) \nUseMethod(\"select\")\n<bytecode: 0x7fd0b7cf4c80>\n<environment: namespace:MASS>\n\n\nWith conflicted, you get an explicit error:\n\nlibrary(conflicted)\nlibrary(dplyr)\nlibrary(MASS)\n\nselect\n\nError:\n! [conflicted] select found in 2 packages.\nEither pick the one you want with `::`:\n• MASS::select\n• dplyr::select\nOr declare a preference with `conflicts_prefer()`:\n• `conflicts_prefer(MASS::select)`\n• `conflicts_prefer(dplyr::select)`\n\n\nIt asks you to either identify the namespace for each call:\n\ndplyr::select\n\nOr, declare a preference with conflicts_prefer():\n\nconflicts_prefer(dplyr::filter)\n\nThat way you know there’s a problem and how to resolve it."
+    "text": "conflicted package\nYou may have noticed this message:\nℹ Use the conflicted package to force all conflicts to become errors\ntidyverse 2.0.0 now advertises the conflicted package.\nPackages can have conflicts (i.e., contain functions of the same name). Normally, the package loaded last “wins” and masks (overrides) the other function, resulting in confusing errors.\n\nlibrary(dplyr)\nlibrary(MASS)\n\n\nAttaching package: 'MASS'\n\n\nThe following object is masked from 'package:dplyr':\n\n    select\n\nselect\n\nfunction (obj) \nUseMethod(\"select\")\n<bytecode: 0x7fe2bf726d48>\n<environment: namespace:MASS>\n\n\nWith conflicted, you get an explicit error:\n\nlibrary(conflicted)\nlibrary(dplyr)\nlibrary(MASS)\n\nselect\n\nError:\n! [conflicted] select found in 2 packages.\nEither pick the one you want with `::`:\n• MASS::select\n• dplyr::select\nOr declare a preference with `conflicts_prefer()`:\n• `conflicts_prefer(MASS::select)`\n• `conflicts_prefer(dplyr::select)`\n\n\nIt asks you to either identify the namespace for each call:\n\ndplyr::select\n\nOr, declare a preference with conflicts_prefer():\n\nconflicts_prefer(dplyr::filter)\n\nThat way you know there’s a problem and how to resolve it."
   },
   {
     "objectID": "posts/tidyverse-2-0-0/index.html#learn-more",
@@ -40,6 +33,48 @@
     "title": "tidyverse 2.0.0",
     "section": "Learn more",
     "text": "Learn more\n\ntidyverse blog: tidyverse 2.0.0\ntidyverse release notes"
+  },
+  {
+    "objectID": "posts/ggplot2-linewidth/index.html",
+    "href": "posts/ggplot2-linewidth/index.html",
+    "title": "linewidth",
+    "section": "",
+    "text": "{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics."
+  },
+  {
+    "objectID": "posts/ggplot2-linewidth/index.html#what-is-new",
+    "href": "posts/ggplot2-linewidth/index.html#what-is-new",
+    "title": "linewidth",
+    "section": "What is new?",
+    "text": "What is new?\nggplot 3.4.0 has been released. Install it with:\ninstall.packages(\"ggplot2\")\nlinewidth will take over sizing of the width of lines - something that was handled previously by size.\n\nBeforeAfter\n\n\n\nlibrary(ggplot2,\n        lib.loc = new_lib)\n\nggplot(airquality) +\n  geom_line(aes(Day, Temp, size = Month, group = Month)) +\n  scale_size(range = c(0.5, 3))\n\n\n\n\n\n\n\nlibrary(ggplot2)\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, linewidth = Month, group = Month)) + \n  scale_linewidth(range = c(0.5, 3))\n\n\n\n\n\n\n\nYou will get a deprecation message if you try to use size when you should be using linewidth.\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, size = Month, group = Month)) + \n  scale_size(range = c(0.5, 3))\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead."
+  },
+  {
+    "objectID": "posts/ggplot2-linewidth/index.html#learn-more",
+    "href": "posts/ggplot2-linewidth/index.html#learn-more",
+    "title": "linewidth",
+    "section": "Learn more",
+    "text": "Learn more\n\ntidyverse blog: ggplot2 3.4.0\nggplot2 release notes"
+  },
+  {
+    "objectID": "posts/ggplot2-errors/index.html",
+    "href": "posts/ggplot2-errors/index.html",
+    "title": "Error messages",
+    "section": "",
+    "text": "{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics."
+  },
+  {
+    "objectID": "posts/ggplot2-errors/index.html#what-is-new",
+    "href": "posts/ggplot2-errors/index.html#what-is-new",
+    "title": "Error messages",
+    "section": "What is new?",
+    "text": "What is new?\nggplot 3.4.0 has been released. Install it with:\ninstall.packages(\"ggplot2\")\n\nBetter error messages\n\nlibrary(ggplot2)\nlibrary(dplyr)\n\nmtcars %>% \n  ggplot(aes(x = cyl, y = hp)) +\n  geom_bar()\n\nError in `geom_bar()`:\n! Problem while computing stat.\nℹ Error occurred in the 1st layer.\nCaused by error in `setup_params()`:\n! `stat_count()` must only have an x or y aesthetic."
+  },
+  {
+    "objectID": "posts/ggplot2-errors/index.html#learn-more",
+    "href": "posts/ggplot2-errors/index.html#learn-more",
+    "title": "Error messages",
+    "section": "Learn more",
+    "text": "Learn more\n\ntidyverse blog: ggplot 3.4.0\ntidyverse release notes"
   },
   {
     "objectID": "posts/stringr-new-str-funs/index.html",
@@ -54,5 +89,12 @@
     "title": "New str_* functions",
     "section": "Comparing strings",
     "text": "Comparing strings\n\nCompare two character vectors\n\nLoading webR..."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "What's new in the tidyverse",
+    "section": "",
+    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidyverse 2.0.0\n\n\n\ntidyverse\n\n\n\ntidyverse 2.0.0 has been released!\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlinewidth\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 introduces a new linewidth aesthetic.\n\n\n\n\n\n\nNov 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nError messages\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 has improved error messages when running plots.\n\n\n\n\n\n\nNov 7, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   }
 ]
