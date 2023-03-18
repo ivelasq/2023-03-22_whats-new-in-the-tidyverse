@@ -2,26 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/stringr-new-str-funs/index.html</loc>
-    <lastmod>2023-03-12T17:34:51.522Z</lastmod>
+    <lastmod>2023-03-17T06:00:10.933Z</lastmod>
   </url>
   <url>
     <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/tidyverse-2-0-0/index.html</loc>
-    <lastmod>2023-03-17T04:46:28.020Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/index.html</loc>
-    <lastmod>2023-03-17T04:54:29.778Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/about.html</loc>
-    <lastmod>2023-03-16T05:28:11.459Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/ggplot2-linewidth/index.html</loc>
-    <lastmod>2023-03-17T04:54:28.920Z</lastmod>
+    <lastmod>2023-03-17T06:00:11.986Z</lastmod>
   </url>
   <url>
     <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/ggplot2-errors/index.html</loc>
-    <lastmod>2023-03-17T04:46:28.769Z</lastmod>
+    <lastmod>2023-03-17T06:00:13.081Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/ggplot2-linewidth/index.html</loc>
+    <lastmod>2023-03-17T06:00:14.241Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/index.html</loc>
+    <lastmod>2023-03-17T06:00:15.119Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/about.html</loc>
+    <lastmod>2023-03-17T06:00:16.076Z</lastmod>
   </url>
 </urlset>

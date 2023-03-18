@@ -21,6 +21,8 @@ ggplot 3.4.0 has been released. Install it with:
 install.packages("ggplot2")
 ```
 
+### linewidth
+
 `linewidth` will take over sizing of the width of lines - something that was  handled previously by `size`.
 
 ::: {.panel-tabset}

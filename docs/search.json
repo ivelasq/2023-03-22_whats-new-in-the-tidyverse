@@ -42,41 +42,6 @@
     "text": "Learn more\n\ntidyverse blog: tidyverse 2.0.0\ntidyverse release notes"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "What's new in the tidyverse",
-    "section": "",
-    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidyverse 2.0.0\n\n\n\ntidyverse\n\n\n\ntidyverse 2.0.0 has been released!\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nError messages\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 has improved error messages when running plots.\n\n\n\n\n\n\nNov 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlinewidth\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 introduces a new linewidth aesthetic.\n\n\n\n\n\n\nNov 7, 2022\n\n\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "Install the newest versions of packages using pak:\n\npak::pak(c(\"tidyverse\", \"dplyr\", \"tidyr\", \"stringr\", \"purrr\", \"ggplot2\"))"
-  },
-  {
-    "objectID": "posts/ggplot2-linewidth/index.html",
-    "href": "posts/ggplot2-linewidth/index.html",
-    "title": "linewidth",
-    "section": "",
-    "text": "{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics."
-  },
-  {
-    "objectID": "posts/ggplot2-linewidth/index.html#what-has-changed",
-    "href": "posts/ggplot2-linewidth/index.html#what-has-changed",
-    "title": "ggplot2 3.4.0",
-    "section": "What has changed?",
-    "text": "What has changed?\nggplot 3.4.0 has been released. Install it with:\ninstall.packages(\"ggplot2\")\nlinewidth will take over sizing of the width of lines - something that was handled previously by size.\n\nBeforeAfter\n\n\n\nlibrary(ggplot2)ggplot(airquality) + geom_line(aes(Day, Temp, size = Month, group = Month)) + scale_size(range = c(0.5, 3))\n\n\n\n\nlibrary(ggplot2)ggplot(airquality) + geom_line(aes(Day, Temp, linewidth = Month, group = Month)) + scale_linewidth(range = c(0.5, 3))\n\n\n\n\nYou will get a deprecation message if you try to use size when you should be using linewidth.\n\nggplot(airquality) + geom_line(aes(Day, Temp, size = Month, group = Month)) + scale_size(range = c(0.5, 3))Error in ggplot(airquality): could not find function “ggplot”"
-  },
-  {
-    "objectID": "posts/ggplot2-linewidth/index.html#what-is-new",
-    "href": "posts/ggplot2-linewidth/index.html#what-is-new",
-    "title": "linewidth",
-    "section": "What is new?",
-    "text": "What is new?\nggplot 3.4.0 has been released. Install it with:\ninstall.packages(\"ggplot2\")\nlinewidth will take over sizing of the width of lines - something that was handled previously by size.\n\nBeforeAfter\n\n\n\nlibrary(ggplot2,\n        lib.loc = new_lib)\n\nggplot(airquality) +\n  geom_line(aes(Day, Temp, size = Month, group = Month)) +\n  scale_size(range = c(0.5, 3))\n\n\n\n\n\n\n\nlibrary(ggplot2)\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, linewidth = Month, group = Month)) + \n  scale_linewidth(range = c(0.5, 3))\n\n\n\n\n\n\n\nYou will get a deprecation message if you try to use size when you should be using linewidth.\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, size = Month, group = Month)) + \n  scale_size(range = c(0.5, 3))\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead."
-  },
-  {
     "objectID": "posts/ggplot2-errors/index.html",
     "href": "posts/ggplot2-errors/index.html",
     "title": "Error messages",
@@ -98,10 +63,38 @@
     "text": "Learn more\n\ntidyverse blog: ggplot 3.4.0\ntidyverse release notes"
   },
   {
+    "objectID": "posts/ggplot2-linewidth/index.html",
+    "href": "posts/ggplot2-linewidth/index.html",
+    "title": "linewidth",
+    "section": "",
+    "text": "{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics."
+  },
+  {
+    "objectID": "posts/ggplot2-linewidth/index.html#what-is-new",
+    "href": "posts/ggplot2-linewidth/index.html#what-is-new",
+    "title": "linewidth",
+    "section": "What is new?",
+    "text": "What is new?\nggplot 3.4.0 has been released. Install it with:\ninstall.packages(\"ggplot2\")\nlinewidth will take over sizing of the width of lines - something that was handled previously by size.\n\nBeforeAfter\n\n\n\nlibrary(ggplot2,\n        lib.loc = new_lib)\n\nggplot(airquality) +\n  geom_line(aes(Day, Temp, size = Month, group = Month)) +\n  scale_size(range = c(0.5, 3))\n\n\n\n\n\n\n\nlibrary(ggplot2)\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, linewidth = Month, group = Month)) + \n  scale_linewidth(range = c(0.5, 3))\n\n\n\n\n\n\n\nYou will get a deprecation message if you try to use size when you should be using linewidth.\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, size = Month, group = Month)) + \n  scale_size(range = c(0.5, 3))\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead."
+  },
+  {
     "objectID": "posts/ggplot2-linewidth/index.html#learn-more",
     "href": "posts/ggplot2-linewidth/index.html#learn-more",
     "title": "linewidth",
     "section": "Learn more",
     "text": "Learn more\n\ntidyverse blog: ggplot2 3.4.0\nggplot2 release notes"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "What's new in the tidyverse",
+    "section": "",
+    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidyverse 2.0.0\n\n\n\ntidyverse\n\n\n\ntidyverse 2.0.0 has been released!\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nError messages\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 has improved error messages when running plots.\n\n\n\n\n\n\nNov 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlinewidth\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 introduces a new linewidth aesthetic.\n\n\n\n\n\n\nNov 7, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Install the newest versions of packages using pak:\n\npak::pak(c(\"tidyverse\", \"dplyr\", \"tidyr\", \"stringr\", \"purrr\", \"ggplot2\"))"
   }
 ]
