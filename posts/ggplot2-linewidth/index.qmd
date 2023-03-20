@@ -6,12 +6,8 @@ categories:
 image: "ggplot-linewidth.png"
 image-alt: "Text that says linewidth ggplot2. An image of a line plot with lines of varying widths."
 description: "ggplot2 3.4.0 introduces a new linewidth aesthetic."
-date: 2022-11-07
+date: 2022-11-04
 ---
-
-## What is ggplot2?
-
-{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics.
 
 ## What is new?
 
@@ -79,6 +75,38 @@ ggplot(airquality) +
   geom_line(aes(Day, Temp, size = Month, group = Month)) + 
   scale_size(range = c(0.5, 3))
 ```
+
+When size is a valid aesthetic like `geom_sf()` or `geom_pointrange()`, you will not get a deprecation warning.
+
+```{r}
+ggplot(airquality) +
+  geom_pointrange(aes(x = factor(Month), y = Temp), stat = "summary", size = 2)
+```
+
+On the point of `geom_sf()`, the default line width is now 0.2 instead of 0.5:
+
+```{r}
+#| message: false
+#| warning: false
+library(sf)
+library(patchwork)
+tn <- leaidr::lea_get("tn")
+
+p1 <- tn %>% 
+  sf::st_as_sf() %>% 
+  ggplot() +
+  geom_sf(linewidth = 0.5) + 
+  ggtitle("Old default")
+
+p2 <- tn %>% 
+  sf::st_as_sf() %>% 
+  ggplot() +
+  geom_sf(linewidth = 0.2) + 
+  ggtitle("New default")
+
+p1/p2
+```
+The switch to `linewidth` goes beyond aesthetics and targets everything that used size to target line width.
 
 ## Learn more
 
