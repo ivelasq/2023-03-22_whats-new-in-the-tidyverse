@@ -175,7 +175,7 @@ fruit[str_like(fruit, "%apple")]
 fruit[str_like(fruit, "p__r")]
 ```
 
-## Learn more
+### Learn more
 
+* [tidyverse blog: stringr 1.5.0](https://www.tidyverse.org/blog/2022/12/stringr-1-5-0/)
 * [stringr release notes](https://stringr.tidyverse.org/news/index.html)
-* [stringr 1.5.0 tidyverse blog post](https://www.tidyverse.org/blog/2022/12/stringr-1-5-0/)
