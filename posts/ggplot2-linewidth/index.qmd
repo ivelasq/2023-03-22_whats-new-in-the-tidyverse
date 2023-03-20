@@ -9,15 +9,14 @@ description: "ggplot2 3.4.0 introduces a new linewidth aesthetic."
 date: 2022-11-04
 ---
 
-## What is new?
+Install ggplot2 3.4.0 with:
 
-ggplot 3.4.0 has been released. Install it with:
-
-```r
-install.packages("ggplot2")
+```{r}
+#| eval: false
+pak::pak("cran/ggplot2@3.4.0")
 ```
 
-### linewidth
+## linewidth
 
 `linewidth` will take over sizing of the width of lines - something that was  handled previously by `size`.
 
@@ -107,7 +106,7 @@ p1/p2
 ```
 The switch to `linewidth` goes beyond aesthetics and targets everything that used size to target line width.
 
-## Learn more
+### Learn more
 
 * [tidyverse blog: ggplot2 3.4.0](https://www.tidyverse.org/blog/2022/11/ggplot2-3-4-0/)
 * [ggplot2 release notes](https://ggplot2.tidyverse.org/news/index.html)
