@@ -6,7 +6,7 @@ categories:
 image: "ggplot-errors.png"
 image-alt: "Text that says error messages ggplot2. An image of a line plot with lines of varying widths."
 description: "ggplot2 3.4.0 has improved error messages when running plots."
-date: 2022-11-07
+date: 2022-11-04
 ---
 
 ```{r}

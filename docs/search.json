@@ -74,7 +74,7 @@
     "href": "index.html",
     "title": "What's new in the tidyverse",
     "section": "",
-    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidyverse 2.0.0\n\n\n\ntidyverse\n\n\n\ntidyverse 2.0.0 has been released!\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nError messages\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 has improved error messages when running plots.\n\n\n\n\n\n\nNov 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlinewidth\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 introduces a new linewidth aesthetic.\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidyverse 2.0.0\n\n\n\ntidyverse\n\n\n\ntidyverse 2.0.0 has been released!\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nError messages\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 has improved error messages when running plots.\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlinewidth\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 introduces a new linewidth aesthetic.\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
