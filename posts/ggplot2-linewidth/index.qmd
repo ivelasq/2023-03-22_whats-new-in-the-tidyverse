@@ -37,8 +37,7 @@ withr::with_libpaths(new = new_lib,
 ```
 
 ```{r}
-library(ggplot2,
-        lib.loc = new_lib)
+library(ggplot2, lib.loc = new_lib)
 
 ggplot(airquality) +
   geom_line(aes(Day, Temp, size = Month, group = Month)) +
