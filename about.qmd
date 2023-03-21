@@ -16,6 +16,13 @@ about:
       href: https://github.com/ivelasq
 ---
 
+See all the packages in the tidyverse:
+
+```{r}
+tidyverse::tidyverse_packages(include_self = TRUE)
+```
+
+
 Install the newest versions of packages using [pak](https://pak.r-lib.org/):
 
 ```{r}

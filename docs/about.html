@@ -190,9 +190,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
   </div>
 </header> <main class="content" id="quarto-document-content">
+<p>See all the packages in the tidyverse:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tidyverse<span class="sc">::</span><span class="fu">tidyverse_packages</span>(<span class="at">include_self =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "broom"         "conflicted"    "cli"           "dbplyr"       
+ [5] "dplyr"         "dtplyr"        "forcats"       "ggplot2"      
+ [9] "googledrive"   "googlesheets4" "haven"         "hms"          
+[13] "httr"          "jsonlite"      "lubridate"     "magrittr"     
+[17] "modelr"        "pillar"        "purrr"         "ragg"         
+[21] "readr"         "readxl"        "reprex"        "rlang"        
+[25] "rstudioapi"    "rvest"         "stringr"       "tibble"       
+[29] "tidyr"         "xml2"          "tidyverse"    </code></pre>
+</div>
+</div>
 <p>Install the newest versions of packages using <a href="https://pak.r-lib.org/">pak</a>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"dplyr"</span>, <span class="st">"tidyr"</span>, <span class="st">"stringr"</span>, <span class="st">"purrr"</span>, <span class="st">"ggplot2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"dplyr"</span>, <span class="st">"tidyr"</span>, <span class="st">"stringr"</span>, <span class="st">"purrr"</span>, <span class="st">"ggplot2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
