@@ -1,0 +1,96 @@
+---
+title: "Untitled"
+---
+
+Install purrr 1.0.0 with:
+
+```r
+pak::pak("cran/purrr@1.0.0")
+```
+
+## Breaking changes
+
+There are four important changes that you should be aware of:
+
+* `pluck()` behaves differently when extracting 0-length vectors.
+* The `map()` family uses the tidyverse rules for coercion and recycling.
+* All functions that modify lists handle `NULL` consistently.
+* We've deprecated functions that aren't related to the core purpose of purrr.
+
+### pluck() and zero-length vectors
+
+```{r}
+library(purrr)
+
+x <- list(y = list(a = character(), b = NULL))
+x
+```
+
+```{r}
+x %>% pluck("y", "a", .default = NA)
+```
+
+```{r}
+x |> pluck("y", "b", .default = NA)
+```
+
+```{r}
+x |> pluck("y", "c", .default = NA)
+```
+
+This also impacts `map_*`:
+
+```{r}
+x <- list(list(1), list(), list(NULL), list(character()))
+x
+
+x %>% map(1, .default = 0) %>% str()
+```
+
+purrr has a number of functions that modify a list: pluck<-(), assign_in(), modify(), modify2(), modify_if(), modify_at(), and list_modify(). Previously, these functions had inconsistent behaviour when you attempted to modify an element with NULL: some functions would delete that element, and some would set it to NULL
+
+```{r}
+x1 <- x2 <- x3 <- list(a = 1, b = 2)
+
+x1$a <- NULL
+str(x1)
+#> List of 1
+#>  $ b: num 2
+
+x2["a"] <- list(NULL)
+str(x2)
+#> List of 2
+#>  $ a: NULL
+#>  $ b: num 2
+
+```
+
+Now functions that edit a list will create an element containing NULL:
+
+x3 |> 
+  list_modify(a = NULL) |> 
+  str()
+#> List of 2
+#>  $ a: NULL
+#>  $ b: num 2
+
+x3 |> 
+  modify_at("b", \(x) NULL) |> 
+  str()
+#> List of 2
+#>  $ a: num 1
+#>  $ b: NULL
+
+
+x3 |> 
+  list_modify(a = zap()) |> 
+  str()
+#> List of 1
+#>  $ b: num 2
+```
+
+### Deprecations
+
+
+
+cross() and all its variants have been deprecated because they’re slow and buggy, and a better approach already exists in tidyr::expand_grid().
