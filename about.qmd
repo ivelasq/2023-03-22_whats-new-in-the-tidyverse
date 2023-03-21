@@ -1,6 +1,7 @@
 ---
-title: "About"
-image: profile.jpg
+title: "What's new in the tidyverse"
+subtitle: "2023-03-22 R-Ladies Rome Presentation"
+image: profile.png
 about:
   template: marquee
   links:

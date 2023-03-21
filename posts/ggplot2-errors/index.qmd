@@ -14,13 +14,11 @@ date: 2022-11-04
 library(dplyr)
 ```
 
+Install ggplot2 3.4.0 with:
 
-## What is new?
-
-ggplot 3.4.0 has been released. Install it with:
-
-```r
-install.packages("ggplot2")
+```{r}
+#| eval: false
+pak::pak("cran/ggplot2@3.4.0")
 ```
 
 ### Better error messages
