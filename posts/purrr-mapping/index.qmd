@@ -3,5 +3,12 @@ title: "Untitled"
 jupyter: python3
 ---
 
+Install tidyr 1.3.0 with:
+
+```{r}
+#| eval: false
+pak::pak("cran/purrr@1.0.0")
+```
+
 ## Progress bars
 
