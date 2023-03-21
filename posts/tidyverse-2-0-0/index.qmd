@@ -7,17 +7,14 @@ categories:
   - "tidyverse"
 description: tidyverse 2.0.0 has been released!
 engine: knitr
-format:
-    html: 
-      toc: true
 editor: source
 ---
 
-Install the latest version of the tidyverse with:
+Install tidyverse 2.0.0 with:
 
 ```{r}
 #| eval: false
-install.packages("tidyverse")
+pak::pak("cran/tidyverse@2.0.0")
 ```
 
 Load the tidyverse with:
@@ -29,7 +26,7 @@ library("tidyverse")
 Did you notice?
 
 <details><summary>Click to reveal!</summary>
-## Welcome to the core tidyverse
+## Welcome to the core tidyverse, lubridate!
 
 <center><bold>[lubridate](https://lubridate.tidyverse.org/)!</bold></center>
 <br>
