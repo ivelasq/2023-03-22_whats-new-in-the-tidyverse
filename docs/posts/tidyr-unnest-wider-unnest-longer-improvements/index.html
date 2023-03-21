@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2023-01-24">
+<meta name="description" content="unnest_longer() and unnest_wider() have received some quality of life and consistency improvements.">
 
-<title>What’s new in the tidyverse</title>
+<title>What’s new in the tidyverse - unnest_wider() and unnest_longer() improvements</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,20 +88,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -121,13 +124,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script>
 
 
-<meta name="twitter:title" content="What’s new in the tidyverse">
-<meta name="twitter:description" content="2023-03-22 R-Ladies Rome Presentation">
-<meta name="twitter:image" content="https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/profile.png">
+<meta name="twitter:title" content="What’s new in the tidyverse - unnest_wider() and unnest_longer() improvements">
+<meta name="twitter:description" content="`unnest_longer()` and `unnest_wider()` have received some quality of life and consistency improvements.">
+<meta name="twitter:image" content="https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/tidyr-unnest-wider-unnest-longer-improvements/tidyr-unnest-wider-unnest-longer-improvements.png">
 <meta name="twitter:creator" content="@ivelasq3">
 <meta name="twitter:site" content="@ivelasq3">
-<meta name="twitter:image-height" content="900">
-<meta name="twitter:image-width" content="1600">
+<meta name="twitter:image-height" content="200">
+<meta name="twitter:image-width" content="540">
+<meta name="twitter:image:alt" content="tidyr 1.3.0. Screenshot of text of an error from unnest_longer.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -138,7 +142,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">What’s new in the tidyverse</span>
     </a>
   </div>
@@ -148,11 +152,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">
+    <a class="nav-link" href="../../index.html">
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page">
+    <a class="nav-link" href="../../about.html">
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
@@ -177,44 +181,135 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     
 <!-- main -->
-<div class="quarto-about-marquee">
-  <div class="about-image-container">
-    <img src="profile.png" class="about-image " style="width: 100%;">
-  </div>
-  <div class="about-contents">
-    <header id="title-block-header" class="quarto-title-block default">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">What’s new in the tidyverse</h1>
-<p class="subtitle lead">2023-03-22 R-Ladies Rome Presentation</p>
+<h1 class="title"><code>unnest_wider()</code> and <code>unnest_longer()</code> improvements</h1>
+<p class="subtitle lead">tidyr 1.3.0</p>
+  <div class="quarto-categories">
+    <div class="quarto-category">tidyr</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    <code>unnest_longer()</code> and <code>unnest_wider()</code> have received some quality of life and consistency improvements.
+  </div>
 </div>
+
+
 <div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 24, 2023</p>
+    </div>
   </div>
-</header> <main class="content" id="quarto-document-content">
-<p>Install the newest versions of packages using <a href="https://pak.r-lib.org/">pak</a>:</p>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>Install tidyr 1.3.0 with:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="fu">c</span>(<span class="st">"tidyverse"</span>, <span class="st">"dplyr"</span>, <span class="st">"tidyr"</span>, <span class="st">"stringr"</span>, <span class="st">"purrr"</span>, <span class="st">"ggplot2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"cran/tidyr@1.3.0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="unnest_wider-and-unnest_longer-improvements" class="level2">
+<h2 class="anchored" data-anchor-id="unnest_wider-and-unnest_longer-improvements"><code>unnest_wider()</code> and <code>unnest_longer()</code> improvements</h2>
+<p><code>unnest_longer()</code> and <code>unnest_wider()</code> have received some quality of life and consistency improvements.</p>
+<p><code>unnest_wider()</code> now gives a better error when unnesting an unnamed vector:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+     id x        
+  &lt;int&gt; &lt;list&gt;   
+1     1 &lt;chr [2]&gt;
+2     2 &lt;chr [3]&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `unnest_wider()`:
+ℹ In column: `x`.
+ℹ In row: 1.
+Caused by error:
+! Can't unnest elements with missing names.
+ℹ Supply `names_sep` to generate automatic names.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(x, <span class="at">names_sep =</span> <span class="st">"_"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+     id x_1   x_2   x_3  
+  &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+1     1 a     b     &lt;NA&gt; 
+2     2 d     e     f    </code></pre>
+</div>
+</div>
+<p><code>unnest_longer()</code> has gained a <code>keep_empty</code> argument like <code>unnest()</code>, and it now treats <code>NULL</code> and empty vectors the same way:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">list</span>(<span class="cn">NULL</span>, <span class="fu">integer</span>(), <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>df </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+     id x        
+  &lt;int&gt; &lt;list&gt;   
+1     1 &lt;NULL&gt;   
+2     2 &lt;int [0]&gt;
+3     3 &lt;int [3]&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">unnest_longer</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+     id     x
+  &lt;int&gt; &lt;int&gt;
+1     3     1
+2     3     2
+3     3     3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">unnest_longer</span>(x, <span class="at">keep_empty =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+     id     x
+  &lt;int&gt; &lt;int&gt;
+1     1    NA
+2     2    NA
+3     3     1
+4     3     2
+5     3     3</code></pre>
+</div>
+</div>
+<section id="learn-more" class="level3">
+<h3 class="anchored" data-anchor-id="learn-more">Learn more</h3>
+<ul>
+<li><a href="https://www.tidyverse.org/blog/2023/01/tidyr-1-3-0/">tidyverse blog: 1.3.0</a></li>
+<li><a href="https://github.com/tidyverse/tidyr/releases/tag/v1.3.0">Release notes</a></li>
+</ul>
 
 
-</main> 
-    <div class="about-footer"><div class="about-links">
-  <a href="https://twitter.com/ivelasq3" class="about-link">
-    <i class="bi bi-twitter"></i>
-     <span class="about-link-text">Twitter</span>
-  </a>
-  <a href="https://linkedin.com/in/ivelasq" class="about-link">
-    <i class="bi bi-linkedin"></i>
-     <span class="about-link-text">LinkedIn</span>
-  </a>
-  <a href="https://github.com/ivelasq" class="about-link">
-    <i class="bi bi-github"></i>
-     <span class="about-link-text">Github</span>
-  </a>
-</div>
-</div>
-  </div>
-</div>
- <!-- /main -->
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -235,6 +330,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
   const clipboard = new window.ClipboardJS('.code-copy-button', {
     target: function(trigger) {
       return trigger.previousElementSibling;
