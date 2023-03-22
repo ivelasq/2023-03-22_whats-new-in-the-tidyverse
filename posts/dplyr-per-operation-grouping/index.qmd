@@ -103,6 +103,7 @@ Advantages:
 -   You never have to remember to `ungroup()`.
 -   You can use tidyselect for multiple columns, including unquoted column names or tidyselections like `.by = all_of(c(""))`.
 -   `summarise()` didn't emit a message about regrouping.
+-   Order doesn't matter (because you're not peeling off layers).
 -   You can place the grouping specification alongside the code that uses it, rather than in a separate group_by() line.
 
 Things to note:

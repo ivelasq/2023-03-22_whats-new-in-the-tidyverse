@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.2.335">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="dcterms.date" content="2023-01-29">
-<meta name="description" content="tidyverse 2.0.0 has been released!">
+<meta name="description" content="Introducing by/.by, an experimental grouping alternative to group_by().">
 <title>What’s new in the tidyverse - Per-operation grouping</title>
 <style>
 code{white-space: pre-wrap;}
@@ -178,7 +178,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div>
   <div class="description">
-    tidyverse 2.0.0 has been released!
+    Introducing by/.by, an experimental grouping alternative to group_by().
   </div>
 </div>
 
@@ -320,11 +320,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Advantages:</p>
 <ul>
 <li>You never have to remember to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>.</li>
-<li>You can use tidyselect for multiple columns.</li>
+<li>You can use tidyselect for multiple columns, including unquoted column names or tidyselections like <code>.by = all_of(c(""))</code>.</li>
 <li>
 <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> didn’t emit a message about regrouping.</li>
+<li>Order doesn’t matter (because you’re not peeling off layers).</li>
 <li>You can place the grouping specification alongside the code that uses it, rather than in a separate group_by() line.</li>
 </ul>
+<p>Things to note:</p>
+<ul>
+<li>
+<code>by/.by</code> is only for selection, it does not create columns.</li>
+<li>
+<code>by/.by</code> always returns an ungrouped data frame (so take note if you depend on grouped data frames with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>).</li>
+<li>With <code>by/.by</code>, you must create your grouping columns ahead of time.</li>
+<li>
+<code>.by</code> doesn’t sort grouping keys. <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> always sorts keys in ascending order, which affects the results of verbs like <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>.</li>
+</ul>
+<section id="where-did-this-come-from" class="level2"><h2 class="anchored" data-anchor-id="where-did-this-come-from">Where did this come from?</h2>
 <p><code>by/.by</code> was inspired by data.table!</p>
 <ul>
 <li>
@@ -367,14 +379,20 @@ dplyr 1.1.0.
 </div>
 </div>
 <p>Notice this is longer grouped by company on the way out. It does the <strong>one operation</strong> then drops off.</p>
-<section id="in-summary" class="level2"><h2 class="anchored" data-anchor-id="in-summary">In summary</h2>
+</section><section id="in-summary" class="level2"><h2 class="anchored" data-anchor-id="in-summary">In summary</h2>
 <ol type="1">
 <li>
 <code>by/.by</code> is per-operation grouping</li>
 <li>
 <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> is persistent grouping</li>
-</ol></section><div class="panel-dataset">
-<section id="before" class="level2"><h2 class="anchored" data-anchor-id="before">Before</h2>
+</ol>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Before</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">After</a></li>
+</ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -391,7 +409,8 @@ dplyr 1.1.0.
 </div>
 </div>
 </div>
-</section><section id="after" class="level2"><h2 class="anchored" data-anchor-id="after">After</h2>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -408,7 +427,8 @@ dplyr 1.1.0.
 </div>
 </div>
 </div>
-</section>
+</div>
+</div>
 </div>
 <section id="dplyr-verbs-that-support-by.by" class="level3"><h3 class="anchored" data-anchor-id="dplyr-verbs-that-support-by.by">dplyr verbs that support <code>by/.by</code>:</h3>
 <ul>
@@ -436,7 +456,6 @@ dplyr 1.1.0.
 ℹ Did you mean to use `by` instead?</code></pre>
 </div>
 </div>
-<p>use tidyselect unquoted column names inside <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> or starts-with .by = all_of(c(““)) by is just selection, does not create columns</p>
 <div class="cell">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">revenue</span>, n <span class="op">=</span> <span class="fl">2</span>, by <span class="op">=</span> <span class="va">company</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -450,7 +469,7 @@ dplyr 1.1.0.
 4 B        2023      12</code></pre>
 </div>
 </div>
-</section><section id="what-happens-to-group_by" class="level2"><h2 class="anchored" data-anchor-id="what-happens-to-group_by">What happens to group_by?</h2>
+</section></section><section id="what-happens-to-group_by" class="level2"><h2 class="anchored" data-anchor-id="what-happens-to-group_by">What happens to group_by?</h2>
 <p>It’s not going away! It is not deprecated or even superseded. Don’t feel pressure to use <code>by/.by</code>.</p>
 <section id="learn-more" class="level3"><h3 class="anchored" data-anchor-id="learn-more">Learn more</h3>
 <ul>
