@@ -240,7 +240,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <pre><code>Error: `NA` must be &lt;character&gt;, not &lt;logical&gt;.</code></pre>
-<p>In this case, you have to use <code>NA_character_</code> instead of <code>NA</code>.</p>
+<p>In this case, you had to use <code>NA_character_</code> instead of <code>NA</code>.</p>
 <p>But not anymore!</p>
 <p>In dplyr 1.1.0, the switch to vctrs means that the above code now “just works”:</p>
 <div class="cell">
@@ -287,13 +287,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="case_match"><code>case_match()</code></h2>
 <p>Sometimes, <code>case_when()</code> can be a bit repetitive:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"USA"</span>, <span class="st">"Canada"</span>, <span class="st">"Wales"</span>, <span class="st">"UK"</span>, <span class="st">"China"</span>, <span class="cn">NA</span>, <span class="st">"Mexico"</span>, <span class="st">"Russia"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">case_when</span>(</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"USA"</span>, <span class="st">"Canada"</span>, <span class="st">"Mexico"</span>) <span class="sc">~</span> <span class="st">"North America"</span>,</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Wales"</span>, <span class="st">"UK"</span>) <span class="sc">~</span> <span class="st">"Europe"</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%in%</span> <span class="st">"China"</span> <span class="sc">~</span> <span class="st">"Asia"</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"USA"</span>, <span class="st">"Canada"</span>, <span class="st">"Wales"</span>, <span class="st">"UK"</span>, <span class="st">"China"</span>, <span class="cn">NA</span>, <span class="st">"Mexico"</span>, <span class="st">"Russia"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">case_when</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"USA"</span>, <span class="st">"Canada"</span>, <span class="st">"Mexico"</span>) <span class="sc">~</span> <span class="st">"North America"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Wales"</span>, <span class="st">"UK"</span>) <span class="sc">~</span> <span class="st">"Europe"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">%in%</span> <span class="st">"China"</span> <span class="sc">~</span> <span class="st">"Asia"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "North America" "North America" "Europe"        "Europe"       
 [5] "Asia"          NA              "North America" NA             </code></pre>
@@ -376,9 +377,11 @@ Note
 10 Instead of...?                                                        Joey T…</code></pre>
 </div>
 </div>
+<p>What if we want to put the continuous dialogue together in one line?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>friends_dialogue <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> stringr<span class="sc">::</span><span class="fu">str_flatten</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.by =</span> speaker)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> stringr<span class="sc">::</span><span class="fu">str_flatten</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> speaker)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   speaker        text                                                           
@@ -389,7 +392,8 @@ Note
 4 Phoebe Buffay  Wait, does he eat chalk? Just, 'cause, I don't want her to go …</code></pre>
 </div>
 </div>
-<p>This smushes everything together - what if we want to keep the consecutive runs? Enter <code>consecutive_id()</code>!</p>
+<p>This smushes everything together - what if we want to keep the consecutive runs?</p>
+<p>Enter <code>consecutive_id()</code>!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>friends_dialogue <span class="sc">|&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">consecutive_id</span>(speaker))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -413,7 +417,8 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>friends_dialogue <span class="sc">|&gt;</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">consecutive_id</span>(speaker)) <span class="sc">|&gt;</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> stringr<span class="sc">::</span><span class="fu">str_flatten</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.by =</span> <span class="fu">c</span>(id, speaker))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> stringr<span class="sc">::</span><span class="fu">str_flatten</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>),</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(id, speaker))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 3
      id speaker        text                                                     

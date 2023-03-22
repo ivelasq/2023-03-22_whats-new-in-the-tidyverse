@@ -256,7 +256,7 @@ Click to reveal!
 <p>You may have noticed this message:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ℹ</span> Use the conflicted package to force all conflicts to become errors</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>tidyverse 2.0.0 now advertises the <a href="https://conflicted.r-lib.org/">conflicted package</a>.</p>
-<p>Packages can have conflicts (i.e., contain functions of the same name). Normally, the package loaded last “wins” and masks (overrides) the other function, resulting in confusing errors.</p>
+<p>Packages can have conflicts (i.e., contain functions of the same name). Normally, the package loaded last “wins” and masks (overrides) the other package’s function, resulting in confusing errors.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -273,7 +273,7 @@ Attaching package: 'MASS'</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (obj) 
 UseMethod("select")
-&lt;bytecode: 0x7ff5dff7e900&gt;
+&lt;bytecode: 0x7f99b46b93a0&gt;
 &lt;environment: namespace:MASS&gt;</code></pre>
 </div>
 </div>
@@ -301,7 +301,7 @@ Or declare a preference with `conflicts_prefer()`:
 </div>
 <p>Or, declare a preference with <code>conflicts_prefer()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(dplyr<span class="sc">::</span>filter)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">conflicts_prefer</span>(dplyr<span class="sc">::</span>select)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>That way you know there’s a problem and how to resolve it.</p>
 </section>

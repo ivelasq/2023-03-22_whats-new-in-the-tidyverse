@@ -252,27 +252,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="lifecycle-stages" class="level3">
 <h3 class="anchored" data-anchor-id="lifecycle-stages">Lifecycle stages</h3>
-<p>Learn about the lifecycle stages:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="lifecycle.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">A diagram showing the transitions between the four main stages: experimental can become stable and stable can become deprecated or superseded.</figcaption><p></p>
-</figure>
-</div>
+<p>Learn about the <a href="https://lifecycle.r-lib.org/articles/stages.html">lifecycle stages</a>:</p>
+<p><img src="lifecycle.svg" class="img-fluid" alt="A diagram showing the transitions between the four main stages: experimental can become stable and stable can become deprecated or superseded."> Example: <a href="https://dplyr.tidyverse.org/reference/recode.html">recode</a></p>
 </section>
 <section id="a-note-on-vctrs" class="level3">
 <h3 class="anchored" data-anchor-id="a-note-on-vctrs">A note on vctrs</h3>
-<p>Quite a few functions have been rewritten to use vctrs package behind the scenes:</p>
+<p>Quite a few functions have been rewritten to use <a href="https://vctrs.r-lib.org/">vctrs</a> package behind the scenes:</p>
 <ul>
 <li>dplyr’s <code>if_else()</code>, <code>first()</code>, <code>last()</code>, <code>nth()</code>, <code>coalesce()</code>, <code>between()</code>.</li>
 </ul>
-<p>The tidyverse team uses <a href="https://vctrs.r-lib.org/">vctrs</a> to keep recycling rules and coercion rules in one place.</p>
-<p>This doesn’t impact data scientists too much but it means more consistency and better error messages, bug fixes, and higher quality code.</p>
+<p>The tidyverse team uses vctrs to keep recycling rules and coercion rules in one place.</p>
+<p>This doesn’t impact data scientists too much but it means more consistency, better error messages, bug fixes, and higher quality code.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cn">NA</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">if_else</span>(x <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>, x, <span class="st">"x"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="cn">NA</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">if_else</span>(x <span class="sc">%%</span> <span class="dv">2</span> <span class="sc">==</span> <span class="dv">0</span>, x, <span class="st">"x"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in if_else(x%%2 == 0, x, "x"): could not find function "if_else"</code></pre>
+<pre><code>Error in `if_else()`:
+! Can't combine `true` &lt;integer&gt; and `false` &lt;character&gt;.</code></pre>
 </div>
 </div>
 </section>
