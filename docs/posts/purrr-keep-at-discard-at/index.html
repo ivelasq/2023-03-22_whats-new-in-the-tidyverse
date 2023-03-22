@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.2.335">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="dcterms.date" content="2022-12-20">
-<meta name="description" content="A new family of separate_*() functions supersedes separate(), separate_rows(), and extract().">
+<meta name="description" content="purrr has two new functions, keep_at() and discard_at(), that operate on names.">
 <title>What’s new in the tidyverse - keep_at() and discard_at()</title>
 <style>
 code{white-space: pre-wrap;}
@@ -180,7 +180,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div>
   <div class="description">
-    A new family of <code>separate_*()</code> functions supersedes <code>separate()</code>, <code>separate_rows()</code>, and <code>extract()</code>.
+    purrr has two new functions, keep_at() and discard_at(), that operate on names.
   </div>
 </div>
 
@@ -224,10 +224,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">keep</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-[1]  9  7  6 10  2
+[1]  9 10  3  6  5
 
 [[2]]
-[1] 10  6  7  4  9</code></pre>
+[1]  6 10  1  8  9</code></pre>
 </div>
 </div>
 </div>
@@ -238,25 +238,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span>  <span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html">discard</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
-[1]  7  3 10  2  5
+[1] 4 5 7 2 6
 
 [[2]]
-[1] 1 6 2 3 4
+[1] 9 7 3 1 8
 
 [[3]]
-[1] 6 1 5 8 3
+[1] 2 9 6 8 4
 
 [[4]]
-[1] 10  1  2  4  3
+[1] 2 4 5 7 6
 
 [[5]]
-[1] 9 1 2 5 8
+[1]  4  7 10  3  1
 
 [[6]]
-[1] 10  3  8  1  5
-
-[[7]]
-[1] 7 2 1 5 8</code></pre>
+[1] 6 5 2 4 7</code></pre>
 </div>
 </div>
 </div>

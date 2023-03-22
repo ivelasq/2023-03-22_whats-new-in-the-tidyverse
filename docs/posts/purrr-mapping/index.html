@@ -217,26 +217,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span>, .progress <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■                             15% |  ETA:  9s</code></pre>
+<pre><code> ■■■■■■■                           21% |  ETA:  8s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■■                    44% |  ETA:  6s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■■■                  50% |  ETA:  5s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■■■■■■■■■■■           73% |  ETA:  3s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■■■■■■■■■■■■         79% |  ETA:  2s</code></pre>
 </div>
 </div>
 <p>Set <code>.progress</code> to a string if you want to identify the progress bar (in this case, <code>.progress = "Saving plots"</code>).</p>
 <div class="cell">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.sleep.html">Sys.sleep</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span>, .progress <span class="op">=</span> <span class="st">"Waiting..."</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Waiting... ■■■■■■■■■■                        30% |  ETA:  7s</code></pre>
+<pre><code>Waiting... ■■■■■■■■■■■■                      37% |  ETA:  6s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Waiting... ■■■■■■■■■■■■■■■■■■■               59% |  ETA:  4s</code></pre>
+<pre><code>Waiting... ■■■■■■■■■■■■■■■■■■■■■             66% |  ETA:  3s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Waiting... ■■■■■■■■■■■■■■■■■■■■■■■■■■■       88% |  ETA:  1s</code></pre>
+<pre><code>Waiting... ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     95% |  ETA:  1s</code></pre>
 </div>
 </div>
 </section><section id="better-errors" class="level3"><h3 class="anchored" data-anchor-id="better-errors">Better errors</h3>
@@ -255,27 +255,24 @@ Caused by error in `x / 2`:
 </section></section><section id="map_vec" class="level2"><h2 class="anchored" data-anchor-id="map_vec"><code>map_vec()</code></h2>
 <p>The <code>map_*</code> family applies a function to each element of a list. We’ve had <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_int()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map.html">map_dbl()</a></code>, and <code><a href="https://purrr.tidyverse.org/reference/map.html">map_chr()</a></code>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, <span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># map always returns a list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
- [1]  2.6826057  1.6314088  0.5877358  0.3281883  1.4118076  0.2460912
- [7]  3.3178964  2.0437852  1.0673998 -0.6362567
+[1] 0.5
 
 [[2]]
- [1] 1.982024 2.079093 3.334697 1.970019 2.366811 1.919516 3.889422 2.137628
- [9] 2.614697 2.132098
+[1] 1
 
 [[3]]
- [1] 1.577695 2.984735 3.145692 3.346063 2.633627 1.688045 3.767580 4.363624
- [9] 4.375538 3.878823</code></pre>
+[1] 1.5</code></pre>
 </div>
 </div>
 <p>Now we have: <code><a href="https://purrr.tidyverse.org/reference/map.html">map_vec()</a></code>!</p>
 <p><code><a href="https://purrr.tidyverse.org/reference/map.html">map_vec()</a></code> is a generalized <code>map_*()</code> that works with an arbitrary types of vectors, like dates, factors, and date-times.</p>
 <div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_vec</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ISOdatetime.html">ISOdate</a></span><span class="op">(</span><span class="fl">2023</span>, <span class="fl">0</span> <span class="op">+</span> <span class="va">i</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_vec</a></span><span class="op">(</span>\<span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ISOdatetime.html">ISOdate</a></span><span class="op">(</span><span class="fl">2023</span>, <span class="fl">2</span> <span class="op">+</span> <span class="va">i</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "2023-01-05" "2023-02-05" "2023-03-05"</code></pre>
+<pre><code>[1] "2023-03-05" "2023-04-05" "2023-05-05"</code></pre>
 </div>
 </div>
 <p>It will error if you try to combine different types:</p>
@@ -289,6 +286,7 @@ Caused by error in `x / 2`:
 <section id="learn-more" class="level3"><h3 class="anchored" data-anchor-id="learn-more">Learn more</h3>
 <ul>
 <li><a href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">tidyverse blog: purrr 1.0.0</a></li>
+<li><a href="https://github.com/tidyverse/purrr/releases/tag/v1.0.0">purrr release notes</a></li>
 </ul>
 
 

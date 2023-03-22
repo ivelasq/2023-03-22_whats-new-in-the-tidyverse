@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.2.335">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="dcterms.date" content="2022-12-20">
-<meta name="description" content="A new family of separate_*() functions supersedes separate(), separate_rows(), and extract().">
+<meta name="description" content="There are four important changes in purrr 1.0.0.">
 <title>What’s new in the tidyverse - Breaking changes</title>
 <style>
 code{white-space: pre-wrap;}
@@ -180,7 +180,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div>
   <div class="description">
-    A new family of <code>separate_*()</code> functions supersedes <code>separate()</code>, <code>separate_rows()</code>, and <code>extract()</code>.
+    There are four important changes in purrr 1.0.0.
   </div>
 </div>
 
@@ -392,12 +392,12 @@ NULL</code></pre>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="op">{</span> <span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/cross.html">cross_df</a></span><span class="op">(</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 28.826   0.745 115.900 </code></pre>
+ 28.994   0.615  33.980 </code></pre>
 </div>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="op">{</span> <span class="va">x</span> <span class="op">|&gt;</span> <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html">expand_grid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.113   0.012   0.303 </code></pre>
+  0.111   0.006   0.118 </code></pre>
 </div>
 </div>
 </section><section id="update_list-rerun-and-the-use-of-tidyselect-with-map_at" class="level4 page-columns page-full"><h4 class="anchored" data-anchor-id="update_list-rerun-and-the-use-of-tidyselect-with-map_at">
