@@ -103,9 +103,18 @@ transactions |>
 Advantages:
 
 * You never have to remember to `ungroup()`.
-* You can use tidyselect for multiple columns.
+* You can use tidyselect for multiple columns, including unquoted column names or tidyselections like `.by = all_of(c(""))`.
 * `summarise()` didn’t emit a message about regrouping.
 * You can place the grouping specification alongside the code that uses it, rather than in a separate group_by() line.
+
+Things to note:
+
+* `by/.by` is only for selection, it does not create columns.
+* `by/.by` always returns an ungrouped data frame (so take note if you depend on grouped data frames with `group_by()`).
+* With `by/.by`, you must create your grouping columns ahead of time. 
+* `.by` doesn’t sort grouping keys. `group_by()` always sorts keys in ascending order, which affects the results of verbs like `summarize()`.
+
+## Where did this come from?
 
 `by/.by` was inspired by data.table!
 
@@ -129,33 +138,62 @@ transactions %>%
 
 Notice this is longer grouped by company on the way out. It does the **one operation** then drops off.
 
-1. .by is per-operation grouping
-2. group_by is persistent grouping
+## In summary
 
-bythe one operation (summarize) then drop off
-bare tibble -> transaction -> always get a bare tibble not a grouped data frame
+1. `by/.by` is per-operation grouping
+2. `group_by()` is persistent grouping
 
-- show lines with more calls (mutate)
+:::{.panel-tabset}
 
-use tidyselect unquoted column names inside `c()` or starts-with
-.by = all_of(c(""))
-by is just selection, does not create columns
+## Before
+
+```{mermaid}
+flowchart LR
+  A[Bare tibble] --> B(Transaction)
+  B --> C{Grouped data frame}
+```
+
+## After
+
+```{mermaid}
+flowchart LR
+  A[Bare tibble] --> B(Transaction)
+  B --> C[Bare tibble]
+```
+
+:::
+
+### dplyr verbs that support `by/.by`:
+
+* `mutate()`
+* `summarize()`
+* `reframe()`
+* `filter()`
+* `slice()`
+* `slide_head()` and `slice_tail()`
+* `slide_min()` and `slice_max()`
+* `slice_sample()`
+
+### `by` or `.by`?
+
+Some verbs use `.` prefix for their arguments and some don't. If you use the incorrect one, you will get an informative error:
+
+```{r}
+#| error: true
+transactions |>
+  slice_max(revenue, n = 2, .by = company)
+```
 
 ```{r}
 transactions %>% 
   slice_max(revenue, n = 2, by = company)
 ```
 
-mutate
-summarize
-filter
-slice_*
-
 ## What happens to group_by?
 
-It's not going away! It is not deprecated or even superseded.
+It's not going away! It is not deprecated or even superseded. Don't feel pressure to use `by/.by`.
 
-Learn more
+### Learn more
 
-* https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/
+* [tidyverse blog: dplyr 1.1.0: Per-operation grouping](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/)
 * [New features in dplyr 1.1.0, and an introduction to ivs](https://www.youtube.com/watch?v=9LAML4Nr1II&t=111s)
