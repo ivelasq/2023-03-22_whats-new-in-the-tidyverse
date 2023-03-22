@@ -6,22 +6,34 @@ categories:
 image: "ggplot-errors.png"
 image-alt: "Text that says error messages ggplot2. An image of a line plot with lines of varying widths."
 description: "ggplot2 3.4.0 has improved error messages when running plots."
-date: 2022-11-07
+date: 2022-11-04
 ---
 
-## What is ggplot2?
+```{r}
+#| include: false
+library(dplyr)
+```
 
-{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics.
+Install ggplot2 3.4.0 with:
 
-## What is new?
-
-ggplot 3.4.0 has been released. Install it with:
-
-```r
-install.packages("ggplot2")
+```{r}
+#| eval: false
+pak::pak("cran/ggplot2@3.4.0")
 ```
 
 ### Better error messages
+
+...with better wording + cli package's rich text formatting!
+
+```{r}
+#| error: true
+library(ggplot2)
+
+ggplot(mtcars) %>% 
+  geom_point(aes(mpg, disp))
+```
+
+ggplot2 error messages can be hard to diagonose because you get the error when you print the plot rather than when it happens in the code. This version tells you what the problem is, where it came from, and what to do about it.
 
 ```{r}
 #| error: true

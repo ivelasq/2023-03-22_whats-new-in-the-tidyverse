@@ -4,35 +4,49 @@
     "href": "posts/stringr-new-str-funs/index.html",
     "title": "New str_* functions",
     "section": "",
-    "text": "Install the latest version of stringr with:"
+    "text": "Install stringr 1.5.0 with:\nLoad the package with:"
   },
   {
-    "objectID": "posts/stringr-new-str-funs/index.html#comparing-strings",
-    "href": "posts/stringr-new-str-funs/index.html#comparing-strings",
+    "objectID": "posts/stringr-new-str-funs/index.html#new-str_-functions",
+    "href": "posts/stringr-new-str-funs/index.html#new-str_-functions",
     "title": "New str_* functions",
-    "section": "Comparing strings",
-    "text": "Comparing strings\n\nCompare two character vectors\n\nLoading webR..."
+    "section": "New str_* functions",
+    "text": "New str_* functions\n\nstr_view()\nstr_equal()\nstr_rank()\nstr_unique()\nstr_split_1()\nstr_split_i()\nstr_escape()\n\nstr_view()\nstr_view() lets you clearly see a string with special characters:\n\nx <- \"a\\n'\\b\\n\\\"c\"\nx\n\n[1] \"a\\n'\\b\\n\\\"c\"\n\n\n\n\nBase R\nstringr\n\n\n\nIn base R, you can use writeLines() to get a good look at the string:\n\nwriteLines(x)\n\na\n'\n\"c\n\n\n\n\nNow you can use str_view()!\n\nstr_view(x)\n\n[1] │ a\n    │ '\n    │ \"c\n\n\n\n\n\nstr_view() also highlights strings with special characters:\n\n\nWhite space\nTabs\n\n\n\n\nnbsp <- \"Hi\\u00A0you\"\nnbsp\n\n[1] \"Hi you\"\n\nnbsp == \"Hi you\"\n\n[1] FALSE\n\nstr_view(nbsp)\n\n[1] │ Hi{\\u00a0}you\n\n\n\n\n\ntab_space <- \"\\t\"\nstr_view(tab_space)\n\n[1] │ {\\t}\n\n\n\n\n\nFinally, str_view() makes matches stand out:\n\nstr_view(c(\"abc\", \"def\", \"fghi\"), \"[aeiou]\")\n\n[1] │ <a>bc\n[2] │ d<e>f\n[3] │ fgh<i>\n\nstr_view(c(\"abc\", \"def\", \"fghi\"), \".$\")\n\n[1] │ ab<c>\n[2] │ de<f>\n[3] │ fgh<i>\n\nstr_view(fruit, \"(.)\\\\1\")\n\n [1] │ a<pp>le\n [5] │ be<ll> pe<pp>er\n [6] │ bilbe<rr>y\n [7] │ blackbe<rr>y\n [8] │ blackcu<rr>ant\n [9] │ bl<oo>d orange\n[10] │ bluebe<rr>y\n[11] │ boysenbe<rr>y\n[16] │ che<rr>y\n[17] │ chili pe<pp>er\n[19] │ cloudbe<rr>y\n[21] │ cranbe<rr>y\n[23] │ cu<rr>ant\n[28] │ e<gg>plant\n[29] │ elderbe<rr>y\n[32] │ goji be<rr>y\n[33] │ g<oo>sebe<rr>y\n[38] │ hucklebe<rr>y\n[47] │ lych<ee>\n[50] │ mulbe<rr>y\n... and 9 more\n\n\nstr_equal()\nUse str_equal() to determine if two strings are equivalent:\n\nstr_equal(\"a\", \"A\")\n\n[1] FALSE\n\n\nYou have the option to ignore case:\n\nstr_equal(\"a\", \"A\", ignore_case = TRUE)\n\n[1] TRUE\n\n\n\na1 <- \"\\u00e1\"\na2 <- \"a\\u0301\"\nc(a1, a2)\n\n[1] \"á\" \"á\"\n\na1 == a2\n\n[1] FALSE\n\nstr_equal(a1, a2)\n\n[1] TRUE\n\n\nstr_rank()\n\nstr_rank(c(\"a\", \"c\", \"b\", \"b\"))\n\n[1] 1 4 2 2\n\nstr_order(c(\"a\", \"c\", \"b\", \"b\"))\n\n[1] 1 3 4 2\n\n\nstr_unique()\nstr_unique() returns unique values:\n\nstr_unique(c(\"a\", \"a\", \"A\"))\n\n[1] \"a\" \"A\"\n\n\nYou have the option to ignore case:\n\nstr_unique(c(\"a\", \"a\", \"A\"), ignore_case = TRUE)\n\n[1] \"a\"\n\n\nstr_split_1()\nstr_split_1() splits a single string. It returns a character vector, not a list:\n\n\nBefore 1.5.0\nAfter 1.5.0\n\n\n\n\nunlist(str_split(\"x-y-z\", \"-\"))\n\n[1] \"x\" \"y\" \"z\"\n\n\n\n\n\nstr_split_1(\"x-y-z\", \"-\")\n\n[1] \"x\" \"y\" \"z\"\n\n\n\n\n\nstr_split_1() errors if you try and give it multiple values:\nstr_split_i()\n\nx <- c(\"a-b-c\", \"d-e\", \"f-g-h-i\")\nstr_split_i(x, \"-\", 2)\n\n[1] \"b\" \"e\" \"g\"\n\nstr_split_i(x, \"-\", 4)\n\n[1] NA  NA  \"i\"\n\nstr_split_i(x, \"-\", -1)\n\n[1] \"c\" \"e\" \"i\"\n\n\nstr_like() works like str_detect() but uses SQL’s LIKE syntax:\n\nfruit <- c(\"apple\", \"banana\", \"pear\", \"pineapple\")\nfruit[str_like(fruit, \"%apple\")]\n\n[1] \"apple\"     \"pineapple\"\n\nfruit[str_like(fruit, \"p__r\")]\n\n[1] \"pear\"\n\n\nLearn more\n\ntidyverse blog: stringr 1.5.0\nstringr release notes"
+  },
+  {
+    "objectID": "posts/purrr-keep-at-discard-at/index.html",
+    "href": "posts/purrr-keep-at-discard-at/index.html",
+    "title": "\nkeep_at() and discard_at()\n",
+    "section": "",
+    "text": "Install purrr 1.0.0 with:\nLoad the package with:"
+  },
+  {
+    "objectID": "posts/purrr-keep-at-discard-at/index.html#keep_at-and-discard_at",
+    "href": "posts/purrr-keep-at-discard-at/index.html#keep_at-and-discard_at",
+    "title": "\nkeep_at() and discard_at()\n",
+    "section": "\nkeep_at() and discard_at()\n",
+    "text": "keep_at() and discard_at()\n\npurrr has two functions, keep() and discard(), that keep/discard elements by value:\n\n\nkeep()\ndiscard()\n\n\n\n\nrep(10, 10) |>\n  map(sample, 5) |>\n  keep(function(x) mean(x) > 6)\n\n[[1]]\n[1]  9 10  3  6  5\n\n[[2]]\n[1]  6 10  1  8  9\n\n\n\n\n\nrep(10, 10) |>\n  map(sample, 5) |>\n  discard(function(x) mean(x) > 6)\n\n[[1]]\n[1] 4 5 7 2 6\n\n[[2]]\n[1] 9 7 3 1 8\n\n[[3]]\n[1] 2 9 6 8 4\n\n[[4]]\n[1] 2 4 5 7 6\n\n[[5]]\n[1]  4  7 10  3  1\n\n[[6]]\n[1] 6 5 2 4 7\n\n\n\n\n\npurrr has two new functions, keep_at() and discard_at(), that work like keep() and discard() but operate on names rather than values:\n\nx <- list(a = 1, b = 2, c = 3, D = 4, E = 5)\n\nx |> \n  keep_at(c(\"a\", \"b\", \"c\")) |> \n  str()\n\nList of 3\n $ a: num 1\n $ b: num 2\n $ c: num 3\n\n\n\nx |> \n  discard_at(c(\"a\", \"b\", \"c\")) |> \n  str()\n\nList of 2\n $ D: num 4\n $ E: num 5\n\n\nOr, you can provide a logical vector\n\nis_lower_case <- function(x) x == tolower(x)\n\nx |> keep_at(is_lower_case)\n\n$a\n[1] 1\n\n$b\n[1] 2\n\n$c\n[1] 3\n\n\nLearn more\n\ntidyverse blog: purrr 1.0.0\npurrr release notes"
   },
   {
     "objectID": "posts/tidyverse-2-0-0/index.html",
     "href": "posts/tidyverse-2-0-0/index.html",
     "title": "tidyverse 2.0.0",
     "section": "",
-    "text": "Install the latest version of the tidyverse with:\nLoad the tidyverse with:\nDid you notice?"
+    "text": "Install tidyverse 2.0.0 with:\nLoad the tidyverse with:\nDid you notice?"
   },
   {
-    "objectID": "posts/tidyverse-2-0-0/index.html#welcome-to-the-core-tidyverse",
-    "href": "posts/tidyverse-2-0-0/index.html#welcome-to-the-core-tidyverse",
+    "objectID": "posts/tidyverse-2-0-0/index.html#welcome-to-the-core-tidyverse-lubridate",
+    "href": "posts/tidyverse-2-0-0/index.html#welcome-to-the-core-tidyverse-lubridate",
     "title": "tidyverse 2.0.0",
-    "section": "Welcome to the core tidyverse",
-    "text": "Welcome to the core tidyverse\n\nlubridate!\n\n\n\n\n\n lubridate is now part of the core tidyverse! Loading the tidyverse automatically attaches lubridate, meaning that you do not have load it separately."
+    "section": "Welcome to the core tidyverse, lubridate!",
+    "text": "Welcome to the core tidyverse, lubridate!\n\nlubridate!\n\n\n\n\n\n lubridate is now part of the core tidyverse! Loading the tidyverse automatically attaches lubridate, meaning that you do not have load it separately."
   },
   {
     "objectID": "posts/tidyverse-2-0-0/index.html#conflicted-package",
     "href": "posts/tidyverse-2-0-0/index.html#conflicted-package",
     "title": "tidyverse 2.0.0",
     "section": "conflicted package",
-    "text": "conflicted package\nYou may have noticed this message:\nℹ Use the conflicted package to force all conflicts to become errors\ntidyverse 2.0.0 now advertises the conflicted package.\nPackages can have conflicts (i.e., contain functions of the same name). Normally, the package loaded last “wins” and masks (overrides) the other function, resulting in confusing errors.\n\nlibrary(dplyr)\nlibrary(MASS)\n\n\nAttaching package: 'MASS'\n\n\nThe following object is masked from 'package:dplyr':\n\n    select\n\nselect\n\nfunction (obj) \nUseMethod(\"select\")\n<bytecode: 0x7fe2bf726d48>\n<environment: namespace:MASS>\n\n\nWith conflicted, you get an explicit error:\n\nlibrary(conflicted)\nlibrary(dplyr)\nlibrary(MASS)\n\nselect\n\nError:\n! [conflicted] select found in 2 packages.\nEither pick the one you want with `::`:\n• MASS::select\n• dplyr::select\nOr declare a preference with `conflicts_prefer()`:\n• `conflicts_prefer(MASS::select)`\n• `conflicts_prefer(dplyr::select)`\n\n\nIt asks you to either identify the namespace for each call:\n\ndplyr::select\n\nOr, declare a preference with conflicts_prefer():\n\nconflicts_prefer(dplyr::filter)\n\nThat way you know there’s a problem and how to resolve it."
+    "text": "conflicted package\nYou may have noticed this message:\nℹ Use the conflicted package to force all conflicts to become errors\ntidyverse 2.0.0 now advertises the conflicted package.\nPackages can have conflicts (i.e., contain functions of the same name). Normally, the package loaded last “wins” and masks (overrides) the other function, resulting in confusing errors.\n\nlibrary(dplyr)\nlibrary(MASS)\n\n\nAttaching package: 'MASS'\n\n\nThe following object is masked from 'package:dplyr':\n\n    select\n\nselect\n\nfunction (obj) \nUseMethod(\"select\")\n<bytecode: 0x7ff5dff7e900>\n<environment: namespace:MASS>\n\n\nWith conflicted, you get an explicit error:\n\nlibrary(conflicted)\nlibrary(dplyr)\nlibrary(MASS)\n\nselect\n\nError:\n! [conflicted] select found in 2 packages.\nEither pick the one you want with `::`:\n• MASS::select\n• dplyr::select\nOr declare a preference with `conflicts_prefer()`:\n• `conflicts_prefer(MASS::select)`\n• `conflicts_prefer(dplyr::select)`\n\n\nIt asks you to either identify the namespace for each call:\n\ndplyr::select\n\nOr, declare a preference with conflicts_prefer():\n\nconflicts_prefer(dplyr::filter)\n\nThat way you know there’s a problem and how to resolve it."
   },
   {
     "objectID": "posts/tidyverse-2-0-0/index.html#learn-more",
@@ -42,18 +56,67 @@
     "text": "Learn more\n\ntidyverse blog: tidyverse 2.0.0\ntidyverse release notes"
   },
   {
+    "objectID": "posts/dplyr-per-operation-grouping/index.html",
+    "href": "posts/dplyr-per-operation-grouping/index.html",
+    "title": "Per-operation grouping",
+    "section": "",
+    "text": "Install dplyr 1.1.0 with:\nLoad the package with:\nAdvantages:\nThings to note:"
+  },
+  {
+    "objectID": "posts/dplyr-per-operation-grouping/index.html#per-operation-grouping",
+    "href": "posts/dplyr-per-operation-grouping/index.html#per-operation-grouping",
+    "title": "Per-operation grouping",
+    "section": "Per-operation grouping",
+    "text": "Per-operation grouping\nby/.by is an experimental grouping alternative to group_by().\ngroup_by()\ngroup_by() provides persistent grouping (lasts for more than one operation) for data operations.\n\ntransactions <-\n  tibble::tribble(\n    ~company, ~year, ~revenue,\n         \"A\", 2019L,      20L,\n         \"A\", 2019L,      50L,\n         \"A\", 2020L,       4L,\n         \"B\", 2021L,      10L,\n         \"B\", 2023L,      12L,\n         \"B\", 2023L,      18L\n    )\n\nLet’s say you want revenue by company and year:\n\ntransactions |>\n  group_by(company, year) |>\n  mutate(total = sum(revenue))\n\n# A tibble: 6 × 4\n# Groups:   company, year [4]\n  company  year revenue total\n  <chr>   <int>   <int> <int>\n1 A        2019      20    70\n2 A        2019      50    70\n3 A        2020       4     4\n4 B        2021      10    10\n5 B        2023      12    30\n6 B        2023      18    30\n\n\nNotice the message that says Groups: company, year [4].\nIf you want only the total yearly revenue of each company, you can use summarize() which peels off a layer of grouping by default:\n\ntransactions %>% \n  group_by(company, year) %>% \n  summarize(revenue = sum(revenue))\n\n# A tibble: 4 × 3\n# Groups:   company [2]\n  company  year revenue\n  <chr>   <int>   <int>\n1 A        2019      70\n2 A        2020       4\n3 B        2021      10\n4 B        2023      30\n\n\n(Year is removed as a group).\nWhat if you didn’t want groups anymore?"
+  },
+  {
+    "objectID": "posts/dplyr-per-operation-grouping/index.html#before-ungroup",
+    "href": "posts/dplyr-per-operation-grouping/index.html#before-ungroup",
+    "title": "Per-operation grouping",
+    "section": "Before: ungroup()\n",
+    "text": "Before: ungroup()\n\n\ntransactions %>% \n  group_by(company, year,) %>% \n  summarize(revenue = sum(revenue)) %>% \n  ungroup()\n\n`summarise()` has grouped output by 'company'. You can override using the\n`.groups` argument.\n\n\n# A tibble: 4 × 3\n  company  year revenue\n  <chr>   <int>   <int>\n1 A        2019      70\n2 A        2020       4\n3 B        2021      10\n4 B        2023      30"
+  },
+  {
+    "objectID": "posts/dplyr-per-operation-grouping/index.html#before-.groups-drop",
+    "href": "posts/dplyr-per-operation-grouping/index.html#before-.groups-drop",
+    "title": "Per-operation grouping",
+    "section": "Before: .groups = \"drop\"\n",
+    "text": "Before: .groups = \"drop\"\n\n\ntransactions %>% \n  group_by(company, year,) %>% \n  summarize(revenue = sum(revenue),\n            .groups = \"drop\")\n\n# A tibble: 4 × 3\n  company  year revenue\n  <chr>   <int>   <int>\n1 A        2019      70\n2 A        2020       4\n3 B        2021      10\n4 B        2023      30"
+  },
+  {
+    "objectID": "posts/dplyr-per-operation-grouping/index.html#now-by.by",
+    "href": "posts/dplyr-per-operation-grouping/index.html#now-by.by",
+    "title": "Per-operation grouping",
+    "section": "Now: by/.by\n",
+    "text": "Now: by/.by\n\nby/.by introduces the idea of per-operation grouping:\n\ntransactions |>\n  mutate(total = sum(revenue), .by = c(company, year))\n\n# A tibble: 6 × 4\n  company  year revenue total\n  <chr>   <int>   <int> <int>\n1 A        2019      20    70\n2 A        2019      50    70\n3 A        2020       4     4\n4 B        2021      10    10\n5 B        2023      12    30\n6 B        2023      18    30"
+  },
+  {
+    "objectID": "posts/dplyr-per-operation-grouping/index.html#where-did-this-come-from",
+    "href": "posts/dplyr-per-operation-grouping/index.html#where-did-this-come-from",
+    "title": "Per-operation grouping",
+    "section": "Where did this come from?",
+    "text": "Where did this come from?\nby/.by was inspired by data.table!\n\n\nby is specified alongside what you want to group &\nYou start with a bare data table and then do this and end up with a bare data table, rather than having a grouped data frame like in dplyr.\n\n\ntransactions[, .(revenue = sum(revenue)), by = .(company, year)]\n\nThis raised the question, what if you can put it in line with your summarize call?\n\ntransactions %>% \n  summarize(\n    revenue = sum(revenue), \n    by = c(company, year)\n    )\n\nWarning: Returning more (or less) than 1 row per `summarise()` group was deprecated in\ndplyr 1.1.0.\nℹ Please use `reframe()` instead.\nℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`\n  always returns an ungrouped data frame and adjust accordingly.\n\n\n# A tibble: 12 × 2\n   revenue by   \n     <int> <chr>\n 1     114 A    \n 2     114 A    \n 3     114 A    \n 4     114 B    \n 5     114 B    \n 6     114 B    \n 7     114 2019 \n 8     114 2019 \n 9     114 2020 \n10     114 2021 \n11     114 2023 \n12     114 2023 \n\n\nNotice this is longer grouped by company on the way out. It does the one operation then drops off."
+  },
+  {
+    "objectID": "posts/dplyr-per-operation-grouping/index.html#in-summary",
+    "href": "posts/dplyr-per-operation-grouping/index.html#in-summary",
+    "title": "Per-operation grouping",
+    "section": "In summary",
+    "text": "In summary\n\n\nby/.by is per-operation grouping\n\ngroup_by() is persistent grouping\n\n\n\nBefore\nAfter\n\n\n\n\n\n\n\n\nflowchart LR\n  A[Bare tibble] --> B(Transaction)\n  B --> C{Grouped data frame}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart LR\n  A[Bare tibble] --> B(Transaction)\n  B --> C[Bare tibble]\n\n\n\n\n\n\n\n\n\n\n\ndplyr verbs that support by/.by:\n\nmutate()\nsummarize()\nreframe()\nfilter()\nslice()\n\nslide_head() and slice_tail()\n\n\nslide_min() and slice_max()\n\nslice_sample()\n\nby or .by?\nSome verbs use . prefix for their arguments and some don’t. If you use the incorrect one, you will get an informative error:\n\ntransactions |>\n  slice_max(revenue, n = 2, .by = company)\n\nError in `slice_max()`:\n! Can't specify an argument named `.by` in this verb.\nℹ Did you mean to use `by` instead?\n\n\n\ntransactions %>% \n  slice_max(revenue, n = 2, by = company)\n\n# A tibble: 4 × 3\n  company  year revenue\n  <chr>   <int>   <int>\n1 A        2019      50\n2 A        2019      20\n3 B        2023      18\n4 B        2023      12"
+  },
+  {
+    "objectID": "posts/dplyr-per-operation-grouping/index.html#what-happens-to-group_by",
+    "href": "posts/dplyr-per-operation-grouping/index.html#what-happens-to-group_by",
+    "title": "Per-operation grouping",
+    "section": "What happens to group_by?",
+    "text": "What happens to group_by?\nIt’s not going away! It is not deprecated or even superseded. Don’t feel pressure to use by/.by.\nLearn more\n\ntidyverse blog: dplyr 1.1.0: Per-operation grouping\nNew features in dplyr 1.1.0, and an introduction to ivs"
+  },
+  {
     "objectID": "posts/ggplot2-errors/index.html",
     "href": "posts/ggplot2-errors/index.html",
     "title": "Error messages",
     "section": "",
-    "text": "{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics."
-  },
-  {
-    "objectID": "posts/ggplot2-errors/index.html#what-is-new",
-    "href": "posts/ggplot2-errors/index.html#what-is-new",
-    "title": "Error messages",
-    "section": "What is new?",
-    "text": "What is new?\nggplot 3.4.0 has been released. Install it with:\ninstall.packages(\"ggplot2\")\n\nBetter error messages\n\nlibrary(ggplot2)\nlibrary(dplyr)\n\nmtcars %>% \n  ggplot(aes(x = cyl, y = hp)) +\n  geom_bar()\n\nError in `geom_bar()`:\n! Problem while computing stat.\nℹ Error occurred in the 1st layer.\nCaused by error in `setup_params()`:\n! `stat_count()` must only have an x or y aesthetic."
+    "text": "Install ggplot2 3.4.0 with:"
   },
   {
     "objectID": "posts/ggplot2-errors/index.html#learn-more",
@@ -63,45 +126,170 @@
     "text": "Learn more\n\ntidyverse blog: ggplot 3.4.0\ntidyverse release notes"
   },
   {
+    "objectID": "posts/dplyr-arrange/index.html",
+    "href": "posts/dplyr-arrange/index.html",
+    "title": "pick(), reframe(), and arrange()",
+    "section": "",
+    "text": "Install dplyr 1.1.0 with:\nLoad the package with:"
+  },
+  {
+    "objectID": "posts/dplyr-arrange/index.html#pick",
+    "href": "posts/dplyr-arrange/index.html#pick",
+    "title": "pick(), reframe(), and arrange()",
+    "section": "pick()",
+    "text": "pick()\nYou may have used across() for column selection while working inside a data-masking function like mutate() or summarize().\n\ndf <- tibble(\n  x_1 = c(1, 3, 2, 1, 2), \n  x_2 = 6:10, \n  w_4 = 11:15, \n  y_2 = c(5, 2, 4, 0, 6)\n)\n\ndf\n\n# A tibble: 5 × 4\n    x_1   x_2   w_4   y_2\n  <dbl> <int> <int> <dbl>\n1     1     6    11     5\n2     3     7    12     2\n3     2     8    13     4\n4     1     9    14     0\n5     2    10    15     6\n\ndf |>\n  summarise(\n    n_x = ncol(across(starts_with(\"x\"))),\n    n_y = ncol(across(starts_with(\"y\")))\n  )\n\n# A tibble: 1 × 2\n    n_x   n_y\n  <int> <int>\n1     2     1\n\n\nBut, across() is meant to apply functions to columns, not select them. dplyr 1.1.0 provides a new function for this function :), called pick():\n\ndf |>\n  summarise(\n    n_x = ncol(pick(starts_with(\"x\"))),\n    n_y = ncol(pick(starts_with(\"y\")))\n  )\n\n# A tibble: 1 × 2\n    n_x   n_y\n  <int> <int>\n1     2     1\n\n\nacross() still works without functions for now, but the tidyverse team plans to deprecate it in the future."
+  },
+  {
+    "objectID": "posts/dplyr-arrange/index.html#reframe",
+    "href": "posts/dplyr-arrange/index.html#reframe",
+    "title": "pick(), reframe(), and arrange()",
+    "section": "reframe()",
+    "text": "reframe()\ndplyr 1.0.0 introduces a powerful new feature: summarise() could return per-group results of any length:\n\ntable <- c(\"a\", \"b\", \"d\", \"f\")\n\ndf <- tibble(\n  g = c(1, 1, 1, 2, 2, 2, 2),\n  x = c(\"e\", \"a\", \"b\", \"c\", \"f\", \"d\", \"a\")\n)\n\ndf |>\n  summarise(x = intersect(x, table), .by = g)\n\nWarning: Returning more (or less) than 1 row per `summarise()` group was deprecated in\ndplyr 1.1.0.\nℹ Please use `reframe()` instead.\nℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`\n  always returns an ungrouped data frame and adjust accordingly.\n\n\n# A tibble: 5 × 2\n      g x    \n  <dbl> <chr>\n1     1 a    \n2     1 b    \n3     2 f    \n4     2 d    \n5     2 a    \n\n\nHowever, this raised some concerns.\n\nIncreases the chance for accidental bugs\nIs against the spirit of a “summary,” which implies 1 row per group\nMakes translation to dbplyr very difficult\n\nThis feature has been walked back and summarize will throw a warning when either 0 or >1 rows are returned per group.\nAs its replacement, welcome new function reframe()!\nThink of reframe() as: “do something to each group”.\n\ndf |>\n  reframe(x = intersect(x, table), .by = g)\n\n# A tibble: 5 × 2\n      g x    \n  <dbl> <chr>\n1     1 a    \n2     1 b    \n3     2 f    \n4     2 d    \n5     2 a    \n\n\nreframe() always returns an ungrouped data frame (i.e., not a grouped data frame even if the input was grouped)."
+  },
+  {
+    "objectID": "posts/dplyr-arrange/index.html#arrange",
+    "href": "posts/dplyr-arrange/index.html#arrange",
+    "title": "pick(), reframe(), and arrange()",
+    "section": "arrange()",
+    "text": "arrange()\nWhen sorting character vectors, the C locale is now the default, rather than the system locale. This makes dplyr wayyy faster at sorting character variables.\n\nlibrary(withr)\nlibrary(dplyr)\n\ndf <- tibble(x = stringi::stri_rand_strings(n = 5e5, length = 15))\n\nwithr::with_options(list(dplyr.legacy_locale = TRUE),\n                    {\n                      bench::system_time(df %>% arrange(x))\n                    })\n\nprocess    real \n  4.59s   4.95s \n\nbench::system_time(df %>% arrange(x))\n\nprocess    real \n  332ms   356ms \n\n\nThere is a new .locale argument for you to explicitly request an alternative locale using a stringi locale identifier (like “en” for English, or “fr” for French).\n\nbench::system_time(df %>% arrange(x, locale = \"fr\"))\n\nprocess    real \n  385ms   427ms"
+  },
+  {
+    "objectID": "posts/dplyr-arrange/index.html#learn-more",
+    "href": "posts/dplyr-arrange/index.html#learn-more",
+    "title": "pick(), reframe(), and arrange()",
+    "section": "Learn more",
+    "text": "Learn more\n\ntidyverse blog: dplyr 1.1.0: pick(), reframe(), and arrange()\ndplyr release notes\nNew features in dplyr 1.1.0, and an introduction to ivs"
+  },
+  {
+    "objectID": "posts/purrr-mapping/index.html",
+    "href": "posts/purrr-mapping/index.html",
+    "title": "Mapping",
+    "section": "",
+    "text": "Install purrr 1.0.0 with:\nLoad the package with:"
+  },
+  {
+    "objectID": "posts/purrr-mapping/index.html#mapping",
+    "href": "posts/purrr-mapping/index.html#mapping",
+    "title": "Mapping",
+    "section": "Mapping",
+    "text": "Mapping\nThere are three big new mapping features in purrr 1.0.0:\n\nProgress bars!\nBetter errors\nA new map_* family member: map_vec().\n\nProgress bars\nSee a progress bar for long running jobs using .progress = TRUE:\n\nx <- map(1:100, \\(x) Sys.sleep(0.1), .progress = TRUE)\n\n ■■■■■■■                           21% |  ETA:  8s\n\n\n ■■■■■■■■■■■■■■■■                  50% |  ETA:  5s\n\n\n ■■■■■■■■■■■■■■■■■■■■■■■■■         79% |  ETA:  2s\n\n\nSet .progress to a string if you want to identify the progress bar (in this case, .progress = \"Saving plots\").\n\nx <- map(1:100, \\(x) Sys.sleep(0.1), .progress = \"Waiting...\")\n\nWaiting... ■■■■■■■■■■■■                      37% |  ETA:  6s\n\n\nWaiting... ■■■■■■■■■■■■■■■■■■■■■             66% |  ETA:  3s\n\n\nWaiting... ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     95% |  ETA:  1s\n\n\nBetter errors\nmap() and friends now tell you which element caused the problem in the function you mapped.\nIn this case, we have a list with two numeric and one character value. When we try to divide it by 2 using map(), we get an error telling us there’s an issue with index 3 (\"a\").\n\nx <- list(10, 5, \"a\")\nx |> map(\\(x) x / 2)\n\nError in `map()`:\nℹ In index: 3.\nCaused by error in `x / 2`:\n! non-numeric argument to binary operator"
+  },
+  {
+    "objectID": "posts/purrr-mapping/index.html#map_vec",
+    "href": "posts/purrr-mapping/index.html#map_vec",
+    "title": "Mapping",
+    "section": "map_vec()",
+    "text": "map_vec()\nThe map_* family applies a function to each element of a list. We’ve had map(), map_lgl(), map_int(), map_dbl(), and map_chr().\n\n1:3 |> map(\\(x) x / 2) # map always returns a list\n\n[[1]]\n[1] 0.5\n\n[[2]]\n[1] 1\n\n[[3]]\n[1] 1.5\n\n\nNow we have: map_vec()!\nmap_vec() is a generalized map_*() that works with an arbitrary types of vectors, like dates, factors, and date-times.\n\n1:3 |> map_vec(\\(i) as.Date(ISOdate(2023, 2 + i, 5)))\n\n[1] \"2023-03-05\" \"2023-04-05\" \"2023-05-05\"\n\n\nIt will error if you try to combine different types:\n\nlist(\"a\", 1) |> map_vec(identity)\n\nError in `map_vec()`:\n! Can't combine `<list>[[1]]` <character> and `<list>[[2]]` <double>.\n\n\nLearn more\n\ntidyverse blog: purrr 1.0.0\npurrr release notes"
+  },
+  {
+    "objectID": "posts/purrr-flattening-simplification/index.html",
+    "href": "posts/purrr-flattening-simplification/index.html",
+    "title": "Flattening and simplification",
+    "section": "",
+    "text": "Install purrr 1.0.0 with:\nLoad the package with:"
+  },
+  {
+    "objectID": "posts/purrr-flattening-simplification/index.html#flattening",
+    "href": "posts/purrr-flattening-simplification/index.html#flattening",
+    "title": "Flattening and simplification",
+    "section": "Flattening",
+    "text": "Flattening\nlist_flatten() removes one layer of hierarchy from a list:\n\nx <- list(1, list(2, list(3, 4), 5))\nx |> str()\n\nList of 2\n $ : num 1\n $ :List of 3\n  ..$ : num 2\n  ..$ :List of 2\n  .. ..$ : num 3\n  .. ..$ : num 4\n  ..$ : num 5\n\n\n\nx |> list_flatten() |> str()\n\nList of 4\n $ : num 1\n $ : num 2\n $ :List of 2\n  ..$ : num 3\n  ..$ : num 4\n $ : num 5\n\n\n\nx |> list_flatten() |> list_flatten() |> str()\n\nList of 5\n $ : num 1\n $ : num 2\n $ : num 3\n $ : num 4\n $ : num 5\n\n\nlist_flatten() always returns a list; once a list is as flat as it can get (i.e. none of its children contain lists), it leaves the input unchanged.\n\nx |> list_flatten() |> list_flatten() |> list_flatten() |> str()\n\nList of 5\n $ : num 1\n $ : num 2\n $ : num 3\n $ : num 4\n $ : num 5"
+  },
+  {
+    "objectID": "posts/purrr-flattening-simplification/index.html#simplification",
+    "href": "posts/purrr-flattening-simplification/index.html#simplification",
+    "title": "Flattening and simplification",
+    "section": "Simplification",
+    "text": "Simplification\nlist_simplify() maintains the length of the input, but produces a simpler type:\n\nx <- list(1, 2, 3)\ntypeof(x)\n\n[1] \"list\"\n\n\n\ny <-\n  x |> list_simplify()\n\ny\n\n[1] 1 2 3\n\ntypeof(y)\n\n[1] \"double\"\n\n\nA few rules for list_simplify():\n\nIt will only succeed if every element has length 1\n\n\nlist_simplify(list(1, 2, 3:4))\n\nError in `list_simplify()`:\n! `x[[3]]` must have size 1, not size 2.\n\n\n\nAll the components must be compatible\n\n\nlist_simplify(list(1, 2, \"a\"))\n\nError in `list_simplify()`:\n! Can't combine `<list>[[1]]` <double> and `<list>[[3]]` <character>.\n\n\nIf you need to simplify if it’s possible, but otherwise leave the input unchanged, use strict = FALSE:\n\nlist_simplify(list(1, 2, \"a\"), strict = FALSE)\n\n[[1]]\n[1] 1\n\n[[2]]\n[1] 2\n\n[[3]]\n[1] \"a\"\n\n\nIf you want to be specific about the type you want, list_simplify() can take the same prototype argument as map_vec():\n\nlist(1, 2, 3) |> list_simplify(ptype = integer())\n\n[1] 1 2 3"
+  },
+  {
+    "objectID": "posts/purrr-flattening-simplification/index.html#concatenation",
+    "href": "posts/purrr-flattening-simplification/index.html#concatenation",
+    "title": "Flattening and simplification",
+    "section": "Concatenation",
+    "text": "Concatenation\nmap_dfr() and map_dfc() (and the map2 and pmap) variants are superseded. Consider switching to an explicit call to list_rbind() or list_cbind() instead:\n\n\nBefore\nAfter\n\n\n\n\npaths |> map_dfr(read_csv, .id = \"path\")\n\n\n\n\npaths |> \n  map(read_csv) |> \n  list_rbind(names_to = \"path\")\n\n\n\n\nLearn more\n\ntidyverse blog: purrr 1.0.0\npurrr release notes"
+  },
+  {
     "objectID": "posts/ggplot2-linewidth/index.html",
     "href": "posts/ggplot2-linewidth/index.html",
     "title": "linewidth",
     "section": "",
-    "text": "{ggplot2} is a system for creating elegant graphics based on The Grammar of Graphics."
+    "text": "Install ggplot2 3.4.0 with:"
   },
   {
-    "objectID": "posts/ggplot2-linewidth/index.html#what-is-new",
-    "href": "posts/ggplot2-linewidth/index.html#what-is-new",
+    "objectID": "posts/ggplot2-linewidth/index.html#linewidth",
+    "href": "posts/ggplot2-linewidth/index.html#linewidth",
     "title": "linewidth",
-    "section": "What is new?",
-    "text": "What is new?\nggplot 3.4.0 has been released. Install it with:\ninstall.packages(\"ggplot2\")\nlinewidth will take over sizing of the width of lines - something that was handled previously by size.\n\nBeforeAfter\n\n\n\nlibrary(ggplot2,\n        lib.loc = new_lib)\n\nggplot(airquality) +\n  geom_line(aes(Day, Temp, size = Month, group = Month)) +\n  scale_size(range = c(0.5, 3))\n\n\n\n\n\n\n\nlibrary(ggplot2)\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, linewidth = Month, group = Month)) + \n  scale_linewidth(range = c(0.5, 3))\n\n\n\n\n\n\n\nYou will get a deprecation message if you try to use size when you should be using linewidth.\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, size = Month, group = Month)) + \n  scale_size(range = c(0.5, 3))\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead."
+    "section": "linewidth",
+    "text": "linewidth\nlinewidth will take over sizing of the width of lines - something that was handled previously by size.\n\n\nBefore\nAfter\n\n\n\n\nlibrary(ggplot2, lib.loc = new_lib)\n\nggplot(airquality) +\n  geom_line(aes(Day, Temp, size = Month, group = Month)) +\n  scale_size(range = c(0.5, 3))\n\n\n\n\n\n\n\nlibrary(ggplot2)\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, linewidth = Month, group = Month)) + \n  scale_linewidth(range = c(0.5, 3))\n\n\n\n\n\n\n\nYou will get a deprecation message if you try to use size when you should be using linewidth.\n\nggplot(airquality) + \n  geom_line(aes(Day, Temp, size = Month, group = Month)) + \n  scale_size(range = c(0.5, 3))\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n\n\n\n\n\nWhen size is a valid aesthetic like geom_sf() or geom_pointrange(), you will not get a deprecation warning.\n\nggplot(airquality) +\n  geom_pointrange(aes(x = factor(Month), y = Temp), stat = \"summary\", size = 2)\n\nNo summary function supplied, defaulting to `mean_se()`\n\n\n\n\n\nOn the point of geom_sf(), the default line width is now 0.2 instead of 0.5:\n\nlibrary(sf)\nlibrary(patchwork)\ntn <- leaidr::lea_get(\"tn\")\n\nOGR data source with driver: ESRI Shapefile \nSource: \"/private/var/folders/pj/nmg9b8_93dq4kwt8nt2d4cj40000gn/T/RtmphQMPaE/47\", layer: \"47\"\nwith 158 features\nIt has 18 fields\n\np1 <- tn %>% \n  sf::st_as_sf() %>% \n  ggplot() +\n  geom_sf(linewidth = 0.5) + \n  ggtitle(\"Old default\")\n\np2 <- tn %>% \n  sf::st_as_sf() %>% \n  ggplot() +\n  geom_sf(linewidth = 0.2) + \n  ggtitle(\"New default\")\n\np1/p2\n\n\n\n\nThe switch to linewidth goes beyond aesthetics and targets everything that used size to target line width.\nLearn more\n\ntidyverse blog: ggplot2 3.4.0\nggplot2 release notes"
   },
   {
-    "objectID": "posts/ggplot2-linewidth/index.html#learn-more",
-    "href": "posts/ggplot2-linewidth/index.html#learn-more",
-    "title": "linewidth",
-    "section": "Learn more",
-    "text": "Learn more\n\ntidyverse blog: ggplot2 3.4.0\nggplot2 release notes"
+    "objectID": "posts/tidyr-separate-family/index.html",
+    "href": "posts/tidyr-separate-family/index.html",
+    "title": "New separate_* functions\n",
+    "section": "",
+    "text": "Install tidyr 1.3.0 with:"
+  },
+  {
+    "objectID": "posts/tidyr-separate-family/index.html#separate_-family-of-functions",
+    "href": "posts/tidyr-separate-family/index.html#separate_-family-of-functions",
+    "title": "New separate_* functions\n",
+    "section": "\nseparate_*() family of functions",
+    "text": "separate_*() family of functions\nA new family of separate_*() functions supersedes separate(), separate_rows(), and extract().\n\n\nBefore\nAfter\n\n\n\n\n\n\n\n\n\n\n\nMake columns\nMake rows\n\n\n\nSeparate with delimiter\nseparate(sep = string)\nseparate_rows()\n\n\nSeparate by position\nseparate(sep = integer_vector\nN/A\n\n\nSeparate with regular expression\nextract()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMake columns\nMake rows\n\n\n\nSeparate with delimiter\nseparate_wider_delim()\nseparate_longer_delim()\n\n\nSeparate by position\nseparate_wider_position()\nseparate_longer_position()\n\n\nSeparate with regular expression\nseparate_wider_regex()\n\n\n\n\n\n\n\nLet’s grab some data from the tidyhydat package. The Date column is made up of a date in YYYY-MM-DD format and time in HH:MM:SS format:\n\nlibrary(tidyhydat)\nlibrary(tidyr)\nlibrary(dplyr)\n\nstation <-\n  realtime_dd(station_number = c(\"01CD005\", \"08MF005\"))\n\nstation\n\n  Queried on: 2023-03-22 03:31:40 (UTC)\n  Date range: 2023-02-20 to 2023-03-22 \n# A tibble: 34,144 × 8\n   STATION_NUMBER PROV_TE…¹ Date                Param…² Value Grade Symbol Code \n   <chr>          <chr>     <dttm>              <chr>   <dbl> <chr> <chr>  <chr>\n 1 01CD005        PE        2023-02-20 04:00:00 Flow    0.31  <NA>  <NA>   1    \n 2 01CD005        PE        2023-02-20 04:05:00 Flow    0.31  <NA>  <NA>   1    \n 3 01CD005        PE        2023-02-20 04:10:00 Flow    0.313 <NA>  <NA>   1    \n 4 01CD005        PE        2023-02-20 04:15:00 Flow    0.31  <NA>  <NA>   1    \n 5 01CD005        PE        2023-02-20 04:20:00 Flow    0.31  <NA>  <NA>   1    \n 6 01CD005        PE        2023-02-20 04:25:00 Flow    0.31  <NA>  <NA>   1    \n 7 01CD005        PE        2023-02-20 04:30:00 Flow    0.31  <NA>  <NA>   1    \n 8 01CD005        PE        2023-02-20 04:35:00 Flow    0.31  <NA>  <NA>   1    \n 9 01CD005        PE        2023-02-20 04:40:00 Flow    0.31  <NA>  <NA>   1    \n10 01CD005        PE        2023-02-20 04:45:00 Flow    0.31  <NA>  <NA>   1    \n# … with 34,134 more rows, and abbreviated variable names ¹​PROV_TERR_STATE_LOC,\n#   ²​Parameter\n\n\nUse separate_wider_position() to move these into their own columns:\n\nstation |>\n  select(Date) |>\n  separate_wider_position(Date,\n                          widths = c(ymd = 10, space = 1, hms = 8))\n\n# A tibble: 34,144 × 3\n   ymd        space hms     \n   <chr>      <chr> <chr>   \n 1 2023-02-20 \" \"   04:00:00\n 2 2023-02-20 \" \"   04:05:00\n 3 2023-02-20 \" \"   04:10:00\n 4 2023-02-20 \" \"   04:15:00\n 5 2023-02-20 \" \"   04:20:00\n 6 2023-02-20 \" \"   04:25:00\n 7 2023-02-20 \" \"   04:30:00\n 8 2023-02-20 \" \"   04:35:00\n 9 2023-02-20 \" \"   04:40:00\n10 2023-02-20 \" \"   04:45:00\n# … with 34,134 more rows\n\n\nWhat if we don’t want the space column?\n\nstation |>\n  select(Date) |>\n  separate_wider_position(Date,\n                          widths = c(ymd = 10, hms = 8))\n\nError in `separate_wider_position()`:\n! Expected 18 characters in each element of `Date`.\n! 34144 values were too long.\nℹ Use `too_many = \"debug\"` to diagnose the problem.\nℹ Use `too_many = \"drop\"` to silence this message.\n\n\n\nstation |>\n  select(Date) |>\n  separate_wider_position(Date,\n                          widths = c(ymd = 10, hms = 8),\n                          too_many = \"debug\")\n\nWarning: Debug mode activated: adding variables `Date_ok`, `Date_width`, and\n`Date_remainder`.\n\n\n# A tibble: 34,144 × 6\n   ymd        hms        Date                Date_width Date_remainder Date_ok\n   <chr>      <chr>      <dttm>                   <int> <chr>          <lgl>  \n 1 2023-02-20 \" 04:00:0\" 2023-02-20 04:00:00         19 0              FALSE  \n 2 2023-02-20 \" 04:05:0\" 2023-02-20 04:05:00         19 0              FALSE  \n 3 2023-02-20 \" 04:10:0\" 2023-02-20 04:10:00         19 0              FALSE  \n 4 2023-02-20 \" 04:15:0\" 2023-02-20 04:15:00         19 0              FALSE  \n 5 2023-02-20 \" 04:20:0\" 2023-02-20 04:20:00         19 0              FALSE  \n 6 2023-02-20 \" 04:25:0\" 2023-02-20 04:25:00         19 0              FALSE  \n 7 2023-02-20 \" 04:30:0\" 2023-02-20 04:30:00         19 0              FALSE  \n 8 2023-02-20 \" 04:35:0\" 2023-02-20 04:35:00         19 0              FALSE  \n 9 2023-02-20 \" 04:40:0\" 2023-02-20 04:40:00         19 0              FALSE  \n10 2023-02-20 \" 04:45:0\" 2023-02-20 04:45:00         19 0              FALSE  \n# … with 34,134 more rows\n\n\nUse NA if there are components that you don’t want to appear in the output:\n\nstation_split <-\n  station |>\n  select(Date) |>\n  separate_wider_position(Date,\n                          widths = c(ymd = 10, 1, hms = 8))\n\nstation_split\n\n# A tibble: 34,144 × 2\n   ymd        hms     \n   <chr>      <chr>   \n 1 2023-02-20 04:00:00\n 2 2023-02-20 04:05:00\n 3 2023-02-20 04:10:00\n 4 2023-02-20 04:15:00\n 5 2023-02-20 04:20:00\n 6 2023-02-20 04:25:00\n 7 2023-02-20 04:30:00\n 8 2023-02-20 04:35:00\n 9 2023-02-20 04:40:00\n10 2023-02-20 04:45:00\n# … with 34,134 more rows\n\n\nUse separate_wider_delim() to break things further down:\n\nstation_split |>\n  separate_wider_delim(ymd,\n                       delim = \"-\",\n                       names = c(\"year\", \"month\", \"day\")) |>\n  separate_wider_delim(hms,\n                       delim = \":\",\n                       names = c(\"hour\", \"minute\", \"second\"))\n\n# A tibble: 34,144 × 6\n   year  month day   hour  minute second\n   <chr> <chr> <chr> <chr> <chr>  <chr> \n 1 2023  02    20    04    00     00    \n 2 2023  02    20    04    05     00    \n 3 2023  02    20    04    10     00    \n 4 2023  02    20    04    15     00    \n 5 2023  02    20    04    20     00    \n 6 2023  02    20    04    25     00    \n 7 2023  02    20    04    30     00    \n 8 2023  02    20    04    35     00    \n 9 2023  02    20    04    40     00    \n10 2023  02    20    04    45     00    \n# … with 34,134 more rows\n\n\n\nstations <- \n  tidyhydat::hy_monthly_levels()"
+  },
+  {
+    "objectID": "posts/tidyr-unnest-wider-unnest-longer-improvements/index.html",
+    "href": "posts/tidyr-unnest-wider-unnest-longer-improvements/index.html",
+    "title": "\nunnest_wider() and unnest_longer() improvements",
+    "section": "",
+    "text": "Install tidyr 1.3.0 with:"
+  },
+  {
+    "objectID": "posts/tidyr-unnest-wider-unnest-longer-improvements/index.html#unnest_wider-and-unnest_longer-improvements",
+    "href": "posts/tidyr-unnest-wider-unnest-longer-improvements/index.html#unnest_wider-and-unnest_longer-improvements",
+    "title": "\nunnest_wider() and unnest_longer() improvements",
+    "section": "\nunnest_wider() and unnest_longer() improvements",
+    "text": "unnest_wider() and unnest_longer() improvements\nunnest_longer() and unnest_wider() have received some quality of life and consistency improvements.\nunnest_wider() now gives a better error when unnesting an unnamed vector:\n\nlibrary(tidyr)\n\ndf <- tibble(\n  id = 1:2,\n  x = list(c(\"a\", \"b\"), c(\"d\", \"e\", \"f\"))\n)\n\ndf\n\n# A tibble: 2 × 2\n     id x        \n  <int> <list>   \n1     1 <chr [2]>\n2     2 <chr [3]>\n\ndf |> \n  unnest_wider(x)\n\nError in `unnest_wider()`:\nℹ In column: `x`.\nℹ In row: 1.\nCaused by error:\n! Can't unnest elements with missing names.\nℹ Supply `names_sep` to generate automatic names.\n\n\n\ndf |> \n  unnest_wider(x, names_sep = \"_\")\n\n# A tibble: 2 × 4\n     id x_1   x_2   x_3  \n  <int> <chr> <chr> <chr>\n1     1 a     b     <NA> \n2     2 d     e     f    \n\n\nunnest_longer() has gained a keep_empty argument like unnest(), and it now treats NULL and empty vectors the same way:\n\ndf <- tibble(\n  id = 1:3,\n  x = list(NULL, integer(), 1:3)\n)\n\ndf \n\n# A tibble: 3 × 2\n     id x        \n  <int> <list>   \n1     1 <NULL>   \n2     2 <int [0]>\n3     3 <int [3]>\n\ndf |> unnest_longer(x)\n\n# A tibble: 3 × 2\n     id     x\n  <int> <int>\n1     3     1\n2     3     2\n3     3     3\n\ndf |> unnest_longer(x, keep_empty = TRUE)\n\n# A tibble: 5 × 2\n     id     x\n  <int> <int>\n1     1    NA\n2     2    NA\n3     3     1\n4     3     2\n5     3     3\n\n\nLearn more\n\ntidyverse blog: 1.3.0\nRelease notes"
+  },
+  {
+    "objectID": "posts/purrr-breaking-changes/index.html",
+    "href": "posts/purrr-breaking-changes/index.html",
+    "title": "Breaking changes",
+    "section": "",
+    "text": "Install purrr 1.0.0 with:\nLoad the package with:"
+  },
+  {
+    "objectID": "posts/purrr-breaking-changes/index.html#breaking-changes",
+    "href": "posts/purrr-breaking-changes/index.html#breaking-changes",
+    "title": "Breaking changes",
+    "section": "Breaking changes",
+    "text": "Breaking changes\nThere are four important changes in purrr 1.0.0:\n\n\npluck() behaves differently when extracting 0-length vectors.\nThe map() family uses the tidyverse rules for coercion and recycling.\nAll functions that modify lists handle NULL consistently.\nDeprecated functions that aren’t related to the core purpose of purrr.\n\n\npluck() and zero-length vectors\npluck() is a function that lets you safely get or set an element within a nested structure.\nBefore, pluck() replaced 0-length vectors with the value of default. Now default is only used for NULL and absent elements:\n\nlibrary(purrr)\n\nx <- list(y = list(a = character(), b = NULL))\nx\n\n$y\n$y$a\ncharacter(0)\n\n$y$b\nNULL\n\n\n\n\nBefore\nAfter\n\n\n\n\nlibrary(purrr, lib.loc = new_lib)\nx |> pluck(\"y\", \"a\", .default = NA)\n\ncharacter(0)\n\n\n\n\n\nlibrary(purrr)\nx |> pluck(\"y\", \"a\", .default = NA)\n\ncharacter(0)\n\n\n\n\n\n\nx |> pluck(\"y\", \"b\", .default = NA)\n\n[1] NA\n\n\n\nx |> pluck(\"y\", \"c\", .default = NA)\n\n[1] NA\n\n\nThis also impacts map_* because using an integer vector, character vector, or list instead of a function automatically calls pluck():\n\nx <- list(list(1), list(), list(NULL), list(character()))\nx |> map(1, .default = 0) |> str()\n\nList of 4\n $ : num 1\n $ : num 0\n $ : num 0\n $ : chr(0)"
+  },
+  {
+    "objectID": "posts/purrr-breaking-changes/index.html#tidyverse-consistency",
+    "href": "posts/purrr-breaking-changes/index.html#tidyverse-consistency",
+    "title": "Breaking changes",
+    "section": "Tidyverse consistency",
+    "text": "Tidyverse consistency\nThe team edited the map_* family to be consistent with general tidyverse coercion and recycling rules, as implemented by the vctrs package.\n\nmap_lgl()\nmap_int()\nmap_int()\nmap_dbl()\n\n\n\nBefore\nAfter\n\n\n\n\nmap_chr(1:4, \\(x) x + 1)\n\n[1] \"2.000000\" \"3.000000\" \"4.000000\" \"5.000000\"\n\n\n\n\n\nmap_chr(1:4, \\(x) as.character(x + 1))\n\n[1] \"2\" \"3\" \"4\" \"5\"\n\n\n\n\n\nGeneral principles:\n\nConverting a logical/integer/double to a character vector is potentially dangerous and should require an explicit coercion.\nVectors of length 1 are recycled to any size but all other vectors must have the same length."
+  },
+  {
+    "objectID": "posts/purrr-breaking-changes/index.html#assigning-null",
+    "href": "posts/purrr-breaking-changes/index.html#assigning-null",
+    "title": "Breaking changes",
+    "section": "Assigning NULL\n",
+    "text": "Assigning NULL\n\npurrr has a number of functions that modify a list:\n\npluck()\nassign_in()\nmodify()\nmodify2()\nmodify_if()\nmodify_at()\nlist_modify()\n\nPreviously, these functions had inconsistent behavior when you attempted to modify an element with NULL: some functions would delete that element, and some would set it to NULL.\n\nx1 <- x2 <- x3 <- list(a = 1, b = 2)\n\nx1$a <- NULL\nstr(x1)\n\nList of 1\n $ b: num 2\n\nx2[\"a\"] <- list(NULL)\nstr(x2)\n\nList of 2\n $ a: NULL\n $ b: num 2\n\n\nNow functions that edit a list will create an element containing NULL:\n\nx3 |> \n  list_modify(a = NULL) |> \n  str()\n\nList of 2\n $ a: NULL\n $ b: num 2\n\nx3 |> \n  modify_at(\"b\", \\(x) NULL) |> \n  str()\n\nList of 2\n $ a: num 1\n $ b: NULL\n\n\nIf you want to delete the element, you can use zap():\n\nx3 |> \n  list_modify(a = zap()) |> \n  str()\n\nList of 1\n $ b: num 2\n\n\nDeprecations\n\ncross() and cross_df()\n\ncross()and all its variants have been deprecated in favor of tidyr::expand_grid(). These functions were slow and buggy:\n\nk = 12\nx = rep(list(1:3), k) |>\n  setNames(LETTERS[1:k])\n\nsystem.time({ x |> purrr::cross_df() })\n\n   user  system elapsed \n 28.994   0.615  33.980 \n\nsystem.time({ x |> tidyr::expand_grid() })\n\n   user  system elapsed \n  0.111   0.006   0.118 \n\n\n\nupdate_list(), rerun(), and the use of tidyselect with map_at()\n\nupdate_list(), rerun(), and the use of tidyselect with map_at() and friends have been deprecated because non-standard evaluation is not a good fit for purrr.\n1In most programming languages, you can only access the values of a function’s arguments. In R, you can also access the code used to compute them. This makes it possible to evaluate code in non-standard ways: to use what is known as non-standard evaluation, or NSE for short.\nlift_*\nThe lift_* family of functions has been superceded because they promote a style of function manipulation that is not commonly used in R.\n\nprepend(), rdunif(), rbernoulli(), when(), and list_along()\n\nThese have been deprecated because they’re not directly related to functional programming.\nsplice()\nsplice() has been deprecated because automatic splicing doesn’t make for good UI and there are other ways to achieve the same result.\nLearn more\n\ntidyverse blog: purrr 1.0.0\npurrr release notes"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
     "title": "What's new in the tidyverse",
     "section": "",
-    "text": "tidyverse_packages(include_self = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n \n\n\n\nNew str_* functions\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ntidyverse 2.0.0\n\n\n\ntidyverse\n\n\n\ntidyverse 2.0.0 has been released!\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nError messages\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 has improved error messages when running plots.\n\n\n\n\n\n\nNov 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n*_join()\n\n\n\ndplyr\n\n\n\nggplot2 3.4.0 introduces a new linewidth aesthetic.\n\n\n\n\n\n\nNov 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlinewidth\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 introduces a new linewidth aesthetic.\n\n\n\n\n\n\nNov 7, 2022\n\n\n\n\n\n\n\n\nNo matching items"
-  },
+    "text": "tidyverse 2.0.0\n\n\n\ntidyverse\n\n\n\ntidyverse 2.0.0 has been released!\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPer-operation grouping\n\n\n\ndplyr\n\n\n\nIntroducing by/.by, an experimental grouping alternative to group_by().\n\n\n\n\n\n\nJan 29, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\npick(), reframe(), and arrange()\n\n\n\ndplyr\n\n\n\ndplyr 1.1.0 is waaaay faster at sorting character vectors, and introduces pick() and reframe() as better alternatives for your data workflow.\n\n\n\n\n\n\nJan 29, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNew separate_* functions\n\n\n\ntidyr\n\n\n\nA new family of separate_*() functions supersedes separate(), separate_rows(), and extract().\n\n\n\n\n\n\nJan 24, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nunnest_wider() and unnest_longer() improvements\n\n\n\ntidyr\n\n\n\nunnest_longer() and unnest_wider() have received some quality of life and consistency improvements.\n\n\n\n\n\n\nJan 24, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nkeep_at() and discard_at()\n\n\n\npurrr\n\n\n\npurrr has two new functions, keep_at() and discard_at(), that operate on names.\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMapping\n\n\n\npurrr\n\n\n\nThere are three big new mapping features in purrr 1.0.0: progress bars, better errors, and map_vec().\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFlattening and simplification\n\n\n\npurrr\n\n\n\npurrr 1.0.0 has new functions for flattening and simplifying lists.\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBreaking changes\n\n\n\npurrr\n\n\n\nThere are four important changes in purrr 1.0.0.\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNew str_* functions\n\n\n\nstringr\n\n\n\nstringr has accumulated several new functions since its last release three years ago.\n\n\n\n\n\n\nDec 2, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nError messages\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 has improved error messages when running plots.\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlinewidth\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 introduces a new linewidth aesthetic.\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\nNo matching items"  },
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
+    "title": "What’s new in the tidyverse",
     "section": "",
-    "text": "Install the newest versions of packages using pak:\n\npak::pak(c(\"tidyverse\", \"dplyr\", \"tidyr\", \"stringr\", \"purrr\", \"ggplot2\"))"
-  },
-  {
-    "objectID": "posts/dplyr-joins/index.html",
-    "href": "posts/dplyr-joins/index.html",
-    "title": "*_join()",
-    "section": "",
-    "text": "library(stringr)\n\nstr_view(\"\\t\")"
+    "text": "See all the packages in the tidyverse:\n\ntidyverse::tidyverse_packages(include_self = TRUE)\n\n [1] \"broom\"         \"conflicted\"    \"cli\"           \"dbplyr\"       \n [5] \"dplyr\"         \"dtplyr\"        \"forcats\"       \"ggplot2\"      \n [9] \"googledrive\"   \"googlesheets4\" \"haven\"         \"hms\"          \n[13] \"httr\"          \"jsonlite\"      \"lubridate\"     \"magrittr\"     \n[17] \"modelr\"        \"pillar\"        \"purrr\"         \"ragg\"         \n[21] \"readr\"         \"readxl\"        \"reprex\"        \"rlang\"        \n[25] \"rstudioapi\"    \"rvest\"         \"stringr\"       \"tibble\"       \n[29] \"tidyr\"         \"xml2\"          \"tidyverse\"    \n\n\nInstall the newest versions of packages using pak:\n\npak::pak(c(\"tidyverse\", \"dplyr\", \"tidyr\", \"stringr\", \"purrr\", \"ggplot2\"))"
   }
 ]
