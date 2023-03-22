@@ -1,0 +1,88 @@
+---
+title: "Mapping"
+subtitle: "purrr 1.1.0"
+date: 2022-12-20
+image: "purrr-mapping.png"
+image-alt: "Text that says purrr mapping. A screenshot of a purrr progress bar with saving plots as the identifier."
+categories:
+  - "purrr"
+description: "There are three big new mapping features in purrr 1.0.0: progress bars, better errors, and `map_vec()`."
+engine: knitr
+editor: visual
+---
+
+Install purrr 1.0.0 with:
+
+```{r}
+#| eval: false
+pak::pak("cran/purrr@1.0.0")
+```
+
+Load the package with:
+
+```{r}
+#| message: false
+library(purrr)
+```
+
+## Mapping
+
+There are three big new mapping features in purrr 1.0.0:
+
+-   Progress bars!
+-   Better errors
+-   A new `map_*` family member: `map_vec()`.
+
+### Progress bars
+
+See a progress bar for long running jobs using `.progress = TRUE`:
+
+```{r}
+x <- map(1:100, \(x) Sys.sleep(0.1), .progress = TRUE)
+```
+
+Set `.progress` to a string if you want to identify the progress bar (in this case, `.progress = "Saving plots"`).
+
+```{r}
+x <- map(1:100, \(x) Sys.sleep(0.1), .progress = "Waiting...")
+```
+
+### Better errors
+
+`map()` and friends now tell you which element caused the problem in the function you mapped.
+
+In this case, we have a list with two numeric and one character value. When we try to divide it by 2 using `map()`, we get an error telling us there's an issue with index 3 (`"a"`).
+
+```{r}
+#| error: true
+x <- list(10, 5, "a")
+x |> map(\(x) x / 2)
+```
+
+## `map_vec()`
+
+The `map_*` family applies a function to each element of a list. We've had `map()`, `map_lgl()`, `map_int()`, `map_dbl()`, and `map_chr()`.
+
+```{r}
+1:3 |> map(\(x) x / 2) # map always returns a list
+```
+
+Now we have: `map_vec()`!
+
+`map_vec()` is a generalized `map_*()` that works with an arbitrary types of vectors, like dates, factors, and date-times.
+
+```{r}
+1:3 |> map_vec(\(i) as.Date(ISOdate(2023, 2 + i, 5)))
+```
+
+It will error if you try to combine different types:
+
+```{r}
+#| error: true
+list("a", 1) |> map_vec(identity)
+```
+
+### Learn more
+
+-   [tidyverse blog: purrr 1.0.0](https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/)
+-   [purrr release notes](https://github.com/tidyverse/purrr/releases/tag/v1.0.0)

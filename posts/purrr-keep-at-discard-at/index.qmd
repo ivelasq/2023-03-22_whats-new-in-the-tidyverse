@@ -1,0 +1,77 @@
+---
+title: "`keep_at()` and `discard_at()`"
+subtitle: "purrr 1.1.0"
+date: 2022-12-20
+image: "purrr-keep-at-discard-at.png"
+image-alt: "Text that says purrr keep_at, discard_at. A screenshot of a list that has keep_at applied to it."
+categories:
+  - "purrr"
+description: purrr has two new functions, keep_at() and discard_at(), that operate on names.
+engine: knitr
+editor: visual
+---
+
+Install purrr 1.0.0 with:
+
+```{r}
+#| eval: false
+pak::pak("cran/purrr@1.0.0")
+```
+
+Load the package with:
+
+```{r}
+#| message: false
+library(purrr)
+```
+
+## `keep_at()` and `discard_at()`
+
+purrr has two functions, `keep()` and `discard()`, that keep/discard elements by value:
+
+::: panel-tabset
+## `keep()`
+
+```{r}
+rep(10, 10) |>
+  map(sample, 5) |>
+  keep(function(x) mean(x) > 6)
+```
+
+## `discard()`
+
+```{r}
+rep(10, 10) |>
+  map(sample, 5) |>
+  discard(function(x) mean(x) > 6)
+```
+:::
+
+purrr has two new functions, `keep_at()` and `discard_at()`, that work like `keep()` and `discard()` but operate on names rather than values:
+
+```{r}
+x <- list(a = 1, b = 2, c = 3, D = 4, E = 5)
+
+x |> 
+  keep_at(c("a", "b", "c")) |> 
+  str()
+```
+
+```{r}
+x |> 
+  discard_at(c("a", "b", "c")) |> 
+  str()
+```
+
+Or, you can provide a logical vector
+
+```{r}
+is_lower_case <- function(x) x == tolower(x)
+
+x |> keep_at(is_lower_case)
+```
+
+### Learn more
+
+-   [tidyverse blog: purrr 1.0.0](https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/)
+-   [purrr release notes](https://github.com/tidyverse/purrr/releases/tag/v1.0.0)

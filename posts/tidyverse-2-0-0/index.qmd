@@ -2,19 +2,19 @@
 title: "tidyverse 2.0.0"
 date: 2023-03-08
 image: "tidyverse-2-0-0.png"
-image-alt: "tidyverse 2.0.0. Images of various hex stickers from packages in the tidyverse."
+image-alt: "Text that says tidyverse 2.0.0. Images of various hex stickers from packages in the tidyverse."
+categories:
+  - "tidyverse"
+description: tidyverse 2.0.0 has been released!
 engine: knitr
-format:
-    html: 
-      toc: true
-editor: source
+editor: visual
 ---
 
-Install the latest version of the tidyverse with:
+Install tidyverse 2.0.0 with:
 
 ```{r}
 #| eval: false
-install.packages("tidyverse")
+pak::pak("cran/tidyverse@2.0.0")
 ```
 
 Load the tidyverse with:
@@ -25,14 +25,19 @@ library("tidyverse")
 
 Did you notice?
 
-<details><summary>Click to reveal!</summary>
-## Welcome to the core tidyverse
+<details>
+
+<summary>Click to reveal!</summary>
+
+## Welcome to the core tidyverse, lubridate!
 
 <center><bold>[lubridate](https://lubridate.tidyverse.org/)!</bold></center>
+
 <br>
-<center><img src="lubridate.png" alt="Lubridate package hex sticker with a calendar" width="300"></center>
-<br>
-lubridate is now part of the core tidyverse! Loading the tidyverse automatically attaches lubridate, meaning that you do not have load it separately.
+
+<center><img src="lubridate.png" alt="Lubridate package hex sticker with a calendar" width="300"/></center>
+
+<br> lubridate is now part of the core tidyverse! Loading the tidyverse automatically attaches lubridate, meaning that you do not have load it separately.
 
 </details>
 
@@ -40,7 +45,7 @@ lubridate is now part of the core tidyverse! Loading the tidyverse automatically
 
 You may have noticed this message:
 
-```bash
+``` bash
 ℹ Use the conflicted package to force all conflicts to become errors
 ```
 
@@ -84,5 +89,5 @@ That way you know there's a problem and how to resolve it.
 
 ## Learn more
 
-* [tidyverse blog: tidyverse 2.0.0](https://www.tidyverse.org/blog/2023/03/tidyverse-2-0-0/)
-* [tidyverse release notes](https://tidyverse.tidyverse.org/news/index.html)
+-   [tidyverse blog: tidyverse 2.0.0](https://www.tidyverse.org/blog/2023/03/tidyverse-2-0-0/)
+-   [tidyverse release notes](https://tidyverse.tidyverse.org/news/index.html)
