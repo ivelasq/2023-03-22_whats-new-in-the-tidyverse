@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2023-01-29">
-<meta name="description" content="dplyr 1.1.0 has relaxed assumptions for non-equi joins.">
+<meta name="description" content="A grab bag of new dplyr updates and functions.">
 
 <title>What’s new in the tidyverse - case_when(), case_match(), and consecutive_id()</title>
 <style>
@@ -125,13 +125,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <meta name="twitter:title" content="What’s new in the tidyverse - case_when(), case_match(), and consecutive_id()">
-<meta name="twitter:description" content="dplyr 1.1.0 has relaxed assumptions for non-equi joins.">
+<meta name="twitter:description" content="A grab bag of new dplyr updates and functions.">
 <meta name="twitter:image" content="https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/dplyr-case-when-case-match-consecutive-id/dplyr-case-when-case-match-consecutive-id.png">
 <meta name="twitter:creator" content="@ivelasq3">
 <meta name="twitter:site" content="@ivelasq3">
 <meta name="twitter:image-height" content="200">
 <meta name="twitter:image-width" content="540">
-<meta name="twitter:image:alt" content="Text that says dplyr `case_when()`, `case_match()`, and `consecutive_id()` An screenshot of a command running the new join by helper.">
+<meta name="twitter:image:alt" content="Text that says dplyr `case_when()`, `case_match()`, and `consecutive_id()` An screenshot of a case_when statement.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -194,7 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div>
   <div class="description">
-    dplyr 1.1.0 has relaxed assumptions for non-equi joins.
+    A grab bag of new dplyr updates and functions.
   </div>
 </div>
 
@@ -357,6 +357,76 @@ Note
 </section>
 <section id="consecutive_id" class="level2">
 <h2 class="anchored" data-anchor-id="consecutive_id">consecutive_id()</h2>
+<p>Here’s an example transcript:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>friends_dialogue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+   text                                                                  speaker
+   &lt;chr&gt;                                                                 &lt;chr&gt;  
+ 1 There's nothing to tell! He's just some guy I work with!              Monica…
+ 2 C'mon, you're going out with the guy! There's gotta be something wro… Joey T…
+ 3 All right Joey, be nice. So does he have a hump? A hump and a hairpi… Chandl…
+ 4 Wait, does he eat chalk?                                              Phoebe…
+ 5 Just, 'cause, I don't want her to go through what I went through wit… Phoebe…
+ 6 Okay, everybody relax. This is not even a date. It's just two people… Monica…
+ 7 Sounds like a date to me.                                             Chandl…
+ 8 Alright, so I'm back in high school, I'm standing in the middle of t… Chandl…
+ 9 Then I look down, and I realize there's a phone... there.             Chandl…
+10 Instead of...?                                                        Joey T…</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>friends_dialogue <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> stringr<span class="sc">::</span><span class="fu">str_flatten</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.by =</span> speaker)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  speaker        text                                                           
+  &lt;chr&gt;          &lt;chr&gt;                                                          
+1 Monica Geller  There's nothing to tell! He's just some guy I work with! Okay,…
+2 Joey Tribbiani C'mon, you're going out with the guy! There's gotta be somethi…
+3 Chandler Bing  All right Joey, be nice. So does he have a hump? A hump and a …
+4 Phoebe Buffay  Wait, does he eat chalk? Just, 'cause, I don't want her to go …</code></pre>
+</div>
+</div>
+<p>This smushes everything together - what if we want to keep the consecutive runs? Enter <code>consecutive_id()</code>!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>friends_dialogue <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">consecutive_id</span>(speaker))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   text                                                            speaker    id
+   &lt;chr&gt;                                                           &lt;chr&gt;   &lt;int&gt;
+ 1 There's nothing to tell! He's just some guy I work with!        Monica…     1
+ 2 C'mon, you're going out with the guy! There's gotta be somethi… Joey T…     2
+ 3 All right Joey, be nice. So does he have a hump? A hump and a … Chandl…     3
+ 4 Wait, does he eat chalk?                                        Phoebe…     4
+ 5 Just, 'cause, I don't want her to go through what I went throu… Phoebe…     4
+ 6 Okay, everybody relax. This is not even a date. It's just two … Monica…     5
+ 7 Sounds like a date to me.                                       Chandl…     6
+ 8 Alright, so I'm back in high school, I'm standing in the middl… Chandl…     6
+ 9 Then I look down, and I realize there's a phone... there.       Chandl…     6
+10 Instead of...?                                                  Joey T…     7</code></pre>
+</div>
+</div>
+<p>With this, we can correctly group the dialogue:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>friends_dialogue <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">consecutive_id</span>(speaker)) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">text =</span> stringr<span class="sc">::</span><span class="fu">str_flatten</span>(text, <span class="at">collapse =</span> <span class="st">" "</span>), <span class="at">.by =</span> <span class="fu">c</span>(id, speaker))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 3
+     id speaker        text                                                     
+  &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;                                                    
+1     1 Monica Geller  There's nothing to tell! He's just some guy I work with! 
+2     2 Joey Tribbiani C'mon, you're going out with the guy! There's gotta be s…
+3     3 Chandler Bing  All right Joey, be nice. So does he have a hump? A hump …
+4     4 Phoebe Buffay  Wait, does he eat chalk? Just, 'cause, I don't want her …
+5     5 Monica Geller  Okay, everybody relax. This is not even a date. It's jus…
+6     6 Chandler Bing  Sounds like a date to me. Alright, so I'm back in high s…
+7     7 Joey Tribbiani Instead of...?                                           </code></pre>
+</div>
+</div>
 </section>
 <section id="learn-more" class="level2">
 <h2 class="anchored" data-anchor-id="learn-more">Learn more</h2>
