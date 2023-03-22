@@ -3,12 +3,12 @@ title: "`unnest_wider()` and `unnest_longer()` improvements"
 subtitle: "tidyr 1.3.0"
 date: 2023-01-24
 image: "tidyr-unnest-wider-unnest-longer-improvements.png"
-image-alt: "tidyr 1.3.0. Screenshot of text of an error from unnest_longer."
+image-alt: "Text that says tidyr 1.3.0. Screenshot of text of an error from unnest_longer."
 categories:
   - "tidyr"
 description: "`unnest_longer()` and `unnest_wider()` have received some quality of life and consistency improvements."
 engine: knitr
-editor: source
+editor: visual
 ---
 
 Install tidyr 1.3.0 with:
