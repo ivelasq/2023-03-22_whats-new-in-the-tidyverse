@@ -18,27 +18,3 @@ about:
       text: Github
       href: https://github.com/ivelasq
 ---
-
-## Hi, I'm Isabella!
-
-Keep in touch on (Twitter)[https://twitter.com/ivelasq3]/(Mastodon)[https://fosstodon.org/@ivelasq3] (@ivelasq3) or [LinkedIn](https://linkedin.com/in/ivelasq) (@ivelasq).
-
-
-## Stay in the loop
-
-* [R for Data Science (2e)](https://r4ds.hadley.nz/)
-* [tidyverse blog](https://www.tidyverse.org/blog/)
-* posit::glimpse() [Twitter](https://twitter.com/rstudio_glimpse) and [Mastodon](https://fosstodon.org/@posit_glimpse)
-
-See all the packages in the tidyverse:
-
-```{r}
-tidyverse::tidyverse_packages(include_self = TRUE)
-```
-
-Install the newest versions of packages using [pak](https://pak.r-lib.org/):
-
-```{r}
-#| eval: false
-pak::pak(c("tidyverse", "dplyr", "tidyr", "stringr", "purrr", "ggplot2"))
-```

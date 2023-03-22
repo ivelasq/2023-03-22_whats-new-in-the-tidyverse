@@ -1,0 +1,86 @@
+---
+title: "Introduction"
+subtitle: "Welcome to R-Ladies Rome!"
+date: 2023-03-22
+image: "intro.png"
+image-alt: "A starry night full of tidyverse package hexes."
+description: "Welcome to R-Ladies Rome!"
+---
+
+## Hi, I'm Isabella!
+
+Keep in touch on [Twitter](https://twitter.com/ivelasq3) /[Mastodon](https://fosstodon.org/@ivelasq3) (@ivelasq3) or [LinkedIn](https://linkedin.com/in/ivelasq) (@ivelasq).
+
+## Stay in the loop
+
+-   [R for Data Science (2e)](https://r4ds.hadley.nz/)
+-   [tidyverse blog](https://www.tidyverse.org/blog/)
+-   posit::glimpse() [Twitter](https://twitter.com/rstudio_glimpse) and [Mastodon](https://fosstodon.org/@posit_glimpse)
+
+## About the tidyverse
+
+> The tidyverse is an opinionated collection of R packages designed for data science.
+
+See all the packages in the tidyverse:
+
+```{r}
+tidyverse::tidyverse_packages(include_self = TRUE)
+```
+
+### pak
+
+Install the newest versions of packages using [pak](https://pak.r-lib.org/):
+
+```{r}
+#| eval: false
+pak::pak(c("tidyverse", "dplyr", "tidyr", "stringr", "purrr", "ggplot2"))
+```
+
+### Lifecycle stages
+
+Learn about the lifecycle stages:
+
+![A diagram showing the transitions between the four main stages: experimental can become stable and stable can become deprecated or superseded.](lifecycle.svg)
+
+### A note on vctrs
+
+Quite a few functions have been rewritten to use vctrs package behind the scenes:
+
+* dplyr's `if_else()`, `first()`, `last()`, `nth()`, `coalesce()`, `between()`.
+
+The tidyverse team uses [vctrs](https://vctrs.r-lib.org/) to keep recycling rules and coercion rules in one place.
+
+This doesn't impact data scientists too much but it means more consistency and better error messages, bug fixes, and higher quality code.
+
+```{r}
+#| error: true
+x <- c(1:10, NA)
+if_else(x %% 2 == 0, x, "x") 
+```
+
+
+## Base R pipe
+
+You will see a lot of references to the base R pipe:
+
+<center>
+
+<blockquote class="twitter-tweet">
+
+<p lang="en" dir="ltr">
+
+The 2nd edition of R4DS uses the base pipe so I've added a chapter that talks about how to use it, why I think you should use it, and how it differs to %\>%: <a href="https://t.co/77zwPkg4cd">https://t.co/77zwPkg4cd</a> <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a>
+
+</p>
+
+--- Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/1519313737773158401?ref_src=twsrc%5Etfw">April 27, 2022</a>
+
+</blockquote>
+
+```{=html}
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+```
+</center>
+
+-   [Read my blog post on understanding the base pipe!](https://ivelasq.rbind.io/blog/understanding-the-r-pipe/)
+-   [See note in the second edition of R for Data Science on using `|>`.](https://r4ds.hadley.nz/data-transform.html#sec-the-pipe)

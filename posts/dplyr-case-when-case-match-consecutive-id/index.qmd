@@ -1,0 +1,154 @@
+---
+title: "`case_when()`, `case_match()`, and `consecutive_id()`"
+subtitle: "dplyr 1.1.0"
+date: 2023-01-29
+image: "dplyr-case-when-case-match-consecutive-id.png"
+image-alt: "Text that says dplyr `case_when()`, `case_match()`, and `consecutive_id()` An screenshot of a command running the new join by helper."
+categories:
+   - "dplyr"
+description: "dplyr 1.1.0 has relaxed assumptions for non-equi joins."
+---
+
+Install dplyr 1.1.0 with:
+
+```{r}
+#| eval: false
+pak::pak("cran/dplyr@1.1.0")
+```
+
+Load the package with:
+
+```{r}
+#| message: false
+library(dplyr)
+```
+
+## case_when()
+
+`case_when()` is a general vectorised if-else.
+
+### `NA`
+
+Have you ever run `case_when()` and gotten the error message:
+
+```{r}
+x <- c(1, 12, -5, 6, -2, NA, 0)
+```
+
+
+```{r}
+#| eval: false
+case_when(
+  x >= 10 ~ "large",
+  x >= 0 ~ "small",
+  x < 0 ~ NA
+)
+```
+
+```         
+Error: `NA` must be <character>, not <logical>.
+```
+
+In this case, you have to use `NA_character_` instead of `NA`.
+
+But not anymore!
+
+In dplyr 1.1.0, the switch to vctrs means that the above code now "just works":
+
+```{r}
+case_when(
+  x >= 10 ~ "large",
+  x >= 0 ~ "small",
+  x < 0 ~ NA
+)
+```
+
+### `TRUE`
+
+To set a default in `case_when()`, you used to have to do this:
+
+```{r}
+case_when(
+  x >= 10 ~ "large",
+  x >= 0 ~ "small",
+  is.na(x) ~ "missing",
+  TRUE ~ "other"
+)
+```
+
+Now there's an explicit argument `.default`:
+
+```{r}
+case_when(
+  x >= 10 ~ "large",
+  x >= 0 ~ "small",
+  is.na(x) ~ "missing",
+  .default = "other"
+)
+```
+
+`TRUE` isn't deprecated yet but the team is planning on deprecating it in the future.
+
+## `case_match()`
+
+Sometimes, `case_when()` can be a bit repetitive:
+
+```{r}
+x <- c("USA", "Canada", "Wales", "UK", "China", NA, "Mexico", "Russia")
+
+case_when(
+  x %in% c("USA", "Canada", "Mexico") ~ "North America",
+  x %in% c("Wales", "UK") ~ "Europe",
+  x %in% "China" ~ "Asia"
+)
+```
+
+`case_match()` is a special case that matches values and a nice way to do replacements. You can streamline your code:
+
+```{r}
+case_match(
+  x,
+  c("USA", "Canada", "Mexico") ~ "North America",
+  c("France", "UK") ~ "Europe",
+  "China" ~ "Asia"
+)
+```
+
+They are no longer logical vectors, just values. You can also put `NA` on the left-hand side:
+
+```{r}
+case_match(
+  x,
+  c("USA", "Canada", "Mexico") ~ "North America",
+  c("France", "UK") ~ "Europe",
+  "China" ~ "Asia",
+  NA ~ "missing"
+)
+```
+
+It also works with `.default`: 
+
+```{r}
+case_match(
+  x,
+  c("USA", "Canada", "Mexico") ~ "North America",
+  c("France", "UK") ~ "Europe",
+  "China" ~ "Asia",
+  NA ~ "missing",
+  .default = "unknown"
+)
+```
+
+::: callout-note
+`if_else()` has received the same updates as `case_when()`. In particular, it is no longer as strict about typed missing values.
+:::
+
+## consecutive_id()
+
+
+
+## Learn more
+
+-   [tidyverse blog: dplyr 1.1.0: `pick()`, `reframe()`, and `arrange()`](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange)
+-   [dplyr release notes](https://dplyr.tidyverse.org/news/index.html)
+-   [New features in dplyr 1.1.0, and an introduction to ivs](https://www.youtube.com/watch?v=9LAML4Nr1II)
