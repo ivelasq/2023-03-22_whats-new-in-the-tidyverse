@@ -3,10 +3,11 @@ title: "`case_when()`, `case_match()`, and `consecutive_id()`"
 subtitle: "dplyr 1.1.0"
 date: 2023-01-29
 image: "dplyr-case-when-case-match-consecutive-id.png"
-image-alt: "Text that says dplyr `case_when()`, `case_match()`, and `consecutive_id()` An screenshot of a command running the new join by helper."
+image-alt: "Text that says dplyr `case_when()`, `case_match()`, and `consecutive_id()` An screenshot of a case_when statement."
 categories:
    - "dplyr"
-description: "dplyr 1.1.0 has relaxed assumptions for non-equi joins."
+description: "A grab bag of new dplyr updates and functions."
+editor: visual
 ---
 
 Install dplyr 1.1.0 with:
@@ -34,7 +35,6 @@ Have you ever run `case_when()` and gotten the error message:
 ```{r}
 x <- c(1, 12, -5, 6, -2, NA, 0)
 ```
-
 
 ```{r}
 #| eval: false
@@ -126,7 +126,7 @@ case_match(
 )
 ```
 
-It also works with `.default`: 
+It also works with `.default`:
 
 ```{r}
 case_match(
@@ -145,7 +145,44 @@ case_match(
 
 ## consecutive_id()
 
+Here's an example transcript:
 
+```{r}
+#| include: false
+library(friends)
+
+friends_dialogue <-
+  friends %>% 
+  slice(1:13) %>% 
+  filter(speaker != "Scene Directions" & speaker != "#ALL#") %>% 
+  select(text, speaker)
+```
+
+```{r}
+friends_dialogue
+```
+
+What if we want to put the continuous dialogue together in one line?
+
+```{r}
+friends_dialogue |>
+  summarise(text = stringr::str_flatten(text, collapse = " "), .by = speaker)
+```
+
+This smushes everything together - what if we want to keep the consecutive runs? Enter `consecutive_id()`!
+
+```{r}
+friends_dialogue |>
+  mutate(id = consecutive_id(speaker))
+```
+
+With this, we can correctly group the dialogue:
+
+```{r}
+friends_dialogue |>
+  mutate(id = consecutive_id(speaker)) |>
+  summarise(text = stringr::str_flatten(text, collapse = " "), .by = c(id, speaker))
+```
 
 ## Learn more
 
