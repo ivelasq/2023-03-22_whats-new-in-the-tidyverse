@@ -36,7 +36,7 @@ library(ggplot2)
 #| error: true
 library(ggplot2)
 
-ggplot(mtcars) %>% 
+ggplot(mtcars) |> 
   geom_point(aes(mpg, disp))
 ```
 
@@ -49,7 +49,7 @@ ggplot2 error messages can be hard to diagonose because you get the error when y
 library(ggplot2)
 library(dplyr)
 
-mtcars %>% 
+mtcars |> 
   ggplot(aes(x = cyl, y = hp)) +
   geom_bar()
 ```

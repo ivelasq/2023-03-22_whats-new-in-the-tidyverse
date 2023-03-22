@@ -32,7 +32,7 @@ A new family of `separate_*()` functions supersedes `separate()`, `separate_rows
 ## Before
 
 |                                  | Make columns                     | Make rows         |
-|----------------------------------|----------------------------------|-------------------|
+|----------------------------|----------------------|-----------------------|
 | Separate with delimiter          | `separate(sep = string)`         | `separate_rows()` |
 | Separate by position             | `separate(sep = integer_vector)` | N/A               |
 | Separate with regular expression | `extract()`                      |                   |
@@ -40,7 +40,7 @@ A new family of `separate_*()` functions supersedes `separate()`, `separate_rows
 ## After
 
 |                                  | Make columns                | Make rows                    |
-|----------------------------------|-----------------------------|------------------------------|
+|---------------------|----------------------------|-----------------------|
 | Separate with delimiter          | `separate_wider_delim()`    | `separate_longer_delim()`    |
 | Separate by position             | `separate_wider_position()` | `separate_longer_position()` |
 | Separate with regular expression | `separate_wider_regex()`    |                              |
@@ -112,6 +112,35 @@ station_split |>
                        delim = ":",
                        names = c("hour", "minute", "second"))
 ```
+
+Use `separate_wider_regex()` to separate a vector of regular expressions that are matched in order, from left to right:
+
+```{r}
+#| message: false
+library(tidycensus)
+
+vt_census <- tidycensus::get_decennial(
+  geography = "block",
+  state = "VT",
+  county = "Washington",
+  variables = "P1_001N",
+  year = 2020
+)
+
+vt_census |>
+  select(NAME) |> 
+  separate_wider_regex(
+    NAME,
+    patterns = c(
+      "Block ", block = "\\d+", ", ",
+      "Block Group ", block_group = "\\d+", ", ",
+      "Census Tract ", tract = "\\d+.\\d+", ", ",
+      county = "[^,]+", ", ",
+      state = ".*"
+    )
+  )
+```
+
 
 ### Learn more
 
