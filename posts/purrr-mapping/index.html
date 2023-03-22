@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-01-24">
-<meta name="description" content="unnest_longer() and unnest_wider() have received some quality of life and consistency improvements.">
+<meta name="dcterms.date" content="2022-12-20">
+<meta name="description" content="There are three big new mapping features in purrr 1.0.0: progress bars, better errors, and map_vec().">
 
-<title>What’s new in the tidyverse - unnest_wider() and unnest_longer() improvements</title>
+<title>What’s new in the tidyverse - Mapping</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,14 +124,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script>
 
 
-<meta name="twitter:title" content="What’s new in the tidyverse - unnest_wider() and unnest_longer() improvements">
-<meta name="twitter:description" content="`unnest_longer()` and `unnest_wider()` have received some quality of life and consistency improvements.">
-<meta name="twitter:image" content="https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/tidyr-unnest-wider-unnest-longer-improvements/tidyr-unnest-wider-unnest-longer-improvements.png">
+<meta name="twitter:title" content="What’s new in the tidyverse - Mapping">
+<meta name="twitter:description" content="There are three big new mapping features in purrr 1.0.0: progress bars, better errors, and `map_vec()`.">
+<meta name="twitter:image" content="https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/purrr-mapping/purrr-mapping.png">
 <meta name="twitter:creator" content="@ivelasq3">
 <meta name="twitter:site" content="@ivelasq3">
 <meta name="twitter:image-height" content="200">
 <meta name="twitter:image-width" content="540">
-<meta name="twitter:image:alt" content="tidyr 1.3.0. Screenshot of text of an error from unnest_longer.">
+<meta name="twitter:image:alt" content="Text that says purrr mapping. A screenshot of a purrr progress bar with saving plots as the identifier.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -185,16 +185,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><code>unnest_wider()</code> and <code>unnest_longer()</code> improvements</h1>
-<p class="subtitle lead">tidyr 1.3.0</p>
+<h1 class="title">Mapping</h1>
+<p class="subtitle lead">purrr 1.1.0</p>
   <div class="quarto-categories">
-    <div class="quarto-category">tidyr</div>
+    <div class="quarto-category">purrr</div>
   </div>
   </div>
 
 <div>
   <div class="description">
-    <code>unnest_longer()</code> and <code>unnest_wider()</code> have received some quality of life and consistency improvements.
+    There are three big new mapping features in purrr 1.0.0: progress bars, better errors, and <code>map_vec()</code>.
   </div>
 </div>
 
@@ -205,7 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 24, 2023</p>
+      <p class="date">December 20, 2022</p>
     </div>
   </div>
   
@@ -215,94 +215,106 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Install tidyr 1.3.0 with:</p>
+<p>Install purrr 1.0.0 with:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"cran/tidyr@1.3.0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"cran/purrr@1.0.0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="unnest_wider-and-unnest_longer-improvements" class="level2">
-<h2 class="anchored" data-anchor-id="unnest_wider-and-unnest_longer-improvements"><code>unnest_wider()</code> and <code>unnest_longer()</code> improvements</h2>
-<p><code>unnest_longer()</code> and <code>unnest_wider()</code> have received some quality of life and consistency improvements.</p>
-<p><code>unnest_wider()</code> now gives a better error when unnesting an unnamed vector:</p>
+<p>Load the package with:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">list</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>), <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"f"</span>))</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 2
-     id x        
-  &lt;int&gt; &lt;list&gt;   
-1     1 &lt;chr [2]&gt;
-2     2 &lt;chr [3]&gt;</code></pre>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="mapping" class="level2">
+<h2 class="anchored" data-anchor-id="mapping">Mapping</h2>
+<p>There are three big new mapping features in purrr 1.0.0:</p>
+<ul>
+<li>Progress bars!</li>
+<li>Better errors</li>
+<li>A new <code>map_*</code> family member: <code>map_vec()</code>.</li>
+</ul>
+<section id="progress-bars" class="level3">
+<h3 class="anchored" data-anchor-id="progress-bars">Progress bars</h3>
+<p>See a progress bar for long running jobs using <code>.progress = TRUE</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, \(x) <span class="fu">Sys.sleep</span>(<span class="fl">0.1</span>), <span class="at">.progress =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code> ■■■■■                             15% |  ETA:  9s</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code> ■■■■■■■■■■■■■■                    44% |  ETA:  6s</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code> ■■■■■■■■■■■■■■■■■■■■■■■           73% |  ETA:  3s</code></pre>
+</div>
+</div>
+<p>Set <code>.progress</code> to a string if you want to identify the progress bar (in this case, <code>.progress = "Saving plots"</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, \(x) <span class="fu">Sys.sleep</span>(<span class="fl">0.1</span>), <span class="at">.progress =</span> <span class="st">"Waiting..."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Waiting... ■■■■■■■■■■                        30% |  ETA:  7s</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Waiting... ■■■■■■■■■■■■■■■■■■■               59% |  ETA:  4s</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Waiting... ■■■■■■■■■■■■■■■■■■■■■■■■■■■       88% |  ETA:  1s</code></pre>
+</div>
+</div>
+</section>
+<section id="better-errors" class="level3">
+<h3 class="anchored" data-anchor-id="better-errors">Better errors</h3>
+<p><code>map()</code> and friends now tell you which element caused the problem in the function you mapped.</p>
+<p>In this case, we have a list with two numeric and one character value. When we try to divide it by 2 using <code>map()</code>, we get an error telling us there’s an issue with index 3 (<code>"a"</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="st">"a"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>x <span class="sc">|&gt;</span> <span class="fu">map</span>(\(x) x <span class="sc">/</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in `unnest_wider()`:
-ℹ In column: `x`.
-ℹ In row: 1.
-Caused by error:
-! Can't unnest elements with missing names.
-ℹ Supply `names_sep` to generate automatic names.</code></pre>
+<pre><code>Error in `map()`:
+ℹ In index: 3.
+Caused by error in `x / 2`:
+! non-numeric argument to binary operator</code></pre>
 </div>
 </div>
+</section>
+</section>
+<section id="map_vec" class="level2">
+<h2 class="anchored" data-anchor-id="map_vec"><code>map_vec()</code></h2>
+<p>The <code>map_*</code> family applies a function to each element of a list. We’ve had <code>map()</code>, <code>map_lgl()</code>, <code>map_int()</code>, <code>map_dbl()</code>, and <code>map_chr()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(x, <span class="at">names_sep =</span> <span class="st">"_"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">|&gt;</span> <span class="fu">map</span>(\(x) <span class="fu">rnorm</span>(<span class="dv">10</span>, x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 4
-     id x_1   x_2   x_3  
-  &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
-1     1 a     b     &lt;NA&gt; 
-2     2 d     e     f    </code></pre>
+<pre><code>[[1]]
+ [1]  2.6826057  1.6314088  0.5877358  0.3281883  1.4118076  0.2460912
+ [7]  3.3178964  2.0437852  1.0673998 -0.6362567
+
+[[2]]
+ [1] 1.982024 2.079093 3.334697 1.970019 2.366811 1.919516 3.889422 2.137628
+ [9] 2.614697 2.132098
+
+[[3]]
+ [1] 1.577695 2.984735 3.145692 3.346063 2.633627 1.688045 3.767580 4.363624
+ [9] 4.375538 3.878823</code></pre>
 </div>
 </div>
-<p><code>unnest_longer()</code> has gained a <code>keep_empty</code> argument like <code>unnest()</code>, and it now treats <code>NULL</code> and empty vectors the same way:</p>
+<p>Now we have: <code>map_vec()</code>!</p>
+<p><code>map_vec()</code> is a generalized <code>map_*()</code> that works with an arbitrary types of vectors, like dates, factors, and date-times.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">list</span>(<span class="cn">NULL</span>, <span class="fu">integer</span>(), <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>df </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">3</span> <span class="sc">|&gt;</span> <span class="fu">map_vec</span>(\(i) <span class="fu">as.Date</span>(<span class="fu">ISOdate</span>(<span class="dv">2023</span>, <span class="dv">0</span> <span class="sc">+</span> i, <span class="dv">5</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-     id x        
-  &lt;int&gt; &lt;list&gt;   
-1     1 &lt;NULL&gt;   
-2     2 &lt;int [0]&gt;
-3     3 &lt;int [3]&gt;</code></pre>
+<pre><code>[1] "2023-01-05" "2023-02-05" "2023-03-05"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">unnest_longer</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-     id     x
-  &lt;int&gt; &lt;int&gt;
-1     3     1
-2     3     2
-3     3     3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">unnest_longer</span>(x, <span class="at">keep_empty =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 2
-     id     x
-  &lt;int&gt; &lt;int&gt;
-1     1    NA
-2     2    NA
-3     3     1
-4     3     2
-5     3     3</code></pre>
+<p>It will error if you try to combine different types:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list</span>(<span class="st">"a"</span>, <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="fu">map_vec</span>(identity)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `map_vec()`:
+! Can't combine `&lt;list&gt;[[1]]` &lt;character&gt; and `&lt;list&gt;[[2]]` &lt;double&gt;.</code></pre>
 </div>
 </div>
 <section id="learn-more" class="level3">
 <h3 class="anchored" data-anchor-id="learn-more">Learn more</h3>
 <ul>
-<li><a href="https://www.tidyverse.org/blog/2023/01/tidyr-1-3-0/">tidyverse blog: 1.3.0</a></li>
-<li><a href="https://github.com/tidyverse/tidyr/releases/tag/v1.3.0">Release notes</a></li>
+<li><a href="https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/">tidyverse blog: purrr 1.0.0</a></li>
 </ul>
 
 
