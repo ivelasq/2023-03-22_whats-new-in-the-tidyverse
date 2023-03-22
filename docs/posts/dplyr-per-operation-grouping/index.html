@@ -178,7 +178,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div>
   <div class="description">
-    Introducing by/.by, an experimental grouping alternative to group_by().
+    Introducing <code>by</code>/<code>.by</code>, an experimental grouping alternative to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>.
   </div>
 </div>
 
@@ -208,7 +208,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="per-operation-grouping" class="level2"><h2 class="anchored" data-anchor-id="per-operation-grouping">Per-operation grouping</h2>
 <p><code>by</code>/<code>.by</code> is an experimental grouping alternative to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>.</p>
 <section id="group_by" class="level3"><h3 class="anchored" data-anchor-id="group_by"><code>group_by()</code></h3>
-<p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> provides persistent grouping (lasts for more than one operation) for data operations.</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> is a function that groups by one or more variable.</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
@@ -239,7 +239,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 6 B        2023      18    30</code></pre>
 </div>
 </div>
-<p>Notice the message that says <code>Groups: company, year [4]</code>.</p>
+<p>Notice the message that says <code>Groups: company, year [4]</code>. <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> provides persistent grouping (lasts for more than one operation).</p>
 <p>If you want only the total yearly revenue of each company, you can use <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> which peels off a layer of grouping by default:</p>
 <div class="cell">
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -317,79 +317,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 </div>
-<p>Advantages:</p>
-<ul>
-<li>You never have to remember to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>.</li>
-<li>You can use tidyselect for multiple columns, including unquoted column names or tidyselections like <code>.by = all_of(c(""))</code>.</li>
-<li>
-<code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> didn’t emit a message about regrouping.</li>
-<li>Order doesn’t matter (because you’re not peeling off layers).</li>
-<li>You can place the grouping specification alongside the code that uses it, rather than in a separate group_by() line.</li>
-</ul>
-<p>Things to note:</p>
-<ul>
-<li>
-<code>by/.by</code> is only for selection, it does not create columns.</li>
-<li>
-<code>by/.by</code> always returns an ungrouped data frame (so take note if you depend on grouped data frames with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>).</li>
-<li>With <code>by/.by</code>, you must create your grouping columns ahead of time.</li>
-<li>
-<code>.by</code> doesn’t sort grouping keys. <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> always sorts keys in ascending order, which affects the results of verbs like <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>.</li>
-</ul>
-<section id="where-did-this-come-from" class="level2"><h2 class="anchored" data-anchor-id="where-did-this-come-from">Where did this come from?</h2>
-<p><code>by/.by</code> was inspired by data.table!</p>
-<ul>
-<li>
-<code>by</code> is specified alongside what you want to group &amp;</li>
-<li>You start with a bare data table and then do this and end up with a bare data table, rather than having a grouped data frame like in dplyr.</li>
-</ul>
-<div class="cell">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>revenue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">revenue</span><span class="op">)</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">company</span>, <span class="va">year</span><span class="op">)</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>This raised the question, what if you can put it in line with your summarize call?</p>
-<div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
-<span>    revenue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">revenue</span><span class="op">)</span>, </span>
-<span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">company</span>, <span class="va">year</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
-dplyr 1.1.0.
-ℹ Please use `reframe()` instead.
-ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
-  always returns an ungrouped data frame and adjust accordingly.</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 12 × 2
-   revenue by   
-     &lt;int&gt; &lt;chr&gt;
- 1     114 A    
- 2     114 A    
- 3     114 A    
- 4     114 B    
- 5     114 B    
- 6     114 B    
- 7     114 2019 
- 8     114 2019 
- 9     114 2020 
-10     114 2021 
-11     114 2023 
-12     114 2023 </code></pre>
-</div>
-</div>
 <p>Notice this is longer grouped by company on the way out. It does the <strong>one operation</strong> then drops off.</p>
-</section><section id="in-summary" class="level2"><h2 class="anchored" data-anchor-id="in-summary">In summary</h2>
 <ol type="1">
 <li>
-<code>by/.by</code> is per-operation grouping</li>
-<li>
-<code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> is persistent grouping</li>
-</ol>
+</li></ol>
 <div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist">
-<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Before</a></li>
-<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">After</a></li>
+<li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true"><code>group_by()</code></a></li>
+<li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false"><code>by/.by</code></a></li>
 </ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
@@ -430,7 +365,71 @@ dplyr 1.1.0.
 </div>
 </div>
 </div>
-<section id="dplyr-verbs-that-support-by.by" class="level3"><h3 class="anchored" data-anchor-id="dplyr-verbs-that-support-by.by">dplyr verbs that support <code>by/.by</code>:</h3>
+<p>Advantages:</p>
+<ul>
+<li>
+<code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> didn’t emit a message about regrouping.</li>
+<li>You never have to remember to <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>.</li>
+<li>Order doesn’t matter (because you’re not peeling off layers).</li>
+<li>You can place the grouping specification alongside the code that uses it, rather than in a separate <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> line.</li>
+<li>You can use tidyselect for multiple columns, including unquoted column names or tidyselections like <code>.by = all_of(c(""))</code>.</li>
+</ul>
+<p>Things to note:</p>
+<ul>
+<li>
+<code>by/.by</code> is only for selection, it does not create columns.</li>
+<li>
+<code>by/.by</code> always returns an ungrouped data frame (so take note if you depend on grouped data frames with <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>).</li>
+<li>With <code>by/.by</code>, you must create your grouping columns ahead of time.</li>
+<li>
+<code>.by</code> doesn’t sort grouping keys. <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> always sorts keys in ascending order, which affects the results of verbs like <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code>.</li>
+</ul>
+<section id="where-did-this-come-from" class="level2"><h2 class="anchored" data-anchor-id="where-did-this-come-from">Where did this come from?</h2>
+<p><code>by/.by</code> was inspired by data.table!</p>
+<ul>
+<li>
+<code>by</code> is specified alongside what you want to group</li>
+<li>You start with a bare data table and then do this and end up with a bare data table, rather than having a grouped data frame like in dplyr.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span><span class="op">[</span>, <span class="fu">.</span><span class="op">(</span>revenue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">revenue</span><span class="op">)</span><span class="op">)</span>, by <span class="op">=</span> <span class="fu">.</span><span class="op">(</span><span class="va">company</span>, <span class="va">year</span><span class="op">)</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This raised the question, what if you can put it in line with your summarize call?</p>
+<div class="cell">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>revenue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">revenue</span><span class="op">)</span>,</span>
+<span>            by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">company</span>, <span class="va">year</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+dplyr 1.1.0.
+ℹ Please use `reframe()` instead.
+ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+  always returns an ungrouped data frame and adjust accordingly.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 12 × 2
+   revenue by   
+     &lt;int&gt; &lt;chr&gt;
+ 1     114 A    
+ 2     114 A    
+ 3     114 A    
+ 4     114 B    
+ 5     114 B    
+ 6     114 B    
+ 7     114 2019 
+ 8     114 2019 
+ 9     114 2020 
+10     114 2021 
+11     114 2023 
+12     114 2023 </code></pre>
+</div>
+</div>
+</section><section id="in-summary" class="level2"><h2 class="anchored" data-anchor-id="in-summary">In summary</h2>
+<ol type="1">
+<li><p><code>by/.by</code> is per-operation grouping</p></li>
+<li><p><code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> is persistent grouping</p></li>
+</ol>
+<p>dplyr verbs that support <code>by/.by</code>:</p>
 <ul>
 <li><code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code></li>
 <li><code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code></li>
@@ -444,7 +443,8 @@ dplyr 1.1.0.
 <code>slide_min()</code> and <code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max()</a></code>
 </li>
 <li><code><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample()</a></code></li>
-</ul></section><section id="by-or-.by" class="level3"><h3 class="anchored" data-anchor-id="by-or-.by">
+</ul>
+<section id="by-or-.by" class="level3"><h3 class="anchored" data-anchor-id="by-or-.by">
 <code>by</code> or <code>.by</code>?</h3>
 <p>Some verbs use <code>.</code> prefix for their arguments and some don’t. If you use the incorrect one, you will get an informative error:</p>
 <div class="cell">
@@ -469,7 +469,7 @@ dplyr 1.1.0.
 4 B        2023      12</code></pre>
 </div>
 </div>
-</section></section><section id="what-happens-to-group_by" class="level2"><h2 class="anchored" data-anchor-id="what-happens-to-group_by">What happens to group_by?</h2>
+</section></section><section id="what-happens-to-group_by" class="level2"><h2 class="anchored" data-anchor-id="what-happens-to-group_by">What happens to <code>group_by()</code>?</h2>
 <p>It’s not going away! It is not deprecated or even superseded. Don’t feel pressure to use <code>by/.by</code>.</p>
 <section id="learn-more" class="level3"><h3 class="anchored" data-anchor-id="learn-more">Learn more</h3>
 <ul>

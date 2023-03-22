@@ -38,6 +38,7 @@ There are three big new mapping features in purrr 1.0.0:
 See a progress bar for long running jobs using `.progress = TRUE`:
 
 ```{r}
+# don't forget to open console
 x <- map(1:100, \(x) Sys.sleep(0.1), .progress = TRUE)
 ```
 

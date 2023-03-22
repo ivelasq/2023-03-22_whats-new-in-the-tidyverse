@@ -207,14 +207,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Let’s create some data. In <code>transactions</code>, we have company IDs, years, and revenue. In <code>companies</code>, we have the company IDs and full company names.</p>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span>  company <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span><span class="op">)</span>,</span>
-<span>  year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2019</span>, <span class="fl">2020</span>, <span class="fl">2021</span>, <span class="fl">2023</span><span class="op">)</span>,</span>
-<span>  revenue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">4</span>, <span class="fl">10</span>, <span class="fl">12</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>    <span class="op">~</span><span class="va">company</span>, <span class="op">~</span><span class="va">year</span>, <span class="op">~</span><span class="va">revenue</span>,</span>
+<span>         <span class="st">"A"</span>, <span class="fl">2019L</span>,      <span class="fl">20L</span>,</span>
+<span>         <span class="st">"A"</span>, <span class="fl">2019L</span>,      <span class="fl">50L</span>,</span>
+<span>         <span class="st">"A"</span>, <span class="fl">2020L</span>,       <span class="fl">4L</span>,</span>
+<span>         <span class="st">"B"</span>, <span class="fl">2021L</span>,      <span class="fl">10L</span>,</span>
+<span>         <span class="st">"B"</span>, <span class="fl">2023L</span>,      <span class="fl">12L</span>,</span>
+<span>         <span class="st">"B"</span>, <span class="fl">2023L</span>,      <span class="fl">18L</span></span>
+<span>    <span class="op">)</span></span>
 <span></span>
-<span><span class="va">companies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>,</span>
-<span>                    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Patagonia"</span>, <span class="st">"RStudio"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">companies</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>    <span class="op">~</span><span class="va">id</span>, <span class="op">~</span><span class="va">name</span>,</span>
+<span>    <span class="st">"A"</span>, <span class="st">"Patagonia"</span>,</span>
+<span>    <span class="st">"B"</span>, <span class="st">"RStudio"</span></span>
+<span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="join_by" class="level2"><h2 class="anchored" data-anchor-id="join_by"><code>join_by()</code></h2>
 <p>Say you want to join these two tables. You’ve been able to do this in dplyr:</p>
@@ -222,13 +231,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">companies</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>company <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 4
+<pre><code># A tibble: 6 × 4
   company  year revenue name     
-  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    
-1 A        2019      50 Patagonia
-2 A        2020       4 Patagonia
-3 B        2021      10 RStudio  
-4 B        2023      12 RStudio  </code></pre>
+  &lt;chr&gt;   &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    
+1 A        2019      20 Patagonia
+2 A        2019      50 Patagonia
+3 A        2020       4 Patagonia
+4 B        2021      10 RStudio  
+5 B        2023      12 RStudio  
+6 B        2023      18 RStudio  </code></pre>
 </div>
 </div>
 <p>This is a bit odd:</p>
@@ -245,95 +256,120 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">companies</span>, by <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">company</span> <span class="op">==</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 4
+<pre><code># A tibble: 6 × 4
   company  year revenue name     
-  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    
-1 A        2019      50 Patagonia
-2 A        2020       4 Patagonia
-3 B        2021      10 RStudio  
-4 B        2023      12 RStudio  </code></pre>
+  &lt;chr&gt;   &lt;int&gt;   &lt;int&gt; &lt;chr&gt;    
+1 A        2019      20 Patagonia
+2 A        2019      50 Patagonia
+3 A        2020       4 Patagonia
+4 B        2021      10 RStudio  
+5 B        2023      12 RStudio  
+6 B        2023      18 RStudio  </code></pre>
 </div>
 </div>
 <p>This is a much more natural way of expressing this join.</p>
 </section><section id="multiple-matches" class="level2"><h2 class="anchored" data-anchor-id="multiple-matches">Multiple matches</h2>
 <p>RStudio became Posit in 2023. Now, let’s add a column to track the change:</p>
 <div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">companies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
-<span>  id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span><span class="op">)</span>,</span>
-<span>  since <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1973</span>, <span class="fl">2009</span>, <span class="fl">2022</span><span class="op">)</span>,</span>
-<span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Patagonia"</span>, <span class="st">"RStudio"</span>, <span class="st">"Posit"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">companies</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>    <span class="op">~</span><span class="va">id</span>, <span class="op">~</span><span class="va">since</span>, <span class="op">~</span><span class="va">name</span>,</span>
+<span>    <span class="st">"A"</span>, <span class="fl">1973</span>, <span class="st">"Patagonia"</span>,</span>
+<span>    <span class="st">"B"</span>, <span class="fl">2009</span>, <span class="st">"RStudio"</span>,</span>
+<span>    <span class="st">"B"</span>, <span class="fl">2022</span>, <span class="st">"Posit"</span></span>
+<span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>What happens when we try to join the tables together?</p>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">faulty</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">transactions</span> <span class="op">|&gt;</span> </span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">companies</span>, by <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">company</span> <span class="op">==</span> <span class="va">id</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in inner_join(transactions, companies, by = join_by(company == id)): Each row in `x` is expected to match at most 1 row in `y`.
-ℹ Row 3 of `x` matches multiple rows.
+ℹ Row 4 of `x` matches multiple rows.
 ℹ If multiple matches are expected, set `multiple = "all"` to silence this
   warning.</code></pre>
 </div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 5
+  company  year revenue since name     
+  &lt;chr&gt;   &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;    
+1 A        2019      20  1973 Patagonia
+2 A        2019      50  1973 Patagonia
+3 A        2020       4  1973 Patagonia
+4 B        2021      10  2009 RStudio  
+5 B        2021      10  2022 Posit    
+6 B        2023      12  2009 RStudio  
+7 B        2023      12  2022 Posit    
+8 B        2023      18  2009 RStudio  
+9 B        2023      18  2022 Posit    </code></pre>
+</div>
 </div>
 <p>In 2021, it joined <code>B</code> with both <code>RStudio</code> and <code>Posit</code>, creating multiple matches. We want to match with RStudio, but not with Posit (because the name hasn’t changed yet).</p>
+<p>You see a warning:</p>
+<pre><code>Warning in inner_join(transactions, companies, by = join_by(company == id)): Each row in `x` is expected to match at most 1 row in `y`.
+ℹ Row 3 of `x` matches multiple rows.
+ℹ If multiple matches are expected, set `multiple = "all"` to silence this warning.</code></pre>
 </section><section id="inequality-joins" class="level2"><h2 class="anchored" data-anchor-id="inequality-joins">Inequality joins</h2>
 <p>dplyr 1.1.0 has inequality joins: join expressions containing one of the following the inequality conditions <code>&gt;=</code>, <code>&gt;</code>, <code>&lt;=</code>, or <code>&lt;</code>.</p>
 <p>You can think through the logic of what you would like with the <code>year</code> and <code>since</code> columns:</p>
 <div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Only want a match if `year` is *after* the name change</span></span>
-<span><span class="co"># `year[i] &gt;= since`?</span></span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># `year[i] &gt;= since`?</span></span>
 <span><span class="fl">2021</span> <span class="op">&gt;=</span> <span class="fl">2009</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">2021</span> <span class="op">&gt;=</span> <span class="fl">2022</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">2021</span> <span class="op">&gt;=</span> <span class="fl">2022</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
 <p>Now, you can add an inequality condition to <code><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by()</a></code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">join_by(company == id, year &gt;= since)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">company</span> <span class="op">==</span> <span class="va">id</span>, <span class="va">year</span> <span class="op">&gt;=</span> <span class="va">since</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Running it with the inequality join:</p>
 <div class="cell">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">companies</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">company</span> <span class="op">==</span> <span class="va">id</span>, <span class="va">year</span> <span class="op">&gt;=</span> <span class="va">since</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 5
+<pre><code># A tibble: 8 × 5
   company  year revenue since name     
-  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    
-1 A        2019      50  1973 Patagonia
-2 A        2020       4  1973 Patagonia
-3 B        2021      10  2009 RStudio  
-4 B        2023      12  2009 RStudio  
-5 B        2023      12  2022 Posit    </code></pre>
+  &lt;chr&gt;   &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;    
+1 A        2019      20  1973 Patagonia
+2 A        2019      50  1973 Patagonia
+3 A        2020       4  1973 Patagonia
+4 B        2021      10  2009 RStudio  
+5 B        2023      12  2009 RStudio  
+6 B        2023      12  2022 Posit    
+7 B        2023      18  2009 RStudio  
+8 B        2023      18  2022 Posit    </code></pre>
 </div>
 </div>
 <p>You’re down to five! But, in 2023, you still have two matches. This is because the logic is true but not complete:</p>
 <div class="cell">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">2023</span> <span class="op">&gt;=</span> <span class="fl">2009</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">2023</span> <span class="op">&gt;=</span> <span class="fl">2009</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">2021</span> <span class="op">&gt;=</span> <span class="fl">2022</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">2023</span> <span class="op">&gt;=</span> <span class="fl">2022</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE</code></pre>
+<pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 </section><section id="rolling-joins" class="level2"><h2 class="anchored" data-anchor-id="rolling-joins">Rolling joins</h2>
 <p>You can use rolling joins to find the ‘closest’ inequality match.</p>
 <p>You prefer the Posit match over the RStudio match because 2022 is <em>closer</em> to the transaction year of 2023 than 2009 is. Wrap something in <code>closest()</code> to express this:</p>
 <div class="cell">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">companies</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">company</span> <span class="op">==</span> <span class="va">id</span>, <span class="fu">closest</span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;=</span> <span class="va">since</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 5
+<pre><code># A tibble: 6 × 5
   company  year revenue since name     
-  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    
-1 A        2019      50  1973 Patagonia
-2 A        2020       4  1973 Patagonia
-3 B        2021      10  2009 RStudio  
-4 B        2023      12  2022 Posit    </code></pre>
+  &lt;chr&gt;   &lt;int&gt;   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;    
+1 A        2019      20  1973 Patagonia
+2 A        2019      50  1973 Patagonia
+3 A        2020       4  1973 Patagonia
+4 B        2021      10  2009 RStudio  
+5 B        2023      12  2022 Posit    
+6 B        2023      18  2022 Posit    </code></pre>
 </div>
 </div>
 <blockquote class="blockquote">
@@ -342,41 +378,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section><section id="unmatched-rows" class="level2"><h2 class="anchored" data-anchor-id="unmatched-rows">Unmatched rows</h2>
 <p>Say you add a new company to <code>transactions</code> but forget to add them to <code>companies</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">&lt;-</span> <span class="va">transactions</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/add_row.html">add_row</a></span><span class="op">(</span>company <span class="op">=</span> <span class="st">"C"</span>, year <span class="op">=</span> <span class="fl">2023</span>, revenue <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">transactions</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/add_row.html">add_row</a></span><span class="op">(</span>company <span class="op">=</span> <span class="st">"C"</span>,</span>
+<span>                  year <span class="op">=</span> <span class="fl">2023</span>,</span>
+<span>                  revenue <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">transactions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 3
+<pre><code># A tibble: 7 × 3
   company  year revenue
   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 A        2019      50
-2 A        2020       4
-3 B        2021      10
-4 B        2023      12
-5 C        2023      15</code></pre>
+1 A        2019      20
+2 A        2019      50
+3 A        2020       4
+4 B        2021      10
+5 B        2023      12
+6 B        2023      18
+7 C        2023      15</code></pre>
 </div>
 </div>
 <p>When you run your join, company C will disappear:</p>
 <div class="cell">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span></span>
-<span>    <span class="va">companies</span>, </span>
-<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">company</span> <span class="op">==</span> <span class="va">id</span>, <span class="fu">closest</span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;=</span> <span class="va">since</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">companies</span>,</span>
+<span>             <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">company</span> <span class="op">==</span> <span class="va">id</span>, <span class="fu">closest</span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;=</span> <span class="va">since</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 5
+<pre><code># A tibble: 6 × 5
   company  year revenue since name     
   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    
-1 A        2019      50  1973 Patagonia
-2 A        2020       4  1973 Patagonia
-3 B        2021      10  2009 RStudio  
-4 B        2023      12  2022 Posit    </code></pre>
+1 A        2019      20  1973 Patagonia
+2 A        2019      50  1973 Patagonia
+3 A        2020       4  1973 Patagonia
+4 B        2021      10  2009 RStudio  
+5 B        2023      12  2022 Posit    
+6 B        2023      18  2022 Posit    </code></pre>
 </div>
 </div>
 <p>You can now catch this problem automatically by using a new quality control argument, <code>unmatched</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">transactions</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span></span>
 <span>    <span class="va">companies</span>, </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/join_by.html">join_by</a></span><span class="op">(</span><span class="va">company</span> <span class="op">==</span> <span class="va">id</span>, <span class="fu">closest</span><span class="op">(</span><span class="va">year</span> <span class="op">&gt;=</span> <span class="va">since</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -385,7 +426,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-error">
 <pre><code>Error in `inner_join()`:
 ! Each row of `x` must have a match in `y`.
-ℹ Row 5 of `x` does not have a match.</code></pre>
+ℹ Row 7 of `x` does not have a match.</code></pre>
 </div>
 </div>
 <div class="callout-tip callout callout-style-default callout-captioned">
@@ -398,7 +439,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Have you been wondering why Davis is using an <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> instead of a <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>? You’d use a left_join() is to ensure that rows from x are always retained, so it wouldn’t make sense to error when rows from x are also unmatched. In an inner_join(), both inputs can potentially drop rows, so <code>unmatched = "error"</code> checks for unmatched rows in both inputs.</p>
+<p>Have you been wondering why Davis is using an <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> instead of a <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>? You’d use a <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code> is to ensure that rows from x are always retained, so it wouldn’t make sense to error when rows from x are also unmatched. In an inner_join(), both inputs can potentially drop rows, so <code>unmatched = "error"</code> checks for unmatched rows in both inputs.</p>
 </div>
 </div>
 </section><section id="overlap-joins" class="level2"><h2 class="anchored" data-anchor-id="overlap-joins">Overlap joins</h2>
@@ -411,9 +452,9 @@ Tip
 <li>
 <code>join_by(id, within(x_lower, x_upper, y_lower, y_upper))</code> or has to be completely inside the lower and upper of the other table</li>
 </ul></section><section id="cross-joins" class="level2"><h2 class="anchored" data-anchor-id="cross-joins">Cross joins</h2>
-<p>Cross joins match each row in x to every row in y, giving you the full Cartesian production.</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/cross_join.html">cross_join()</a></code> match each row in x to every row in y, giving you the full Cartesian production.</p>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">characters</span> <span class="op">&lt;-</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">characters</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>    <span class="op">~</span><span class="va">person</span>,         <span class="op">~</span><span class="va">title</span>,</span>
 <span>     <span class="st">"Shiv"</span>,    <span class="st">"President"</span>,</span>
@@ -463,7 +504,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><code><a href="https://dplyr.tidyverse.org/reference/cross_join.html">cross_join()</a></code> achieves the same effect as <code><a href="https://tidyr.tidyverse.org/reference/expand.html">tidyr::crossing()</a></code> but dplyr is always about data frames whereas <code><a href="https://tidyr.tidyverse.org/reference/expand.html">tidyr::crossing()</a></code> is more for individual data.</p>
+<p><code><a href="https://dplyr.tidyverse.org/reference/cross_join.html">cross_join()</a></code> achieves the same effect as <code><a href="https://tidyr.tidyverse.org/reference/expand.html">tidyr::crossing()</a></code> but <code><a href="https://dplyr.tidyverse.org/reference/cross_join.html">dplyr::cross_join()</a></code> is always about data frames whereas <code><a href="https://tidyr.tidyverse.org/reference/expand.html">tidyr::crossing()</a></code> is more for individual data.</p>
 </div>
 </div>
 </section><section id="learn-more" class="level2"><h2 class="anchored" data-anchor-id="learn-more">Learn more</h2>

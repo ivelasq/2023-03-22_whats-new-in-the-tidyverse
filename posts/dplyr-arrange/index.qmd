@@ -1,5 +1,5 @@
 ---
-title: "pick(), reframe(), and arrange()"
+title: "`pick()`, `reframe()`, and `arrange()`"
 subtitle: "dplyr 1.1.0"
 date: 2023-01-29
 image: "dplyr-pick-reframe-arrange.png"
@@ -21,10 +21,11 @@ pak::pak("cran/dplyr@1.1.0")
 Load the package with:
 
 ```{r}
+#| message: false
 library(dplyr)
 ```
 
-## pick()
+## `pick()`
 
 You may have used `across()` for column selection while working inside a data-masking function like `mutate()` or `summarize()`.
 
@@ -57,7 +58,7 @@ df |>
 
 `across()` still works without functions for now, but the tidyverse team plans to deprecate it in the future.
 
-## reframe()
+## `reframe()`
 
 dplyr 1.0.0 introduces a powerful new feature: `summarise()` could return per-group results of any length:
 
@@ -69,6 +70,8 @@ df <- tibble(
   x = c("e", "a", "b", "c", "f", "d", "a")
 )
 
+df
+
 df |>
   summarise(x = intersect(x, table), .by = g)
 ```
@@ -79,7 +82,7 @@ However, this raised some concerns.
 -   Is against the spirit of a "summary," which implies 1 row per group
 -   Makes translation to dbplyr very difficult
 
-This feature has been walked back and summarize will throw a warning when either 0 or \>1 rows are returned per group.
+This feature has been walked back and `summarize()` will throw a warning when either 0 or \>1 rows are returned per group.
 
 As its replacement, welcome new function `reframe()`!
 
@@ -92,9 +95,9 @@ df |>
 
 `reframe()` always returns an ungrouped data frame (i.e., not a grouped data frame even if the input was grouped).
 
-## arrange()
+## `arrange()`
 
-When sorting character vectors, the C locale is now the default, rather than the system locale. This makes dplyr wayyy faster at sorting character variables.
+When sorting character vectors, the C locale is now the default, rather than the system locale. This makes dplyr 1.1.0 wayyy faster at sorting character variables.
 
 ```{r}
 #| message: false
@@ -102,6 +105,7 @@ library(withr)
 library(dplyr)
 
 df <- tibble(x = stringi::stri_rand_strings(n = 5e5, length = 15))
+df
 
 withr::with_options(list(dplyr.legacy_locale = TRUE),
                     {
@@ -111,14 +115,14 @@ withr::with_options(list(dplyr.legacy_locale = TRUE),
 bench::system_time(df %>% arrange(x))
 ```
 
-There is a new `.locale` argument for you to explicitly request an alternative locale using a stringi locale identifier (like "en" for English, or "fr" for French).
+There is a new `locale` argument for you to explicitly request an alternative locale using a stringi locale identifier (like "en" for English, or "fr" for French).
 
 ```{r}
 bench::system_time(df %>% arrange(x, locale = "fr"))
 ```
 
 ::: callout-warning
-Be aware: the new locale slighly changes how vectors are ordered.
+Be aware: the new locale slightly changes how vectors are ordered.
 :::
 
 ## Learn more

@@ -41,43 +41,13 @@ There are four important changes in purrr 1.0.0:
 Before, `pluck()` replaced 0-length vectors with the value of default. Now default is only used for `NULL` and absent elements:
 
 ```{r}
-library(purrr)
-
 x <- list(y = list(a = character(), b = NULL))
 x
 ```
 
-::: panel-tabset
-## Before
-
 ```{r}
-#| include: false
-new_lib <- tempfile()
-dir.create(new_lib)
-withr::with_libpaths(new = new_lib,
-                     install.packages("remotes"))
-withr::with_libpaths(new = new_lib,
-                     remotes::install_version("purrr", "0.3.4"))
-```
-
-```{r}
-library(purrr, lib.loc = new_lib)
 x |> pluck("y", "a", .default = NA)
 ```
-
-```{r}
-#| include: false
-unlink(new_lib, recursive = TRUE)
-unloadNamespace("purrr")
-```
-
-## After
-
-```{r}
-library(purrr)
-x |> pluck("y", "a", .default = NA)
-```
-:::
 
 ```{r}
 x |> pluck("y", "b", .default = NA)
@@ -195,7 +165,7 @@ system.time({ x |> tidyr::expand_grid() })
 
 #### `lift_*`
 
-The `lift_*` family of functions has been superceded because they promote a style of function manipulation that is not commonly used in R.
+The `lift_*` family of functions has been superseded because they promote a style of function manipulation that is not commonly used in R.
 
 #### `prepend()`, `rdunif()`, `rbernoulli()`, `when()`, and `list_along()`
 

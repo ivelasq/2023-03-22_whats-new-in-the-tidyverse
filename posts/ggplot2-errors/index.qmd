@@ -21,6 +21,13 @@ Install ggplot2 3.4.0 with:
 pak::pak("cran/ggplot2@3.4.0")
 ```
 
+Load the package with:
+
+```{r}
+library(ggplot2)
+```
+
+
 ### Better error messages
 
 ...with better wording + cli package's rich text formatting!

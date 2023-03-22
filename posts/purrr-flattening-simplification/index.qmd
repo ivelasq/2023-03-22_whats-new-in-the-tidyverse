@@ -56,6 +56,7 @@ x |> list_flatten() |> list_flatten() |> list_flatten() |> str()
 x <- list(1, 2, 3)
 typeof(x)
 ```
+
 ```{r}
 y <-
   x |> list_simplify()
@@ -67,21 +68,21 @@ typeof(y)
 
 A few rules for `list_simplify()`:
 
-* It will only succeed if every element has length 1
+-   It will only succeed if every element has length 1
 
 ```{r}
 #| error: true
 list_simplify(list(1, 2, 3:4))
 ```
 
-* All the components must be compatible
+-   All the components must be compatible
 
 ```{r}
 #| error: true
 list_simplify(list(1, 2, "a"))
 ```
 
-If you need to simplify if it’s possible, but otherwise leave the input unchanged, use `strict = FALSE`:
+If you need to simplify if it's possible, but otherwise leave the input unchanged, use `strict = FALSE`:
 
 ```{r}
 list_simplify(list(1, 2, "a"), strict = FALSE)
@@ -97,8 +98,7 @@ list(1, 2, 3) |> list_simplify(ptype = integer())
 
 `map_dfr()` and `map_dfc()` (and the `map2` and `pmap`) variants are superseded. Consider switching to an explicit call to `list_rbind()` or `list_cbind()` instead:
 
-:::{.panel-tabset}
-
+::: panel-tabset
 ## Before
 
 ```{r}
@@ -114,7 +114,6 @@ paths |>
   map(read_csv) |> 
   list_rbind(names_to = "path")
 ```
-
 :::
 
 ### Learn more

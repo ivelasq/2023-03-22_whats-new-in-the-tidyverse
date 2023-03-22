@@ -18,9 +18,15 @@ Install tidyr 1.3.0 with:
 pak::pak("cran/tidyr@1.3.0")
 ```
 
+Load the package with:
+
+```{r}
+library(tidyr)
+```
+
 ## `unnest_wider()` and `unnest_longer()` improvements
 
-`unnest_longer()` and `unnest_wider()` have received some quality of life and consistency improvements. 
+`unnest_longer()` and `unnest_wider()` have received some quality of life and consistency improvements.
 
 `unnest_wider()` now gives a better error when unnesting an unnamed vector:
 
@@ -38,7 +44,6 @@ df
 df |> 
   unnest_wider(x)
 ```
-
 
 ```{r}
 df |> 
@@ -62,5 +67,5 @@ df |> unnest_longer(x, keep_empty = TRUE)
 
 ### Learn more
 
-* [tidyverse blog: 1.3.0](https://www.tidyverse.org/blog/2023/01/tidyr-1-3-0/)
-* [Release notes](https://github.com/tidyverse/tidyr/releases/tag/v1.3.0)
+-   [tidyverse blog: 1.3.0](https://www.tidyverse.org/blog/2023/01/tidyr-1-3-0/)
+-   [Release notes](https://github.com/tidyverse/tidyr/releases/tag/v1.3.0)

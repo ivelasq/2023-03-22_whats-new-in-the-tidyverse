@@ -1,5 +1,5 @@
 ---
-title: "New str_* functions"
+title: "New `str_*` functions"
 subtitle: "stringr 1.5.0"
 date: 2022-12-02
 categories:
@@ -7,6 +7,7 @@ categories:
 image: "stringr-new-str-funs.png"
 image-alt: "Text: New str_* functions stringr. Image of various new stringr functions."
 description: "stringr has accumulated several new functions since its last release three years ago."
+editor: source
 ---
 
 Install stringr 1.5.0 with:
@@ -22,17 +23,17 @@ Load the package with:
 library(stringr)
 ```
 
-## New str_* functions
+## New str\_\* functions
 
-* [str_view()](#str_view)
-* [str_equal()](#str_equal)
-* [str_rank()](#str_rank)
-* [str_unique()](#str_unique)
-* [str_split_1()](#str_split_1)
-* [str_split_i()](str_split_i)
-* [str_escape()](str_escape) 
+-   [str_view()](#str_view)
+-   [str_equal()](#str_equal)
+-   [str_rank()](#str_rank)
+-   [str_unique()](#str_unique)
+-   [str_split_1()](#str_split_1)
+-   [str_split_i()](str_split_i)
+-   [str_escape()](str_escape)
 
-### str_view()
+### str_view() {#str_view}
 
 `str_view()` lets you clearly see a string with special characters:
 
@@ -41,8 +42,7 @@ x <- "a\n'\b\n\"c"
 x
 ```
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## Base R
 
 In base R, you can use `writeLines()` to get a good look at the string:
@@ -52,18 +52,17 @@ writeLines(x)
 ```
 
 ## stringr
+
 Now you can use `str_view()`!
 
 ```{r}
 str_view(x)
 ```
-
 :::
 
 `str_view()` also highlights strings with special characters:
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## White space
 
 ```{r}
@@ -79,7 +78,6 @@ str_view(nbsp)
 tab_space <- "\t"
 str_view(tab_space)
 ```
-
 :::
 
 Finally, `str_view()` makes matches stand out:
@@ -90,7 +88,7 @@ str_view(c("abc", "def", "fghi"), ".$")
 str_view(fruit, "(.)\\1")
 ```
 
-### str_equal()
+### str_equal() {#str_equal}
 
 Use `str_equal()` to determine if two strings are equivalent:
 
@@ -105,6 +103,7 @@ str_equal("a", "A", ignore_case = TRUE)
 ```
 
 ```{r}
+# These two strings encode "a" with an accent in two different ways
 a1 <- "\u00e1"
 a2 <- "a\u0301"
 c(a1, a2)
@@ -113,14 +112,15 @@ a1 == a2
 str_equal(a1, a2)
 ```
 
-### str_rank()
+### str_rank() {#str_rank}
+
+`str_rank()` returns the ranks of the values:
 
 ```{r}
 str_rank(c("a", "c", "b", "b"))
-str_order(c("a", "c", "b", "b"))
 ```
 
-### str_unique()
+### str_unique() {#str_unique}
 
 `str_unique()` returns unique values:
 
@@ -134,13 +134,13 @@ You have the option to ignore case:
 str_unique(c("a", "a", "A"), ignore_case = TRUE)
 ```
 
-### str_split_1() 
+### str_split_1() {#str_split_1}
 
 `str_split_1()` splits a single string. It returns a character vector, not a list:
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## Before 1.5.0
+
 ```{r}
 unlist(str_split("x-y-z", "-"))
 ```
@@ -150,12 +150,11 @@ unlist(str_split("x-y-z", "-"))
 ```{r}
 str_split_1("x-y-z", "-")
 ```
-
 :::
 
-`str_split_1()` errors if you try and give it multiple values:
-
 ### str_split_i()
+
+`str_split_i()` extracts a single piece from the split string:
 
 ```{r}
 x <- c("a-b-c", "d-e", "f-g-h-i")
@@ -166,8 +165,8 @@ str_split_i(x, "-", 4)
 str_split_i(x, "-", -1)
 ```
 
-`str_like()` works like `str_detect()` but uses SQL’s LIKE syntax:
- 
+`str_like()` works like `str_detect()` but uses SQL's LIKE syntax:
+
 ```{r}
 fruit <- c("apple", "banana", "pear", "pineapple")
 fruit[str_like(fruit, "%apple")]
@@ -177,5 +176,5 @@ fruit[str_like(fruit, "p__r")]
 
 ### Learn more
 
-* [tidyverse blog: stringr 1.5.0](https://www.tidyverse.org/blog/2022/12/stringr-1-5-0/)
-* [stringr release notes](https://stringr.tidyverse.org/news/index.html)
+-   [tidyverse blog: stringr 1.5.0](https://www.tidyverse.org/blog/2022/12/stringr-1-5-0/)
+-   [stringr release notes](https://stringr.tidyverse.org/news/index.html)

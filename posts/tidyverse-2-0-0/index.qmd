@@ -51,7 +51,7 @@ You may have noticed this message:
 
 tidyverse 2.0.0 now advertises the [conflicted package](https://conflicted.r-lib.org/).
 
-Packages can have conflicts (i.e., contain functions of the same name). Normally, the package loaded last "wins" and masks (overrides) the other function, resulting in confusing errors.
+Packages can have conflicts (i.e., contain functions of the same name). Normally, the package loaded last "wins" and masks (overrides) the other package's function, resulting in confusing errors.
 
 ```{r}
 library(dplyr)
@@ -82,7 +82,7 @@ Or, declare a preference with `conflicts_prefer()`:
 
 ```{r}
 #| eval: false
-conflicts_prefer(dplyr::filter)
+conflicts_prefer(dplyr::select)
 ```
 
 That way you know there's a problem and how to resolve it.

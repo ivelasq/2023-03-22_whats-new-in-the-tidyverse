@@ -38,24 +38,36 @@ pak::pak(c("tidyverse", "dplyr", "tidyr", "stringr", "purrr", "ggplot2"))
 
 ### Lifecycle stages
 
-Learn about the lifecycle stages:
+Learn about the [lifecycle stages](https://lifecycle.r-lib.org/articles/stages.html):
 
 ![A diagram showing the transitions between the four main stages: experimental can become stable and stable can become deprecated or superseded.](lifecycle.svg)
+Example: [recode](https://dplyr.tidyverse.org/reference/recode.html)
 
 ### A note on vctrs
 
-Quite a few functions have been rewritten to use vctrs package behind the scenes:
+Quite a few functions have been rewritten to use [vctrs](https://vctrs.r-lib.org/)  package behind the scenes:
 
 * dplyr's `if_else()`, `first()`, `last()`, `nth()`, `coalesce()`, `between()`.
 
-The tidyverse team uses [vctrs](https://vctrs.r-lib.org/) to keep recycling rules and coercion rules in one place.
+The tidyverse team uses vctrs to keep recycling rules and coercion rules in one place.
 
-This doesn't impact data scientists too much but it means more consistency and better error messages, bug fixes, and higher quality code.
+This doesn't impact data scientists too much but it means more consistency, better error messages, bug fixes, and higher quality code.
 
 ```{r}
 #| error: true
+#| message: false
+library(dplyr)
 x <- c(1:10, NA)
 if_else(x %% 2 == 0, x, "x") 
+```
+
+### tidyselect
+
+Tidyselect is the backend of functions like `select()` that makes it consistent to create selecting verbs.
+
+```{r}
+mtcars %>% 
+  select(contains("t"))
 ```
 
 

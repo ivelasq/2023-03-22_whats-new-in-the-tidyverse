@@ -49,7 +49,7 @@ case_when(
 Error: `NA` must be <character>, not <logical>.
 ```
 
-In this case, you have to use `NA_character_` instead of `NA`.
+In this case, you had to use `NA_character_` instead of `NA`.
 
 But not anymore!
 
@@ -94,7 +94,8 @@ case_when(
 Sometimes, `case_when()` can be a bit repetitive:
 
 ```{r}
-x <- c("USA", "Canada", "Wales", "UK", "China", NA, "Mexico", "Russia")
+x <-
+  c("USA", "Canada", "Wales", "UK", "China", NA, "Mexico", "Russia")
 
 case_when(
   x %in% c("USA", "Canada", "Mexico") ~ "North America",
@@ -155,7 +156,7 @@ friends_dialogue <-
   friends %>% 
   slice(1:13) %>% 
   filter(speaker != "Scene Directions" & speaker != "#ALL#") %>% 
-  select(text, speaker)
+  dplyr::select(text, speaker)
 ```
 
 ```{r}
@@ -166,10 +167,13 @@ What if we want to put the continuous dialogue together in one line?
 
 ```{r}
 friends_dialogue |>
-  summarise(text = stringr::str_flatten(text, collapse = " "), .by = speaker)
+  summarise(text = stringr::str_flatten(text, collapse = " "),
+            .by = speaker)
 ```
 
-This smushes everything together - what if we want to keep the consecutive runs? Enter `consecutive_id()`!
+This smushes everything together - what if we want to keep the consecutive runs?
+
+Enter `consecutive_id()`!
 
 ```{r}
 friends_dialogue |>
@@ -181,7 +185,8 @@ With this, we can correctly group the dialogue:
 ```{r}
 friends_dialogue |>
   mutate(id = consecutive_id(speaker)) |>
-  summarise(text = stringr::str_flatten(text, collapse = " "), .by = c(id, speaker))
+  summarise(text = stringr::str_flatten(text, collapse = " "),
+            .by = c(id, speaker))
 ```
 
 ## Learn more

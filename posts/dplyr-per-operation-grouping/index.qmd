@@ -31,7 +31,7 @@ library(dplyr)
 
 ### `group_by()`
 
-`group_by()` provides persistent grouping (lasts for more than one operation) for data operations.
+`group_by()` is a function that groups by one or more variable.
 
 ```{r}
 transactions <-
@@ -54,7 +54,7 @@ transactions |>
   mutate(total = sum(revenue))
 ```
 
-Notice the message that says `Groups: company, year [4]`.
+Notice the message that says `Groups: company, year [4]`. `group_by()` provides persistent grouping (lasts for more than one operation).
 
 If you want only the total yearly revenue of each company, you can use `summarize()` which peels off a layer of grouping by default:
 
@@ -98,13 +98,35 @@ transactions |>
 ```
 :::
 
+Notice this is longer grouped by company on the way out. It does the **one operation** then drops off.
+
+1.  
+
+::: panel-tabset
+## `group_by()`
+
+```{mermaid}
+flowchart LR
+  A[Bare tibble] --> B(Transaction)
+  B --> C{Grouped data frame}
+```
+
+## `by/.by`
+
+```{mermaid}
+flowchart LR
+  A[Bare tibble] --> B(Transaction)
+  B --> C[Bare tibble]
+```
+:::
+
 Advantages:
 
--   You never have to remember to `ungroup()`.
--   You can use tidyselect for multiple columns, including unquoted column names or tidyselections like `.by = all_of(c(""))`.
 -   `summarise()` didn't emit a message about regrouping.
+-   You never have to remember to `ungroup()`.
 -   Order doesn't matter (because you're not peeling off layers).
--   You can place the grouping specification alongside the code that uses it, rather than in a separate group_by() line.
+-   You can place the grouping specification alongside the code that uses it, rather than in a separate `group_by()` line.
+-   You can use tidyselect for multiple columns, including unquoted column names or tidyselections like `.by = all_of(c(""))`.
 
 Things to note:
 
@@ -117,7 +139,7 @@ Things to note:
 
 `by/.by` was inspired by data.table!
 
--   `by` is specified alongside what you want to group &
+-   `by` is specified alongside what you want to group
 -   You start with a bare data table and then do this and end up with a bare data table, rather than having a grouped data frame like in dplyr.
 
 ```{r}
@@ -128,39 +150,18 @@ transactions[, .(revenue = sum(revenue)), by = .(company, year)]
 This raised the question, what if you can put it in line with your summarize call?
 
 ```{r}
-transactions %>% 
-  summarize(
-    revenue = sum(revenue), 
-    by = c(company, year)
-    )
+transactions %>%
+  summarize(revenue = sum(revenue),
+            by = c(company, year))
 ```
-
-Notice this is longer grouped by company on the way out. It does the **one operation** then drops off.
 
 ## In summary
 
 1.  `by/.by` is per-operation grouping
+
 2.  `group_by()` is persistent grouping
 
-::: panel-tabset
-## Before
-
-```{mermaid}
-flowchart LR
-  A[Bare tibble] --> B(Transaction)
-  B --> C{Grouped data frame}
-```
-
-## After
-
-```{mermaid}
-flowchart LR
-  A[Bare tibble] --> B(Transaction)
-  B --> C[Bare tibble]
-```
-:::
-
-### dplyr verbs that support `by/.by`:
+dplyr verbs that support `by/.by`:
 
 -   `mutate()`
 -   `summarize()`
@@ -186,7 +187,7 @@ transactions %>%
   slice_max(revenue, n = 2, by = company)
 ```
 
-## What happens to group_by?
+## What happens to `group_by()`?
 
 It's not going away! It is not deprecated or even superseded. Don't feel pressure to use `by/.by`.
 

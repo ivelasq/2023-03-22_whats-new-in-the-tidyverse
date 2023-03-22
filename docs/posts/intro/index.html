@@ -226,24 +226,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="http://pak.r-lib.org/reference/pak.html">pak</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyverse"</span>, <span class="st">"dplyr"</span>, <span class="st">"tidyr"</span>, <span class="st">"stringr"</span>, <span class="st">"purrr"</span>, <span class="st">"ggplot2"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section><section id="lifecycle-stages" class="level3"><h3 class="anchored" data-anchor-id="lifecycle-stages">Lifecycle stages</h3>
-<p>Learn about the lifecycle stages:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="lifecycle.svg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">A diagram showing the transitions between the four main stages: experimental can become stable and stable can become deprecated or superseded.</figcaption><p></p>
-</figure>
-</div>
+<p>Learn about the <a href="https://lifecycle.r-lib.org/articles/stages.html">lifecycle stages</a>:</p>
+<p><img src="lifecycle.svg" class="img-fluid" alt="A diagram showing the transitions between the four main stages: experimental can become stable and stable can become deprecated or superseded."> Example: <a href="https://dplyr.tidyverse.org/reference/recode.html">recode</a></p>
 </section><section id="a-note-on-vctrs" class="level3"><h3 class="anchored" data-anchor-id="a-note-on-vctrs">A note on vctrs</h3>
-<p>Quite a few functions have been rewritten to use vctrs package behind the scenes:</p>
+<p>Quite a few functions have been rewritten to use <a href="https://vctrs.r-lib.org/">vctrs</a> package behind the scenes:</p>
 <ul>
-<li>dplyr’s <code>if_else()</code>, <code>first()</code>, <code>last()</code>, <code>nth()</code>, <code>coalesce()</code>, <code>between()</code>.</li>
+<li>dplyr’s <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/nth.html">first()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/nth.html">last()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/nth.html">nth()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/coalesce.html">coalesce()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/between.html">between()</a></code>.</li>
 </ul>
-<p>The tidyverse team uses <a href="https://vctrs.r-lib.org/">vctrs</a> to keep recycling rules and coercion rules in one place.</p>
-<p>This doesn’t impact data scientists too much but it means more consistency and better error messages, bug fixes, and higher quality code.</p>
+<p>The tidyverse team uses vctrs to keep recycling rules and coercion rules in one place.</p>
+<p>This doesn’t impact data scientists too much but it means more consistency, better error messages, bug fixes, and higher quality code.</p>
 <div class="cell">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="cn">NA</span><span class="op">)</span></span>
-<span><span class="fu">if_else</span><span class="op">(</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">2</span> <span class="op">==</span> <span class="fl">0</span>, <span class="va">x</span>, <span class="st">"x"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="cn">NA</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">2</span> <span class="op">==</span> <span class="fl">0</span>, <span class="va">x</span>, <span class="st">"x"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error in if_else(x%%2 == 0, x, "x"): could not find function "if_else"</code></pre>
+<pre><code>Error in `if_else()`:
+! Can't combine `true` &lt;integer&gt; and `false` &lt;character&gt;.</code></pre>
 </div>
 </div>
 </section></section><section id="base-r-pipe" class="level2"><h2 class="anchored" data-anchor-id="base-r-pipe">Base R pipe</h2>

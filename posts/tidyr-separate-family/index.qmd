@@ -8,7 +8,7 @@ categories:
   - "tidyr"
 description: A new family of `separate_*()` functions supersedes `separate()`, `separate_rows()`, and `extract()`.
 engine: knitr
-editor: source
+editor: visual
 ---
 
 Install tidyr 1.3.0 with:
@@ -18,30 +18,35 @@ Install tidyr 1.3.0 with:
 pak::pak("cran/tidyr@1.3.0")
 ```
 
+Load the package with:
+
+```{r}
+library(tidyr)
+```
+
 ## `separate_*()` family of functions
 
 A new family of `separate_*()` functions supersedes `separate()`, `separate_rows()`, and `extract()`.
 
 ::: panel-tabset
-
 ## Before
 
-|                                  | Make columns                    | Make rows         |
-|----------------------------|----------------------|-----------------------|
-| Separate with delimiter          | `separate(sep = string)`        | `separate_rows()` |
-| Separate by position             | `separate(sep = integer_vector` | N/A               |
-| Separate with regular expression | `extract()`                     |                   |
+|                                  | Make columns                     | Make rows         |
+|----------------------------------|----------------------------------|-------------------|
+| Separate with delimiter          | `separate(sep = string)`         | `separate_rows()` |
+| Separate by position             | `separate(sep = integer_vector)` | N/A               |
+| Separate with regular expression | `extract()`                      |                   |
 
 ## After
 
 |                                  | Make columns                | Make rows                    |
-|----------------------------|----------------------|-----------------------|
+|----------------------------------|-----------------------------|------------------------------|
 | Separate with delimiter          | `separate_wider_delim()`    | `separate_longer_delim()`    |
 | Separate by position             | `separate_wider_position()` | `separate_longer_position()` |
 | Separate with regular expression | `separate_wider_regex()`    |                              |
 :::
 
-Let's grab some data from the tidyhydat package. The `Date` column is made up of a date in YYYY-MM-DD format and time in  HH:MM:SS format:
+Let's grab some data from the tidyhydat package. The `Date` column is made up of a date in YYYY-MM-DD format and time in HH:MM:SS format:
 
 ```{r}
 #| message: false
@@ -50,9 +55,10 @@ library(tidyr)
 library(dplyr)
 
 station <-
-  realtime_dd(station_number = c("01CD005", "08MF005"))
+  realtime_dd(station_number = c("01CD005"))
 
-station
+station |>
+  select(Date)
 ```
 
 Use `separate_wider_position()` to move these into their own columns:
@@ -107,8 +113,8 @@ station_split |>
                        names = c("hour", "minute", "second"))
 ```
 
-```{r}
-stations <- 
-  tidyhydat::hy_monthly_levels()
-```
+### Learn more
 
+-   [tidyverse blog: tidyr 1.3.0](https://www.tidyverse.org/blog/2023/01/tidyr-1-3-0/)
+
+-   [tidyr release notes](https://github.com/tidyverse/tidyr/releases/tag/v1.3.0)
