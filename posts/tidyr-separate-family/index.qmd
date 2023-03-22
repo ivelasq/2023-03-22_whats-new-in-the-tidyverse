@@ -1,5 +1,6 @@
 ---
-title: "tidyr 1.3.0"
+subtitle: "tidyr 1.3.0"
+title: "New `separate_* functions`"
 date: 2023-01-24
 image: "tidyr-separate-family.png"
 image-alt: "tidyr 1.3.0. Screenshot of text of various separate functions."
