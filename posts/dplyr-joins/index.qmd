@@ -9,9 +9,25 @@ image-alt: "Text that says dplyr joins. An image of a line plot with lines of va
 description: "ggplot2 3.4.0 introduces a new linewidth aesthetic."
 ---
 
+Install dplyr 1.1.0 with:
+
+```{r}
+#| eval: false
+pak::pak("cran/dplyr@1.1.0")
+```
+
+Load the package with:
+
+```{r}
+library(dplyr)
+```
+
+## 
+
+
 ## Equality joins
 
-You've been able to do this in dplyr 
+You've been able to do this in dplyr for joins:
 
 
 
