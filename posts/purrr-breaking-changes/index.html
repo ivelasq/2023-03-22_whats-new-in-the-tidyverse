@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="dcterms.date" content="2022-12-20">
-<meta name="description" content="A new family of separate_*() functions supersedes separate(), separate_rows(), and extract().">
+<meta name="description" content="There are four important changes in purrr 1.0.0.">
 
 <title>What’s new in the tidyverse - Breaking changes</title>
 <style>
@@ -196,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div>
   <div class="description">
-    A new family of <code>separate_*()</code> functions supersedes <code>separate()</code>, <code>separate_rows()</code>, and <code>extract()</code>.
+    There are four important changes in purrr 1.0.0.
   </div>
 </div>
 
@@ -409,12 +409,12 @@ NULL</code></pre>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>({ x <span class="sc">|&gt;</span> purrr<span class="sc">::</span><span class="fu">cross_df</span>() })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
- 28.826   0.745 115.900 </code></pre>
+ 28.994   0.615  33.980 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>({ x <span class="sc">|&gt;</span> tidyr<span class="sc">::</span><span class="fu">expand_grid</span>() })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.113   0.012   0.303 </code></pre>
+  0.111   0.006   0.118 </code></pre>
 </div>
 </div>
 </section>
