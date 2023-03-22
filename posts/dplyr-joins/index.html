@@ -6,8 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2022-11-07">
-<meta name="description" content="ggplot2 3.4.0 introduces a new linewidth aesthetic.">
+<meta name="dcterms.date" content="2023-01-29">
+<meta name="description" content="dplyr 1.1.0 has relaxed assumptions for non-equi joins.">
 
 <title>What’s new in the tidyverse - *_join()</title>
 <style>
@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -66,7 +129,9 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:image" content="https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/dplyr-joins/dplyr-join.png">
 <meta name="twitter:creator" content="@ivelasq3">
 <meta name="twitter:site" content="@ivelasq3">
-<meta name="twitter:image:alt" content="Text that says dplyr joins. An image of a line plot with lines of varying widths.">
+<meta name="twitter:image-height" content="200">
+<meta name="twitter:image-width" content="540">
+<meta name="twitter:image:alt" content="Text that says dplyr join. An screenshot of a command running the new join by helper.">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -129,7 +194,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    ggplot2 3.4.0 introduces a new linewidth aesthetic.
+    dplyr 1.1.0 has relaxed assumptions for non-equi joins.
   </div>
 </div>
 
@@ -140,7 +205,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 7, 2022</p>
+      <p class="date">January 29, 2023</p>
     </div>
   </div>
   
@@ -150,79 +215,294 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>Install dplyr 1.1.0 with:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"cran/dplyr@1.1.0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Load the package with:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s create some data. In <code>transactions</code>, we have company IDs, years, and revenue. In <code>companies</code>, we have the company IDs and full company names.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">company =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2023</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">revenue =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">12</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>companies <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">id =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Patagonia"</span>, <span class="st">"RStudio"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="join_by" class="level2">
+<h2 class="anchored" data-anchor-id="join_by"><code>join_by()</code></h2>
+<p>Say you want to join these two tables. You’ve been able to do this in dplyr:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(companies, <span class="at">by =</span> <span class="fu">c</span>(<span class="at">company =</span> <span class="st">"id"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  company  year revenue name     
+  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    
+1 A        2019      50 Patagonia
+2 A        2020       4 Patagonia
+3 B        2021      10 RStudio  
+4 B        2023      12 RStudio  </code></pre>
+</div>
+</div>
+<p>This is a bit odd:</p>
+<ul>
+<li>Using <code>=</code> not <code>==</code></li>
+<li>Using <code>c()</code></li>
+<li><code>"id"</code> has to be in quotes</li>
+</ul>
+<p>Welcome <code>join_by()</code>!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(companies, <span class="at">by =</span> <span class="fu">join_by</span>(company <span class="sc">==</span> id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 4
+  company  year revenue name     
+  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    
+1 A        2019      50 Patagonia
+2 A        2020       4 Patagonia
+3 B        2021      10 RStudio  
+4 B        2023      12 RStudio  </code></pre>
+</div>
+</div>
+<p>This is a much more natural way of expressing this join.</p>
+</section>
+<section id="multiple-matches" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-matches">Multiple matches</h2>
+<p>RStudio became Posit in 2023. Now, let’s add a column to track the change:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>companies <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">since =</span> <span class="fu">c</span>(<span class="dv">1973</span>, <span class="dv">2009</span>, <span class="dv">2022</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="fu">c</span>(<span class="st">"Patagonia"</span>, <span class="st">"RStudio"</span>, <span class="st">"Posit"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What happens when we try to join the tables together?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>faulty <span class="ot">&lt;-</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  transactions <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(companies, <span class="at">by =</span> <span class="fu">join_by</span>(company <span class="sc">==</span> id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in inner_join(transactions, companies, by = join_by(company == id)): Each row in `x` is expected to match at most 1 row in `y`.
+ℹ Row 3 of `x` matches multiple rows.
+ℹ If multiple matches are expected, set `multiple = "all"` to silence this
+  warning.</code></pre>
+</div>
+</div>
+<p>In 2021, it joined <code>B</code> with both <code>RStudio</code> and <code>Posit</code>, creating multiple matches. We want to match with RStudio, but not with Posit (because the name hasn’t changed yet).</p>
+</section>
+<section id="inequality-joins" class="level2">
+<h2 class="anchored" data-anchor-id="inequality-joins">Inequality joins</h2>
+<p>dplyr 1.1.0 has inequality joins: join expressions containing one of the following the inequality conditions <code>&gt;=</code>, <code>&gt;</code>, <code>&lt;=</code>, or <code>&lt;</code>.</p>
+<p>You can think through the logic of what you would like with the <code>year</code> and <code>since</code> columns:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only want a match if `year` is *after* the name change</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># `year[i] &gt;= since`?</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2021</span> <span class="sc">&gt;=</span> <span class="dv">2009</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2021</span> <span class="sc">&gt;=</span> <span class="dv">2022</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>Now, you can add an inequality condition to <code>join_by()</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">join_by(company == id, year &gt;= since)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Running it with the inequality join:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(companies, <span class="fu">join_by</span>(company <span class="sc">==</span> id, year <span class="sc">&gt;=</span> since))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  company  year revenue since name     
+  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    
+1 A        2019      50  1973 Patagonia
+2 A        2020       4  1973 Patagonia
+3 B        2021      10  2009 RStudio  
+4 B        2023      12  2009 RStudio  
+5 B        2023      12  2022 Posit    </code></pre>
+</div>
+</div>
+<p>You’re down to five! But, in 2023, you still have two matches. This is because the logic is true but not complete:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2023</span> <span class="sc">&gt;=</span> <span class="dv">2009</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2021</span> <span class="sc">&gt;=</span> <span class="dv">2022</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+</section>
+<section id="rolling-joins" class="level2">
+<h2 class="anchored" data-anchor-id="rolling-joins">Rolling joins</h2>
+<p>You can use rolling joins to find the ‘closest’ inequality match.</p>
+<p>You prefer the Posit match over the RStudio match because 2022 is <em>closer</em> to the transaction year of 2023 than 2009 is. Wrap something in <code>closest()</code> to express this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(companies, <span class="fu">join_by</span>(company <span class="sc">==</span> id, <span class="fu">closest</span>(year <span class="sc">&gt;=</span> since)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  company  year revenue since name     
+  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    
+1 A        2019      50  1973 Patagonia
+2 A        2020       4  1973 Patagonia
+3 B        2021      10  2009 RStudio  
+4 B        2023      12  2022 Posit    </code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p><code>closest(year &gt;= since)</code> finds all of the matches in <code>since</code> for a particular year, and then filters them down to only the closest match to that year.</p>
+</blockquote>
+</section>
+<section id="unmatched-rows" class="level2">
+<h2 class="anchored" data-anchor-id="unmatched-rows">Unmatched rows</h2>
+<p>Say you add a new company to <code>transactions</code> but forget to add them to <code>companies</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="ot">&lt;-</span> transactions <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">add_row</span>(<span class="at">company =</span> <span class="st">"C"</span>, <span class="at">year =</span> <span class="dv">2023</span>, <span class="at">revenue =</span> <span class="dv">15</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>transactions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 3
+  company  year revenue
+  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 A        2019      50
+2 A        2020       4
+3 B        2021      10
+4 B        2023      12
+5 C        2023      15</code></pre>
+</div>
+</div>
+<p>When you run your join, company C will disappear:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    companies, </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">join_by</span>(company <span class="sc">==</span> id, <span class="fu">closest</span>(year <span class="sc">&gt;=</span> since))</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  company  year revenue since name     
+  &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    
+1 A        2019      50  1973 Patagonia
+2 A        2020       4  1973 Patagonia
+3 B        2021      10  2009 RStudio  
+4 B        2023      12  2022 Posit    </code></pre>
+</div>
+</div>
+<p>You can now catch this problem automatically by using a new quality control argument, <code>unmatched</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>transactions <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    companies, </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">join_by</span>(company <span class="sc">==</span> id, <span class="fu">closest</span>(year <span class="sc">&gt;=</span> since)),</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">unmatched =</span> <span class="st">"error"</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `inner_join()`:
+! Each row of `x` must have a match in `y`.
+ℹ Row 5 of `x` does not have a match.</code></pre>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Have you been wondering why Davis is using an <code>inner_join()</code> instead of a <code>left_join()</code>? You’d use a left_join() is to ensure that rows from x are always retained, so it wouldn’t make sense to error when rows from x are also unmatched. In an inner_join(), both inputs can potentially drop rows, so <code>unmatched = "error"</code> checks for unmatched rows in both inputs.</p>
+</div>
+</div>
+</section>
+<section id="overlap-joins" class="level2">
+<h2 class="anchored" data-anchor-id="overlap-joins">Overlap joins</h2>
+<p>These are special cases of inequality joins popular in time series and genomics.</p>
+<ul>
+<li><code>join_by(id, between(date, y_lower, y_upper))</code>: You have a date in one column in one table and a range of upper/lower bounds in the other table and want to match when values are in the range in the other table.</li>
+<li><code>join_by(id, overlaps(x_lower, x_upper, y_lower, y_upper))</code>: Now, you have two sets of ranges and if they overlap at all, they match.</li>
+<li><code>join_by(id, within(x_lower, x_upper, y_lower, y_upper))</code> or has to be completely inside the lower and upper of the other table</li>
+</ul>
+</section>
+<section id="cross-joins" class="level2">
+<h2 class="anchored" data-anchor-id="cross-joins">Cross joins</h2>
+<p>Cross joins match each row in x to every row in y, giving you the full Cartesian production.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>characters <span class="ot">&lt;-</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span>person,         <span class="sc">~</span>title,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>     <span class="st">"Shiv"</span>,    <span class="st">"President"</span>,</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Kendall"</span>,  <span class="st">"Interim CEO"</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Logan"</span>,          <span class="st">"CEO"</span>,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Tom"</span>, <span class="st">"Head of News"</span>,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Roman"</span>,          <span class="st">"COO"</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>alliances <span class="ot">&lt;-</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  tibble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>      <span class="sc">~</span>person, <span class="sc">~</span>allies,</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>       <span class="st">"Shiv"</span>,   <span class="st">"Tom"</span>,</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kendall"</span>,  <span class="st">"Greg"</span>,</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Roman"</span>,  <span class="st">"Geri"</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="fu">cross_join</span>(characters, alliances)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 4
+   person.x title        person.y allies
+   &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt; 
+ 1 Shiv     President    Shiv     Tom   
+ 2 Shiv     President    Kendall  Greg  
+ 3 Shiv     President    Roman    Geri  
+ 4 Kendall  Interim CEO  Shiv     Tom   
+ 5 Kendall  Interim CEO  Kendall  Greg  
+ 6 Kendall  Interim CEO  Roman    Geri  
+ 7 Logan    CEO          Shiv     Tom   
+ 8 Logan    CEO          Kendall  Greg  
+ 9 Logan    CEO          Roman    Geri  
+10 Tom      Head of News Shiv     Tom   
+11 Tom      Head of News Kendall  Greg  
+12 Tom      Head of News Roman    Geri  
+13 Roman    COO          Shiv     Tom   
+14 Roman    COO          Kendall  Greg  
+15 Roman    COO          Roman    Geri  </code></pre>
+</div>
+</div>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>cross_join()</code> achieves the same effect as <code>tidyr::crossing()</code> but dplyr is always about data frames whereas <code>tidyr::crossing()</code> is more for individual data.</p>
+</div>
+</div>
+</section>
+<section id="learn-more" class="level2">
+<h2 class="anchored" data-anchor-id="learn-more">Learn more</h2>
+<ul>
+<li><a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange">tidyverse blog: dplyr 1.1.0: <code>pick()</code>, <code>reframe()</code>, and <code>arrange()</code></a></li>
+<li><a href="https://dplyr.tidyverse.org/news/index.html">dplyr release notes</a></li>
+<li><a href="https://www.youtube.com/watch?v=9LAML4Nr1II">New features in dplyr 1.1.0, and an introduction to ivs</a></li>
+</ul>
 
 
-<style type="text/css">
-.number{
-    color: rgb(21,20,181) ;
-}
-
-.functioncall{
-    color: black ;
-}
-
-.string{
-    color: rgb(153,153,255) ;
-}
-
-.keyword{
-    color: black;
-}
-
-.argument{
-    color: rgb( 177,63,5) ;
-}
-
-.comment{
-    color: rgb( 204,204,204) ;
-}
-
-.roxygencomment{
-    color: rgb(0,151,255);
-}
-
-.formalargs{
-    color: rgb(18,182,18);
-}
-
-.eqformalargs{
-    color: rgb(18,182,18);
-}
-
-.assignement{
-    color: rgb(55,55,98);
-}
-
-.package{
-    color: rgb(150,182,37);
-}
-
-.slot{
-    font-style:italic;
-}
-
-.symbol{
-    color: black ;
-}
-
-.prompt{
-    color: black ;
-}
-
-.line{
-    color: gray ;   
-}
-</style>
-
-
-<pre><span class="functioncall">library</span><span class="keyword">(</span><span class="symbol">stringr</span><span class="keyword">)</span>
-
-<span class="functioncall">str_view</span><span class="keyword">(</span><span class="string">"\t"</span><span class="keyword">)</span>
-</pre>
-
-
-
-
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -361,6 +641,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
+    <div class="nav-footer-left">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="../../colophon.html">Colophon</a>
+  </li>  
+</ul>
+    </div>   
     <div class="nav-footer-right">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">

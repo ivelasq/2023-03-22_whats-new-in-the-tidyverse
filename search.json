@@ -4,7 +4,21 @@
     "href": "about.html",
     "title": "What’s new in the tidyverse",
     "section": "",
-    "text": "See all the packages in the tidyverse:\n\ntidyverse::tidyverse_packages(include_self = TRUE)\n\n [1] \"broom\"         \"conflicted\"    \"cli\"           \"dbplyr\"       \n [5] \"dplyr\"         \"dtplyr\"        \"forcats\"       \"ggplot2\"      \n [9] \"googledrive\"   \"googlesheets4\" \"haven\"         \"hms\"          \n[13] \"httr\"          \"jsonlite\"      \"lubridate\"     \"magrittr\"     \n[17] \"modelr\"        \"pillar\"        \"purrr\"         \"ragg\"         \n[21] \"readr\"         \"readxl\"        \"reprex\"        \"rlang\"        \n[25] \"rstudioapi\"    \"rvest\"         \"stringr\"       \"tibble\"       \n[29] \"tidyr\"         \"xml2\"          \"tidyverse\"    \n\n\nInstall the newest versions of packages using pak:\n\npak::pak(c(\"tidyverse\", \"dplyr\", \"tidyr\", \"stringr\", \"purrr\", \"ggplot2\"))"
+    "text": "Keep in touch on (Twitter)[https://twitter.com/ivelasq3]/(Mastodon)[https://fosstodon.org/@ivelasq3] (@ivelasq3) or LinkedIn (@ivelasq)."
+  },
+  {
+    "objectID": "about.html#stay-in-the-loop",
+    "href": "about.html#stay-in-the-loop",
+    "title": "What’s new in the tidyverse",
+    "section": "Stay in the loop",
+    "text": "Stay in the loop\n\nR for Data Science (2e)\ntidyverse blog\nposit::glimpse() Twitter and Mastodon\n\nSee all the packages in the tidyverse:\n\ntidyverse::tidyverse_packages(include_self = TRUE)\n\n [1] \"broom\"         \"conflicted\"    \"cli\"           \"dbplyr\"       \n [5] \"dplyr\"         \"dtplyr\"        \"forcats\"       \"ggplot2\"      \n [9] \"googledrive\"   \"googlesheets4\" \"haven\"         \"hms\"          \n[13] \"httr\"          \"jsonlite\"      \"lubridate\"     \"magrittr\"     \n[17] \"modelr\"        \"pillar\"        \"purrr\"         \"ragg\"         \n[21] \"readr\"         \"readxl\"        \"reprex\"        \"rlang\"        \n[25] \"rstudioapi\"    \"rvest\"         \"stringr\"       \"tibble\"       \n[29] \"tidyr\"         \"xml2\"          \"tidyverse\"    \n\n\nInstall the newest versions of packages using pak:\n\npak::pak(c(\"tidyverse\", \"dplyr\", \"tidyr\", \"stringr\", \"purrr\", \"ggplot2\"))"
+  },
+  {
+    "objectID": "colophon.html",
+    "href": "colophon.html",
+    "title": "Colophon",
+    "section": "",
+    "text": "See today’s session info:\n\nsessionInfo()\n\nR version 4.2.2 (2022-10-31)\nPlatform: x86_64-apple-darwin17.0 (64-bit)\nRunning under: macOS Big Sur ... 10.16\n\nMatrix products: default\nBLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib\nLAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib\n\nlocale:\n[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.2.2    fastmap_1.1.1     cli_3.6.0        \n [5] tools_4.2.2       htmltools_0.5.4   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.20    knitr_1.42        xfun_0.37         digest_0.6.31    \n[13] jsonlite_1.8.4    rlang_1.1.0.9000  evaluate_0.20"
   },
   {
     "objectID": "posts/tidyverse-2-0-0/index.html",
@@ -151,7 +165,63 @@
     "href": "posts/dplyr-joins/index.html",
     "title": "*_join()",
     "section": "",
-    "text": "library(stringr)\n\nstr_view(\"\\t\")"
+    "text": "Install dplyr 1.1.0 with:\nLoad the package with:\nLet’s create some data. In transactions, we have company IDs, years, and revenue. In companies, we have the company IDs and full company names."
+  },
+  {
+    "objectID": "posts/dplyr-joins/index.html#join_by",
+    "href": "posts/dplyr-joins/index.html#join_by",
+    "title": "*_join()",
+    "section": "join_by()",
+    "text": "join_by()\nSay you want to join these two tables. You’ve been able to do this in dplyr:\n\ntransactions |> \n  inner_join(companies, by = c(company = \"id\"))\n\n# A tibble: 4 × 4\n  company  year revenue name     \n  <chr>   <dbl>   <dbl> <chr>    \n1 A        2019      50 Patagonia\n2 A        2020       4 Patagonia\n3 B        2021      10 RStudio  \n4 B        2023      12 RStudio  \n\n\nThis is a bit odd:\n\nUsing = not ==\nUsing c()\n\"id\" has to be in quotes\n\nWelcome join_by()!\n\ntransactions |> \n  inner_join(companies, by = join_by(company == id))\n\n# A tibble: 4 × 4\n  company  year revenue name     \n  <chr>   <dbl>   <dbl> <chr>    \n1 A        2019      50 Patagonia\n2 A        2020       4 Patagonia\n3 B        2021      10 RStudio  \n4 B        2023      12 RStudio  \n\n\nThis is a much more natural way of expressing this join."
+  },
+  {
+    "objectID": "posts/dplyr-joins/index.html#multiple-matches",
+    "href": "posts/dplyr-joins/index.html#multiple-matches",
+    "title": "*_join()",
+    "section": "Multiple matches",
+    "text": "Multiple matches\nRStudio became Posit in 2023. Now, let’s add a column to track the change:\n\ncompanies <- tibble(\n  id = c(\"A\", \"B\", \"B\"),\n  since = c(1973, 2009, 2022),\n  name = c(\"Patagonia\", \"RStudio\", \"Posit\")\n)\n\nWhat happens when we try to join the tables together?\n\nfaulty <-\n  transactions |> \n  inner_join(companies, by = join_by(company == id))\n\nWarning in inner_join(transactions, companies, by = join_by(company == id)): Each row in `x` is expected to match at most 1 row in `y`.\nℹ Row 3 of `x` matches multiple rows.\nℹ If multiple matches are expected, set `multiple = \"all\"` to silence this\n  warning.\n\n\nIn 2021, it joined B with both RStudio and Posit, creating multiple matches. We want to match with RStudio, but not with Posit (because the name hasn’t changed yet)."
+  },
+  {
+    "objectID": "posts/dplyr-joins/index.html#inequality-joins",
+    "href": "posts/dplyr-joins/index.html#inequality-joins",
+    "title": "*_join()",
+    "section": "Inequality joins",
+    "text": "Inequality joins\ndplyr 1.1.0 has inequality joins: join expressions containing one of the following the inequality conditions >=, >, <=, or <.\nYou can think through the logic of what you would like with the year and since columns:\n\n# Only want a match if `year` is *after* the name change\n# `year[i] >= since`?\n2021 >= 2009\n\n[1] TRUE\n\n2021 >= 2022\n\n[1] FALSE\n\n\nNow, you can add an inequality condition to join_by():\n`join_by(company == id, year >= since)\nRunning it with the inequality join:\n\ntransactions |>\n  inner_join(companies, join_by(company == id, year >= since))\n\n# A tibble: 5 × 5\n  company  year revenue since name     \n  <chr>   <dbl>   <dbl> <dbl> <chr>    \n1 A        2019      50  1973 Patagonia\n2 A        2020       4  1973 Patagonia\n3 B        2021      10  2009 RStudio  \n4 B        2023      12  2009 RStudio  \n5 B        2023      12  2022 Posit    \n\n\nYou’re down to five! But, in 2023, you still have two matches. This is because the logic is true but not complete:\n\n2023 >= 2009\n\n[1] TRUE\n\n2021 >= 2022\n\n[1] FALSE"
+  },
+  {
+    "objectID": "posts/dplyr-joins/index.html#rolling-joins",
+    "href": "posts/dplyr-joins/index.html#rolling-joins",
+    "title": "*_join()",
+    "section": "Rolling joins",
+    "text": "Rolling joins\nYou can use rolling joins to find the ‘closest’ inequality match.\nYou prefer the Posit match over the RStudio match because 2022 is closer to the transaction year of 2023 than 2009 is. Wrap something in closest() to express this:\n\ntransactions |>\n  inner_join(companies, join_by(company == id, closest(year >= since)))\n\n# A tibble: 4 × 5\n  company  year revenue since name     \n  <chr>   <dbl>   <dbl> <dbl> <chr>    \n1 A        2019      50  1973 Patagonia\n2 A        2020       4  1973 Patagonia\n3 B        2021      10  2009 RStudio  \n4 B        2023      12  2022 Posit    \n\n\n\nclosest(year >= since) finds all of the matches in since for a particular year, and then filters them down to only the closest match to that year."
+  },
+  {
+    "objectID": "posts/dplyr-joins/index.html#unmatched-rows",
+    "href": "posts/dplyr-joins/index.html#unmatched-rows",
+    "title": "*_join()",
+    "section": "Unmatched rows",
+    "text": "Unmatched rows\nSay you add a new company to transactions but forget to add them to companies:\n\ntransactions <- transactions |>\n  tibble::add_row(company = \"C\", year = 2023, revenue = 15)\n\ntransactions\n\n# A tibble: 5 × 3\n  company  year revenue\n  <chr>   <dbl>   <dbl>\n1 A        2019      50\n2 A        2020       4\n3 B        2021      10\n4 B        2023      12\n5 C        2023      15\n\n\nWhen you run your join, company C will disappear:\n\ntransactions |>\n  inner_join(\n    companies, \n    join_by(company == id, closest(year >= since))\n  )\n\n# A tibble: 4 × 5\n  company  year revenue since name     \n  <chr>   <dbl>   <dbl> <dbl> <chr>    \n1 A        2019      50  1973 Patagonia\n2 A        2020       4  1973 Patagonia\n3 B        2021      10  2009 RStudio  \n4 B        2023      12  2022 Posit    \n\n\nYou can now catch this problem automatically by using a new quality control argument, unmatched:\n\ntransactions |>\n  inner_join(\n    companies, \n    join_by(company == id, closest(year >= since)),\n    unmatched = \"error\"\n  )\n\nError in `inner_join()`:\n! Each row of `x` must have a match in `y`.\nℹ Row 5 of `x` does not have a match.\n\n\n\n\n\n\n\n\nTip\n\n\n\nHave you been wondering why Davis is using an inner_join() instead of a left_join()? You’d use a left_join() is to ensure that rows from x are always retained, so it wouldn’t make sense to error when rows from x are also unmatched. In an inner_join(), both inputs can potentially drop rows, so unmatched = \"error\" checks for unmatched rows in both inputs."
+  },
+  {
+    "objectID": "posts/dplyr-joins/index.html#overlap-joins",
+    "href": "posts/dplyr-joins/index.html#overlap-joins",
+    "title": "*_join()",
+    "section": "Overlap joins",
+    "text": "Overlap joins\nThese are special cases of inequality joins popular in time series and genomics.\n\njoin_by(id, between(date, y_lower, y_upper)): You have a date in one column in one table and a range of upper/lower bounds in the other table and want to match when values are in the range in the other table.\njoin_by(id, overlaps(x_lower, x_upper, y_lower, y_upper)): Now, you have two sets of ranges and if they overlap at all, they match.\njoin_by(id, within(x_lower, x_upper, y_lower, y_upper)) or has to be completely inside the lower and upper of the other table"
+  },
+  {
+    "objectID": "posts/dplyr-joins/index.html#cross-joins",
+    "href": "posts/dplyr-joins/index.html#cross-joins",
+    "title": "*_join()",
+    "section": "Cross joins",
+    "text": "Cross joins\nCross joins match each row in x to every row in y, giving you the full Cartesian production.\n\ncharacters <-\n  tibble::tribble(\n    ~person,         ~title,\n     \"Shiv\",    \"President\",\n  \"Kendall\",  \"Interim CEO\",\n    \"Logan\",          \"CEO\",\n      \"Tom\", \"Head of News\",\n    \"Roman\",          \"COO\"\n  )\n\nalliances <-\n  tibble::tribble(\n      ~person, ~allies,\n       \"Shiv\",   \"Tom\",\n    \"Kendall\",  \"Greg\",\n      \"Roman\",  \"Geri\"\n    )\n\ncross_join(characters, alliances)\n\n# A tibble: 15 × 4\n   person.x title        person.y allies\n   <chr>    <chr>        <chr>    <chr> \n 1 Shiv     President    Shiv     Tom   \n 2 Shiv     President    Kendall  Greg  \n 3 Shiv     President    Roman    Geri  \n 4 Kendall  Interim CEO  Shiv     Tom   \n 5 Kendall  Interim CEO  Kendall  Greg  \n 6 Kendall  Interim CEO  Roman    Geri  \n 7 Logan    CEO          Shiv     Tom   \n 8 Logan    CEO          Kendall  Greg  \n 9 Logan    CEO          Roman    Geri  \n10 Tom      Head of News Shiv     Tom   \n11 Tom      Head of News Kendall  Greg  \n12 Tom      Head of News Roman    Geri  \n13 Roman    COO          Shiv     Tom   \n14 Roman    COO          Kendall  Greg  \n15 Roman    COO          Roman    Geri  \n\n\n\n\n\n\n\n\nTip\n\n\n\ncross_join() achieves the same effect as tidyr::crossing() but dplyr is always about data frames whereas tidyr::crossing() is more for individual data."
+  },
+  {
+    "objectID": "posts/dplyr-joins/index.html#learn-more",
+    "href": "posts/dplyr-joins/index.html#learn-more",
+    "title": "*_join()",
+    "section": "Learn more",
+    "text": "Learn more\n\ntidyverse blog: dplyr 1.1.0: pick(), reframe(), and arrange()\ndplyr release notes\nNew features in dplyr 1.1.0, and an introduction to ivs"
   },
   {
     "objectID": "posts/tidyr-unnest-wider-unnest-longer-improvements/index.html",
