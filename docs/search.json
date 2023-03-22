@@ -128,23 +128,37 @@
   {
     "objectID": "posts/dplyr-arrange/index.html",
     "href": "posts/dplyr-arrange/index.html",
-    "title": "dplyr 1.1.0",
+    "title": "pick(), reframe(), and arrange()",
     "section": "",
-    "text": "Install the newest version of dplyr with:"
+    "text": "Install dplyr 1.1.0 with:\nLoad the package with:"
   },
   {
-    "objectID": "posts/dplyr-arrange/index.html#whats-new",
-    "href": "posts/dplyr-arrange/index.html#whats-new",
-    "title": "dplyr 1.1.0",
-    "section": "What’s new",
-    "text": "What’s new\n\nlibrary(withr)\nlibrary(dplyr)\n\ndf <- tibble(x = stringi::stri_rand_strings(n = 5e5, length = 15))\n\nwithr::with_options(list(dplyr.legacy_locale = TRUE),\n                    {\n                      bench::system_time(df %>% arrange(x))\n                    })\n\nprocess    real \n  3.87s   3.88s \n\nbench::system_time(df %>% arrange(x))\n\nprocess    real \n  276ms   276ms \n\nbench::system_time(df %>% arrange(x, locale = \"fr\"))\n\nprocess    real \n  297ms   297ms"
+    "objectID": "posts/dplyr-arrange/index.html#pick",
+    "href": "posts/dplyr-arrange/index.html#pick",
+    "title": "pick(), reframe(), and arrange()",
+    "section": "pick()",
+    "text": "pick()\nYou may have used across() for column selection while working inside a data-masking function like mutate() or summarize().\n\ndf <- tibble(\n  x_1 = c(1, 3, 2, 1, 2), \n  x_2 = 6:10, \n  w_4 = 11:15, \n  y_2 = c(5, 2, 4, 0, 6)\n)\n\ndf\n\n# A tibble: 5 × 4\n    x_1   x_2   w_4   y_2\n  <dbl> <int> <int> <dbl>\n1     1     6    11     5\n2     3     7    12     2\n3     2     8    13     4\n4     1     9    14     0\n5     2    10    15     6\n\ndf |>\n  summarise(\n    n_x = ncol(across(starts_with(\"x\"))),\n    n_y = ncol(across(starts_with(\"y\")))\n  )\n\n# A tibble: 1 × 2\n    n_x   n_y\n  <int> <int>\n1     2     1\n\n\nBut, across() is meant to apply functions to columns, not select them. dplyr 1.1.0 provides a new function for this function :), called pick():\n\ndf |>\n  summarise(\n    n_x = ncol(pick(starts_with(\"x\"))),\n    n_y = ncol(pick(starts_with(\"y\")))\n  )\n\n# A tibble: 1 × 2\n    n_x   n_y\n  <int> <int>\n1     2     1\n\n\nacross() still works without functions for now, but the tidyverse team plans to deprecate it in the future."
+  },
+  {
+    "objectID": "posts/dplyr-arrange/index.html#reframe",
+    "href": "posts/dplyr-arrange/index.html#reframe",
+    "title": "pick(), reframe(), and arrange()",
+    "section": "reframe()",
+    "text": "reframe()\ndplyr 1.0.0 introduces a powerful new feature: summarise() could return per-group results of any length:\n\ntable <- c(\"a\", \"b\", \"d\", \"f\")\n\ndf <- tibble(\n  g = c(1, 1, 1, 2, 2, 2, 2),\n  x = c(\"e\", \"a\", \"b\", \"c\", \"f\", \"d\", \"a\")\n)\n\ndf |>\n  summarise(x = intersect(x, table), .by = g)\n\nWarning: Returning more (or less) than 1 row per `summarise()` group was deprecated in\ndplyr 1.1.0.\nℹ Please use `reframe()` instead.\nℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`\n  always returns an ungrouped data frame and adjust accordingly.\n\n\n# A tibble: 5 × 2\n      g x    \n  <dbl> <chr>\n1     1 a    \n2     1 b    \n3     2 f    \n4     2 d    \n5     2 a    \n\n\nHowever, this raised some concerns.\n\nIncreases the chance for accidental bugs\nIs against the spirit of a “summary,” which implies 1 row per group\nMakes translation to dbplyr very difficult\n\nThis feature has been walked back and summarize will throw a warning when either 0 or >1 rows are returned per group.\nAs its replacement, welcome new function reframe()!\nThink of reframe() as: “do something to each group”.\n\ndf |>\n  reframe(x = intersect(x, table), .by = g)\n\n# A tibble: 5 × 2\n      g x    \n  <dbl> <chr>\n1     1 a    \n2     1 b    \n3     2 f    \n4     2 d    \n5     2 a    \n\n\nreframe() always returns an ungrouped data frame (i.e., not a grouped data frame even if the input was grouped)."
+  },
+  {
+    "objectID": "posts/dplyr-arrange/index.html#arrange",
+    "href": "posts/dplyr-arrange/index.html#arrange",
+    "title": "pick(), reframe(), and arrange()",
+    "section": "arrange()",
+    "text": "arrange()\nWhen sorting character vectors, the C locale is now the default, rather than the system locale. This makes dplyr wayyy faster at sorting character variables.\n\nlibrary(withr)\nlibrary(dplyr)\n\ndf <- tibble(x = stringi::stri_rand_strings(n = 5e5, length = 15))\n\nwithr::with_options(list(dplyr.legacy_locale = TRUE),\n                    {\n                      bench::system_time(df %>% arrange(x))\n                    })\n\nprocess    real \n  4.59s   4.95s \n\nbench::system_time(df %>% arrange(x))\n\nprocess    real \n  332ms   356ms \n\n\nThere is a new .locale argument for you to explicitly request an alternative locale using a stringi locale identifier (like “en” for English, or “fr” for French).\n\nbench::system_time(df %>% arrange(x, locale = \"fr\"))\n\nprocess    real \n  385ms   427ms"
   },
   {
     "objectID": "posts/dplyr-arrange/index.html#learn-more",
     "href": "posts/dplyr-arrange/index.html#learn-more",
-    "title": "dplyr 1.1.0",
+    "title": "pick(), reframe(), and arrange()",
     "section": "Learn more",
-    "text": "Learn more\n\ntidyverse blog: dplyr 1.1.0: pick(), reframe(), and arrange()\ndplyr release notes"
+    "text": "Learn more\n\ntidyverse blog: dplyr 1.1.0: pick(), reframe(), and arrange()\ndplyr release notes\nNew features in dplyr 1.1.0, and an introduction to ivs"
   },
   {
     "objectID": "posts/purrr-mapping/index.html",
