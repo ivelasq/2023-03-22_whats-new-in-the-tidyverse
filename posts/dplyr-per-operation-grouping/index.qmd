@@ -6,7 +6,7 @@ image-alt: "Text: Per-operation grouping, dplyr. An image of an example call usi
 categories:
   - dplyr
 date: 2023-01-29
-description: tidyverse 2.0.0 has been released!
+description: "Introducing by/.by, an experimental grouping alternative to group_by()."
 engine: knitr
 editor: visual
 ---
@@ -69,8 +69,7 @@ transactions %>%
 
 What if you didn't want groups anymore?
 
-:::{.panel}
-
+::: panel
 ## Before: `ungroup()`
 
 ```{r}
@@ -97,29 +96,28 @@ transactions %>%
 transactions |>
   mutate(total = sum(revenue), .by = c(company, year))
 ```
-
 :::
 
 Advantages:
 
-* You never have to remember to `ungroup()`.
-* You can use tidyselect for multiple columns, including unquoted column names or tidyselections like `.by = all_of(c(""))`.
-* `summarise()` didn’t emit a message about regrouping.
-* You can place the grouping specification alongside the code that uses it, rather than in a separate group_by() line.
+-   You never have to remember to `ungroup()`.
+-   You can use tidyselect for multiple columns, including unquoted column names or tidyselections like `.by = all_of(c(""))`.
+-   `summarise()` didn't emit a message about regrouping.
+-   You can place the grouping specification alongside the code that uses it, rather than in a separate group_by() line.
 
 Things to note:
 
-* `by/.by` is only for selection, it does not create columns.
-* `by/.by` always returns an ungrouped data frame (so take note if you depend on grouped data frames with `group_by()`).
-* With `by/.by`, you must create your grouping columns ahead of time. 
-* `.by` doesn’t sort grouping keys. `group_by()` always sorts keys in ascending order, which affects the results of verbs like `summarize()`.
+-   `by/.by` is only for selection, it does not create columns.
+-   `by/.by` always returns an ungrouped data frame (so take note if you depend on grouped data frames with `group_by()`).
+-   With `by/.by`, you must create your grouping columns ahead of time.
+-   `.by` doesn't sort grouping keys. `group_by()` always sorts keys in ascending order, which affects the results of verbs like `summarize()`.
 
 ## Where did this come from?
 
 `by/.by` was inspired by data.table!
 
-* `by` is specified alongside what you want to group &
-* You start with a bare data table and then do this and end up with a bare data table, rather than having a grouped data frame like in dplyr.
+-   `by` is specified alongside what you want to group &
+-   You start with a bare data table and then do this and end up with a bare data table, rather than having a grouped data frame like in dplyr.
 
 ```{r}
 #| eval: false
@@ -140,11 +138,10 @@ Notice this is longer grouped by company on the way out. It does the **one opera
 
 ## In summary
 
-1. `by/.by` is per-operation grouping
-2. `group_by()` is persistent grouping
+1.  `by/.by` is per-operation grouping
+2.  `group_by()` is persistent grouping
 
-:::{.panel-tabset}
-
+::: panel-tabset
 ## Before
 
 ```{mermaid}
@@ -160,19 +157,18 @@ flowchart LR
   A[Bare tibble] --> B(Transaction)
   B --> C[Bare tibble]
 ```
-
 :::
 
 ### dplyr verbs that support `by/.by`:
 
-* `mutate()`
-* `summarize()`
-* `reframe()`
-* `filter()`
-* `slice()`
-* `slide_head()` and `slice_tail()`
-* `slide_min()` and `slice_max()`
-* `slice_sample()`
+-   `mutate()`
+-   `summarize()`
+-   `reframe()`
+-   `filter()`
+-   `slice()`
+-   `slide_head()` and `slice_tail()`
+-   `slide_min()` and `slice_max()`
+-   `slice_sample()`
 
 ### `by` or `.by`?
 
@@ -195,5 +191,5 @@ It's not going away! It is not deprecated or even superseded. Don't feel pressur
 
 ### Learn more
 
-* [tidyverse blog: dplyr 1.1.0: Per-operation grouping](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/)
-* [New features in dplyr 1.1.0, and an introduction to ivs](https://www.youtube.com/watch?v=9LAML4Nr1II&t=111s)
+-   [tidyverse blog: dplyr 1.1.0: Per-operation grouping](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-per-operation-grouping/)
+-   [New features in dplyr 1.1.0, and an introduction to ivs](https://www.youtube.com/watch?v=9LAML4Nr1II&t=111s)
