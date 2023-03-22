@@ -20,13 +20,20 @@ website:
         href: https://github.com/ivelasq/2023-03-22_whats-new-in-the-tidyverse
       - icon: twitter
         href: https://twitter.com/ivelasq3
+  page-footer: 
+    right: 
+      - icon: github
+        href: https://github.com/ivelasq/2023-03-22_whats-new-in-the-tidyverse
+      - icon: twitter 
+        href: https://twitter.com/ivelasq3
+  
 format:
   html:
     theme: [litera, styles.scss]
-    highlight-style: zenburn
+    highlight-style: tango
     code-copy: true
     code-overflow: wrap
-
+    code-link: true
 editor: source
 
 execute: 

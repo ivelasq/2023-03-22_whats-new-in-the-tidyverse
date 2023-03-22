@@ -1,0 +1,123 @@
+---
+title: "Flattening and simplification"
+subtitle: "purrr 1.1.0"
+date: 2022-12-20
+image: "purrr-flattening-simplification.png"
+image-alt: "Text that says purrr flattening and simplification. An image of a list being flattened with the list_flatten function."
+categories:
+  - "purrr"
+description: "purrr 1.0.0 has new functions for flattening and simplifying lists."
+engine: knitr
+editor: visual
+---
+
+Install purrr 1.0.0 with:
+
+```{r}
+#| eval: false
+pak::pak("cran/purrr@1.0.0")
+```
+
+Load the package with:
+
+```{r}
+#| message: false
+library(purrr)
+```
+
+## Flattening
+
+`list_flatten()` removes one layer of hierarchy from a list:
+
+```{r}
+x <- list(1, list(2, list(3, 4), 5))
+x |> str()
+```
+
+```{r}
+x |> list_flatten() |> str()
+```
+
+```{r}
+x |> list_flatten() |> list_flatten() |> str()
+```
+
+`list_flatten()` always returns a list; once a list is as flat as it can get (i.e. none of its children contain lists), it leaves the input unchanged.
+
+```{r}
+x |> list_flatten() |> list_flatten() |> list_flatten() |> str()
+```
+
+## Simplification
+
+`list_simplify()` maintains the length of the input, but produces a simpler type:
+
+```{r}
+x <- list(1, 2, 3)
+typeof(x)
+```
+```{r}
+y <-
+  x |> list_simplify()
+
+y
+
+typeof(y)
+```
+
+A few rules for `list_simplify()`:
+
+* It will only succeed if every element has length 1
+
+```{r}
+#| error: true
+list_simplify(list(1, 2, 3:4))
+```
+
+* All the components must be compatible
+
+```{r}
+#| error: true
+list_simplify(list(1, 2, "a"))
+```
+
+If you need to simplify if it’s possible, but otherwise leave the input unchanged, use `strict = FALSE`:
+
+```{r}
+list_simplify(list(1, 2, "a"), strict = FALSE)
+```
+
+If you want to be specific about the type you want, list_simplify() can take the same prototype argument as map_vec():
+
+```{r}
+list(1, 2, 3) |> list_simplify(ptype = integer())
+```
+
+## Concatenation
+
+`map_dfr()` and `map_dfc()` (and the `map2` and `pmap`) variants are superseded. Consider switching to an explicit call to `list_rbind()` or `list_cbind()` instead:
+
+:::{.panel-tabset}
+
+## Before
+
+```{r}
+#| eval: false
+paths |> map_dfr(read_csv, .id = "path")
+```
+
+## After
+
+```{r}
+#| eval: false
+paths |> 
+  map(read_csv) |> 
+  list_rbind(names_to = "path")
+```
+
+:::
+
+### Learn more
+
+-   [tidyverse blog: purrr 1.0.0](https://www.tidyverse.org/blog/2022/12/purrr-1-0-0/)
+-   [purrr release notes](https://github.com/tidyverse/purrr/releases/tag/v1.0.0)
