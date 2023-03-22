@@ -151,7 +151,7 @@
     "href": "posts/dplyr-per-operation-grouping/index.html",
     "title": "Per-operation grouping",
     "section": "",
-    "text": "Install dplyr 1.1.0 with:\nLoad the package with:\nAdvantages:\nby/.by was inspired by data.table!\nThis raised the question, what if you can put it in line with your summarize call?\nNotice this is longer grouped by company on the way out. It does the one operation then drops off."
+    "text": "Install dplyr 1.1.0 with:\nLoad the package with:\nAdvantages:\nThings to note:"
   },
   {
     "objectID": "posts/dplyr-per-operation-grouping/index.html#per-operation-grouping",
@@ -182,25 +182,18 @@
     "text": "Now: by/.by\nby/.by introduces the idea of per-operation grouping:\n\ntransactions |>\n  mutate(total = sum(revenue), .by = c(company, year))\n\n# A tibble: 6 × 4\n  company  year revenue total\n  <chr>   <int>   <int> <int>\n1 A        2019      20    70\n2 A        2019      50    70\n3 A        2020       4     4\n4 B        2021      10    10\n5 B        2023      12    30\n6 B        2023      18    30"
   },
   {
+    "objectID": "posts/dplyr-per-operation-grouping/index.html#where-did-this-come-from",
+    "href": "posts/dplyr-per-operation-grouping/index.html#where-did-this-come-from",
+    "title": "Per-operation grouping",
+    "section": "Where did this come from?",
+    "text": "Where did this come from?\nby/.by was inspired by data.table!\n\nby is specified alongside what you want to group &\nYou start with a bare data table and then do this and end up with a bare data table, rather than having a grouped data frame like in dplyr.\n\n\ntransactions[, .(revenue = sum(revenue)), by = .(company, year)]\n\nThis raised the question, what if you can put it in line with your summarize call?\n\ntransactions %>% \n  summarize(\n    revenue = sum(revenue), \n    by = c(company, year)\n    )\n\nWarning: Returning more (or less) than 1 row per `summarise()` group was deprecated in\ndplyr 1.1.0.\nℹ Please use `reframe()` instead.\nℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`\n  always returns an ungrouped data frame and adjust accordingly.\n\n\n# A tibble: 12 × 2\n   revenue by   \n     <int> <chr>\n 1     114 A    \n 2     114 A    \n 3     114 A    \n 4     114 B    \n 5     114 B    \n 6     114 B    \n 7     114 2019 \n 8     114 2019 \n 9     114 2020 \n10     114 2021 \n11     114 2023 \n12     114 2023 \n\n\nNotice this is longer grouped by company on the way out. It does the one operation then drops off."
+  },
+  {
     "objectID": "posts/dplyr-per-operation-grouping/index.html#in-summary",
     "href": "posts/dplyr-per-operation-grouping/index.html#in-summary",
     "title": "Per-operation grouping",
     "section": "In summary",
-    "text": "In summary\n\nby/.by is per-operation grouping\ngroup_by() is persistent grouping"
-  },
-  {
-    "objectID": "posts/dplyr-per-operation-grouping/index.html#before",
-    "href": "posts/dplyr-per-operation-grouping/index.html#before",
-    "title": "Per-operation grouping",
-    "section": "Before",
-    "text": "Before\n\n\n\n\nflowchart LR\n  A[Bare tibble] --> B(Transaction)\n  B --> C{Grouped data frame}"
-  },
-  {
-    "objectID": "posts/dplyr-per-operation-grouping/index.html#after",
-    "href": "posts/dplyr-per-operation-grouping/index.html#after",
-    "title": "Per-operation grouping",
-    "section": "After",
-    "text": "After\n\n\n\n\nflowchart LR\n  A[Bare tibble] --> B(Transaction)\n  B --> C[Bare tibble]"
+    "text": "In summary\n\nby/.by is per-operation grouping\ngroup_by() is persistent grouping\n\n\nBeforeAfter\n\n\n\n\n\n\nflowchart LR\n  A[Bare tibble] --> B(Transaction)\n  B --> C{Grouped data frame}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nflowchart LR\n  A[Bare tibble] --> B(Transaction)\n  B --> C[Bare tibble]\n\n\n\n\n\n\n\n\n\n\n\n\ndplyr verbs that support by/.by:\n\nmutate()\nsummarize()\nreframe()\nfilter()\nslice()\nslide_head() and slice_tail()\nslide_min() and slice_max()\nslice_sample()\n\n\n\nby or .by?\nSome verbs use . prefix for their arguments and some don’t. If you use the incorrect one, you will get an informative error:\n\ntransactions |>\n  slice_max(revenue, n = 2, .by = company)\n\nError in `slice_max()`:\n! Can't specify an argument named `.by` in this verb.\nℹ Did you mean to use `by` instead?\n\n\n\ntransactions %>% \n  slice_max(revenue, n = 2, by = company)\n\n# A tibble: 4 × 3\n  company  year revenue\n  <chr>   <int>   <int>\n1 A        2019      50\n2 A        2019      20\n3 B        2023      18\n4 B        2023      12"
   },
   {
     "objectID": "posts/dplyr-per-operation-grouping/index.html#what-happens-to-group_by",
@@ -284,6 +277,6 @@
     "href": "index.html",
     "title": "What's new in the tidyverse",
     "section": "",
-    "text": "tidyverse 2.0.0\n\n\n\ntidyverse\n\n\n\ntidyverse 2.0.0 has been released!\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndplyr 1.1.0\n\n\n\ndplyr\n\n\n\ndplyr 1.1.0 is waaaay faster at sorting character vectors, and introduces pick() and reframe() as better alternatives for your data workflow.\n\n\n\n\n\n\nJan 29, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPer-operation grouping\n\n\n\ndplyr\n\n\n\ntidyverse 2.0.0 has been released!\n\n\n\n\n\n\nJan 29, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nunnest_wider() and unnest_longer() improvements\n\n\n\ntidyr\n\n\n\nunnest_longer() and unnest_wider() have received some quality of life and consistency improvements.\n\n\n\n\n\n\nJan 24, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNew separate_* functions\n\n\n\ntidyr\n\n\n\nA new family of separate_*() functions supersedes separate(), separate_rows(), and extract().\n\n\n\n\n\n\nJan 24, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMapping\n\n\n\npurrr\n\n\n\nThere are three big new mapping features in purrr 1.0.0: progress bars, better errors, and map_vec().\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFlattening and simplification\n\n\n\npurrr\n\n\n\npurrr 1.0.0 has new functions for flattening and simplifying lists.\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nkeep_at() and discard_at()\n\n\n\npurrr\n\n\n\npurrr has two new functions, keep_at() and discard_at(), that operate on names.\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBreaking changes\n\n\n\npurrr\n\n\n\nThere are four important changes in purrr 1.0.0.\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNew str_* functions\n\n\n\nstringr\n\n\n\nstringr has accumulated several new functions since its last release three years ago.\n\n\n\n\n\n\nDec 2, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlinewidth\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 introduces a new linewidth aesthetic.\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nError messages\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 has improved error messages when running plots.\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "tidyverse 2.0.0\n\n\n\ntidyverse\n\n\n\ntidyverse 2.0.0 has been released!\n\n\n\n\n\n\nMar 8, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\ndplyr 1.1.0\n\n\n\ndplyr\n\n\n\ndplyr 1.1.0 is waaaay faster at sorting character vectors, and introduces pick() and reframe() as better alternatives for your data workflow.\n\n\n\n\n\n\nJan 29, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPer-operation grouping\n\n\n\ndplyr\n\n\n\nIntroducing by/.by, an experimental grouping alternative to group_by().\n\n\n\n\n\n\nJan 29, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nunnest_wider() and unnest_longer() improvements\n\n\n\ntidyr\n\n\n\nunnest_longer() and unnest_wider() have received some quality of life and consistency improvements.\n\n\n\n\n\n\nJan 24, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNew separate_* functions\n\n\n\ntidyr\n\n\n\nA new family of separate_*() functions supersedes separate(), separate_rows(), and extract().\n\n\n\n\n\n\nJan 24, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMapping\n\n\n\npurrr\n\n\n\nThere are three big new mapping features in purrr 1.0.0: progress bars, better errors, and map_vec().\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFlattening and simplification\n\n\n\npurrr\n\n\n\npurrr 1.0.0 has new functions for flattening and simplifying lists.\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nkeep_at() and discard_at()\n\n\n\npurrr\n\n\n\npurrr has two new functions, keep_at() and discard_at(), that operate on names.\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nBreaking changes\n\n\n\npurrr\n\n\n\nThere are four important changes in purrr 1.0.0.\n\n\n\n\n\n\nDec 20, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nNew str_* functions\n\n\n\nstringr\n\n\n\nstringr has accumulated several new functions since its last release three years ago.\n\n\n\n\n\n\nDec 2, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nlinewidth\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 introduces a new linewidth aesthetic.\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nError messages\n\n\n\nggplot2\n\n\n\nggplot2 3.4.0 has improved error messages when running plots.\n\n\n\n\n\n\nNov 4, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   }
 ]
