@@ -2,10 +2,10 @@
 title: "*_join()"
 subtitle: "dplyr 1.1.0"
 date: 2023-01-29
+image: "dplyr-join.png"
+image-alt: "Text that says dplyr join. An screenshot of a command running the new join by helper."
 categories:
    - "dplyr"
-image: "dplyr-join.png"
-image-alt: "Text that says dplyr joins. An image of a line plot with lines of varying widths."
 description: "dplyr 1.1.0 has relaxed assumptions for non-equi joins."
 ---
 
@@ -153,6 +153,7 @@ transactions |>
 You can now catch this problem automatically by using a new quality control argument, `unmatched`:
 
 ```{r}
+#| error: true
 transactions |>
   inner_join(
     companies, 

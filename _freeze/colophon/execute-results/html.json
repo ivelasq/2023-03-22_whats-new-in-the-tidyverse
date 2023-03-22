@@ -1,0 +1,14 @@
+{
+  "hash": "ceca95da52a8de94c451275fd52efecc",
+  "result": {
+    "markdown": "---\ntitle: \"Colophon\"\n---\n\n\nSee today's session info:\n\n\n::: {.cell}\n\n```{.r .cell-code}\nsessionInfo()\n```\n\n::: {.cell-output .cell-output-stdout}\n```\nR version 4.2.2 (2022-10-31)\nPlatform: x86_64-apple-darwin17.0 (64-bit)\nRunning under: macOS Big Sur ... 10.16\n\nMatrix products: default\nBLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib\nLAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib\n\nlocale:\n[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.2 compiler_4.2.2    fastmap_1.1.1     cli_3.6.0        \n [5] tools_4.2.2       htmltools_0.5.4   rstudioapi_0.14   yaml_2.3.7       \n [9] rmarkdown_2.20    knitr_1.42        xfun_0.37         digest_0.6.31    \n[13] jsonlite_1.8.4    rlang_1.1.0.9000  evaluate_0.20    \n```\n:::\n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

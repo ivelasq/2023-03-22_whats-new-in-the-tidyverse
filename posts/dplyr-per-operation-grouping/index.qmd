@@ -6,7 +6,7 @@ image-alt: "Text: Per-operation grouping, dplyr. An image of an example call usi
 categories:
   - dplyr
 date: 2023-01-29
-description: "Introducing by/.by, an experimental grouping alternative to group_by()."
+description: "Introducing `by`/`.by`, an experimental grouping alternative to `group_by()`."
 engine: knitr
 editor: visual
 ---

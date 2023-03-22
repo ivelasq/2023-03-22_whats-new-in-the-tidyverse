@@ -117,6 +117,10 @@ There is a new `.locale` argument for you to explicitly request an alternative l
 bench::system_time(df %>% arrange(x, locale = "fr"))
 ```
 
+::: callout-warning
+Be aware: the new locale slighly changes how vectors are ordered.
+:::
+
 ## Learn more
 
 -   [tidyverse blog: dplyr 1.1.0: `pick()`, `reframe()`, and `arrange()`](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange)

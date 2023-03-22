@@ -1,0 +1,9 @@
+---
+title: "Colophon"
+---
+
+See today's session info:
+
+```{r}
+sessionInfo()
+```

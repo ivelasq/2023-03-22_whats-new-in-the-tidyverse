@@ -6,7 +6,7 @@ image: "purrr-keep-at-discard-at.png"
 image-alt: "Text that says purrr keep_at, discard_at. A screenshot of a list that has keep_at applied to it."
 categories:
   - "purrr"
-description: purrr has two new functions, keep_at() and discard_at(), that operate on names.
+description: "purrr has two new functions, `keep_at()` and `discard_at()`, that operate on names."
 engine: knitr
 editor: visual
 ---
