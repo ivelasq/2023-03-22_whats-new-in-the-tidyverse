@@ -6,8 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2023-02-07">
-<meta name="description" content="dplyr 1.1.0 is waaaay faster at sorting character vectors.">
+<meta name="dcterms.date" content="2023-01-29">
+<meta name="description" content="dplyr 1.1.0 is waaaay faster at sorting character vectors, and introduces pick() and reframe() as better alternatives for your data workflow.">
 
 <title>What’s new in the tidyverse - pick(), reframe(), and arrange()</title>
 <style>
@@ -185,7 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">dplyr 1.1.0</h1>
+<h1 class="title">pick(), reframe(), and arrange()</h1>
 <p class="subtitle lead">dplyr 1.1.0</p>
   <div class="quarto-categories">
     <div class="quarto-category">dplyr</div>
@@ -194,7 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div>
   <div class="description">
-    dplyr 1.1.0 is waaaay faster at sorting character vectors.
+    dplyr 1.1.0 is waaaay faster at sorting character vectors, and introduces <code>pick()</code> and <code>reframe()</code> as better alternatives for your data workflow.
   </div>
 </div>
 
@@ -205,7 +205,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 7, 2023</p>
+      <p class="date">January 29, 2023</p>
     </div>
   </div>
   
@@ -215,33 +215,163 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<p>Install the newest version of dplyr with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dplyr:)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="whats-new" class="level2">
-<h2 class="anchored" data-anchor-id="whats-new">What’s new</h2>
+<p>Install dplyr 1.1.0 with:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(withr)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> stringi<span class="sc">::</span><span class="fu">stri_rand_strings</span>(<span class="at">n =</span> <span class="fl">5e5</span>, <span class="at">length =</span> <span class="dv">15</span>))</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_options</span>(<span class="fu">list</span>(<span class="at">dplyr.legacy_locale =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                    {</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                      bench<span class="sc">::</span><span class="fu">system_time</span>(df <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(x))</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                    })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>process    real 
-  3.87s   3.88s </code></pre>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">"cran/dplyr@1.1.0"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">system_time</span>(df <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>process    real 
-  276ms   276ms </code></pre>
+<p>Load the package with:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">system_time</span>(df <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(x, <span class="at">locale =</span> <span class="st">"fr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+</div>
+<section id="pick" class="level2">
+<h2 class="anchored" data-anchor-id="pick">pick()</h2>
+<p>You may have used <code>across()</code> for column selection while working inside a data-masking function like <code>mutate()</code> or <code>summarize()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_1 =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>), </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x_2 =</span> <span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">w_4 =</span> <span class="dv">11</span><span class="sc">:</span><span class="dv">15</span>, </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y_2 =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">6</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+    x_1   x_2   w_4   y_2
+  &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+1     1     6    11     5
+2     3     7    12     2
+3     2     8    13     4
+4     1     9    14     0
+5     2    10    15     6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_x =</span> <span class="fu">ncol</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"x"</span>))),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_y =</span> <span class="fu">ncol</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"y"</span>)))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+    n_x   n_y
+  &lt;int&gt; &lt;int&gt;
+1     2     1</code></pre>
+</div>
+</div>
+<p>But, <code>across()</code> is meant to apply functions to columns, not select them. dplyr 1.1.0 provides a new function for this function :), called <code>pick()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_x =</span> <span class="fu">ncol</span>(<span class="fu">pick</span>(<span class="fu">starts_with</span>(<span class="st">"x"</span>))),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_y =</span> <span class="fu">ncol</span>(<span class="fu">pick</span>(<span class="fu">starts_with</span>(<span class="st">"y"</span>)))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+    n_x   n_y
+  &lt;int&gt; &lt;int&gt;
+1     2     1</code></pre>
+</div>
+</div>
+<p><code>across()</code> still works without functions for now, but the tidyverse team plans to deprecate it in the future.</p>
+</section>
+<section id="reframe" class="level2">
+<h2 class="anchored" data-anchor-id="reframe">reframe()</h2>
+<p>dplyr 1.0.0 introduces a powerful new feature: <code>summarise()</code> could return per-group results of any length:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"d"</span>, <span class="st">"f"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">g =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="st">"e"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"f"</span>, <span class="st">"d"</span>, <span class="st">"a"</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">x =</span> <span class="fu">intersect</span>(x, table), <span class="at">.by =</span> g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+dplyr 1.1.0.
+ℹ Please use `reframe()` instead.
+ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+  always returns an ungrouped data frame and adjust accordingly.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+      g x    
+  &lt;dbl&gt; &lt;chr&gt;
+1     1 a    
+2     1 b    
+3     2 f    
+4     2 d    
+5     2 a    </code></pre>
+</div>
+</div>
+<p>However, this raised some concerns.</p>
+<ul>
+<li>Increases the chance for accidental bugs</li>
+<li>Is against the spirit of a “summary,” which implies 1 row per group</li>
+<li>Makes translation to dbplyr very difficult</li>
+</ul>
+<p>This feature has been walked back and summarize will throw a warning when either 0 or &gt;1 rows are returned per group.</p>
+<p>As its replacement, welcome new function <code>reframe()</code>!</p>
+<p>Think of <code>reframe()</code> as: “do something to each group”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reframe</span>(<span class="at">x =</span> <span class="fu">intersect</span>(x, table), <span class="at">.by =</span> g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+      g x    
+  &lt;dbl&gt; &lt;chr&gt;
+1     1 a    
+2     1 b    
+3     2 f    
+4     2 d    
+5     2 a    </code></pre>
+</div>
+</div>
+<p><code>reframe()</code> always returns an ungrouped data frame (i.e., not a grouped data frame even if the input was grouped).</p>
+</section>
+<section id="arrange" class="level2">
+<h2 class="anchored" data-anchor-id="arrange">arrange()</h2>
+<p>When sorting character vectors, the C locale is now the default, rather than the system locale. This makes dplyr wayyy faster at sorting character variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(withr)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> stringi<span class="sc">::</span><span class="fu">stri_rand_strings</span>(<span class="at">n =</span> <span class="fl">5e5</span>, <span class="at">length =</span> <span class="dv">15</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>withr<span class="sc">::</span><span class="fu">with_options</span>(<span class="fu">list</span>(<span class="at">dplyr.legacy_locale =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>                    {</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                      bench<span class="sc">::</span><span class="fu">system_time</span>(df <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(x))</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                    })</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>process    real 
-  297ms   297ms </code></pre>
+  4.59s   4.95s </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">system_time</span>(df <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>process    real 
+  332ms   356ms </code></pre>
+</div>
+</div>
+<p>There is a new <code>.locale</code> argument for you to explicitly request an alternative locale using a stringi locale identifier (like “en” for English, or “fr” for French).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bench<span class="sc">::</span><span class="fu">system_time</span>(df <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(x, <span class="at">locale =</span> <span class="st">"fr"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>process    real 
+  385ms   427ms </code></pre>
 </div>
 </div>
 </section>
@@ -250,6 +380,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange">tidyverse blog: dplyr 1.1.0: <code>pick()</code>, <code>reframe()</code>, and <code>arrange()</code></a></li>
 <li><a href="https://dplyr.tidyverse.org/news/index.html">dplyr release notes</a></li>
+<li><a href="https://www.youtube.com/watch?v=9LAML4Nr1II&amp;t=1252s">New features in dplyr 1.1.0, and an introduction to ivs</a></li>
 </ul>
 
 
