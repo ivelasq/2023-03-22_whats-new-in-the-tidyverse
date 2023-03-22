@@ -1,0 +1,123 @@
+---
+title: "dplyr 1.1.0"
+date: 2023-01-29
+image: "dplyr-pick-reframe-arrange.png"
+image-alt: "dplyr 1.1.0. Image of two benchmark comparisons arranging a vector in the old and new dplyr."
+categories:
+  - dplyr
+description: "dplyr 1.1.0 is waaaay faster at sorting character vectors, and introduces `pick()` and `reframe()` as better alternatives for your data workflow."
+engine: knitr
+editor: visual
+---
+
+Install dplyr 1.1.0 with:
+
+```{r}
+#| eval: false
+pak::pak("cran/dplyr@1.1.0")
+```
+
+Load the package with:
+
+```{r}
+library(dplyr)
+```
+
+## pick()
+
+You may have used `across()` for column selection while working inside a data-masking function like `mutate()` or `summarize()`.
+
+```{r}
+df <- tibble(
+  x_1 = c(1, 3, 2, 1, 2), 
+  x_2 = 6:10, 
+  w_4 = 11:15, 
+  y_2 = c(5, 2, 4, 0, 6)
+)
+
+df
+
+df |>
+  summarise(
+    n_x = ncol(across(starts_with("x"))),
+    n_y = ncol(across(starts_with("y")))
+  )
+```
+
+But, `across()` is meant to apply functions to columns, not select them. dplyr 1.1.0 provides a new function for this function :), called `pick()`:
+
+```{r}
+df |>
+  summarise(
+    n_x = ncol(pick(starts_with("x"))),
+    n_y = ncol(pick(starts_with("y")))
+  )
+```
+
+`across()` still works without functions for now, but the tidyverse team plans to deprecate it in the future.
+
+## reframe()
+
+dplyr 1.0.0 introduces a powerful new feature: `summarise()` could return per-group results of any length:
+
+```{r}
+table <- c("a", "b", "d", "f")
+
+df <- tibble(
+  g = c(1, 1, 1, 2, 2, 2, 2),
+  x = c("e", "a", "b", "c", "f", "d", "a")
+)
+
+df |>
+  summarise(x = intersect(x, table), .by = g)
+```
+
+However, this raised some concerns.
+
+* Increases the chance for accidental bugs
+* Is against the spirit of a “summary,” which implies 1 row per group
+* Makes translation to dbplyr very difficult
+
+This feature has been walked back and summarize will throw a warning when either 0 or >1 rows are returned per group.
+
+As its replacement, welcome new function `reframe()`!
+
+Think of `reframe()` as: "do something to each group".
+
+```{r}
+df |>
+  reframe(x = intersect(x, table), .by = g)
+```
+
+`reframe()` always returns an ungrouped data frame (i.e., not a grouped data frame even if the input was grouped).
+
+## arrange()
+
+When sorting character vectors, the C locale is now the default, rather than the system locale. This makes dplyr wayyy faster at sorting character variables.
+
+```{r}
+#| message: false
+library(withr)
+library(dplyr)
+
+df <- tibble(x = stringi::stri_rand_strings(n = 5e5, length = 15))
+
+withr::with_options(list(dplyr.legacy_locale = TRUE),
+                    {
+                      bench::system_time(df %>% arrange(x))
+                    })
+
+bench::system_time(df %>% arrange(x))
+```
+
+There is a new `.locale` argument for you to explicitly request an alternative locale using a stringi locale identifier (like "en" for English, or "fr" for French).
+
+```{r}
+bench::system_time(df %>% arrange(x, locale = "fr"))
+```
+
+## Learn more
+
+* [tidyverse blog: dplyr 1.1.0: `pick()`, `reframe()`, and `arrange()`](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange)
+* [dplyr release notes](https://dplyr.tidyverse.org/news/index.html)
+* [New features in dplyr 1.1.0, and an introduction to ivs](https://www.youtube.com/watch?v=9LAML4Nr1II&t=1252s)
