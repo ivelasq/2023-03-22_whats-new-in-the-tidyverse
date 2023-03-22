@@ -1,0 +1,44 @@
+---
+title: "*_join()"
+subtitle: "dplyr 1.1.0"
+date: 2023-01-29
+categories:
+   - "dplyr"
+image: "dplyr-join.png"
+image-alt: "Text that says dplyr joins. An image of a line plot with lines of varying widths."
+description: "ggplot2 3.4.0 introduces a new linewidth aesthetic."
+---
+
+## Equality joins
+
+You've been able to do this in dplyr 
+
+
+
+but now you can use join_by
+
+join_by(id, a == b)
+
+## Inequality joins
+
+This happens when you add an inequality condition to join_by
+
+join_by(id, date >= since)
+
+## Rolling joins
+
+Wrap something in closest
+
+join_by(id, closest(date >= since))
+
+## Overlap joins
+
+Special cases of inequality joins popular in time series and genomics
+I have a date in one column in one table and arange of upper/lower bounds and want to match when values are in the range in the other table
+
+join_by(id, between(date, y_lower, y_upper))
+join_by(id, overlaps(x_lower, x_upper, y_lower, y_upper)) now two sets of ranges and if they oeverlap at alll, they match
+join_by(id, within(x_lower, x_upper, y_lower, y_upper)))) or has to be completely inside the lower and upper of the other table
+
+## Cross join
+
