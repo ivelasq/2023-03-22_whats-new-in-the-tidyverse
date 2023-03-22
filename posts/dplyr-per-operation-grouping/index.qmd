@@ -1,31 +1,39 @@
 ---
 title: "Per-operation grouping"
-subtitle: "dplyr"
-categories:
-  - dplyr
+subtitle: "dplyr 1.1.0"
 image: "per-operation.png"
 image-alt: "Text: Per-operation grouping, dplyr. An image of an example call using by."
-date: 2023-02-01
+categories:
+  - dplyr
+date: 2023-01-29
+description: tidyverse 2.0.0 has been released!
+engine: knitr
+editor: visual
 ---
 
-Install the latest version of dplyr with:
+Install dplyr 1.1.0 with:
 
 ```{r}
 #| eval: false
-install.packages("dplyr")
+pak::pak("cran/dplyr@1.1.0")
 ```
 
-Load dplyr with:
-
-```{r}
-library(dplyr)
-```
-
+Load the package with:
 
 ```{r}
 #| message: false
 library(dplyr)
+```
 
+## Per-operation grouping
+
+`by`/`.by` is an experimental grouping alternative to `group_by()`.
+
+### `group_by()`
+
+`group_by()` provides persistent grouping (lasts for more than one operation) for data operations.
+
+```{r}
 transactions <-
   tibble::tribble(
     ~company, ~year, ~revenue,
@@ -38,8 +46,17 @@ transactions <-
     )
 ```
 
+Let's say you want revenue by company and year:
 
-Total yearly revenue of each company?
+```{r}
+transactions |>
+  group_by(company, year) |>
+  mutate(total = sum(revenue))
+```
+
+Notice the message that says `Groups: company, year [4]`.
+
+If you want only the total yearly revenue of each company, you can use `summarize()` which peels off a layer of grouping by default:
 
 ```{r}
 #| message: false
@@ -48,34 +65,59 @@ transactions %>%
   summarize(revenue = sum(revenue))
 ```
 
+(Year is removed as a group).
+
+What if you didn't want groups anymore?
+
+:::{.panel}
+
+## Before: `ungroup()`
+
 ```{r}
-#| message: false
 transactions %>% 
   group_by(company, year,) %>% 
   summarize(revenue = sum(revenue)) %>% 
   ungroup()
 ```
 
+## Before: `.groups = "drop"`
+
 ```{r}
-#| message: false
 transactions %>% 
   group_by(company, year,) %>% 
   summarize(revenue = sum(revenue),
             .groups = "drop")
 ```
 
-Enter... datatable
+## Now: `by/.by`
 
-explain datatable
-by is specified alongside what you want to group
-you start with a bare data table and then do this and end up with a bare data table, rather than having a grouped data frame like in dplyr
+`by/.by` introduces the idea of per-operation grouping:
+
+```{r}
+transactions |>
+  mutate(total = sum(revenue), .by = c(company, year))
+```
+
+:::
+
+Advantages:
+
+* You never have to remember to `ungroup()`.
+* You can use tidyselect for multiple columns.
+* `summarise()` didn’t emit a message about regrouping.
+* You can place the grouping specification alongside the code that uses it, rather than in a separate group_by() line.
+
+`by/.by` was inspired by data.table!
+
+* `by` is specified alongside what you want to group &
+* You start with a bare data table and then do this and end up with a bare data table, rather than having a grouped data frame like in dplyr.
 
 ```{r}
 #| eval: false
 transactions[, .(revenue = sum(revenue)), by = .(company, year)]
 ```
 
-what if you can put it in line with your summarize call?
+This raised the question, what if you can put it in line with your summarize call?
 
 ```{r}
 transactions %>% 
@@ -84,14 +126,14 @@ transactions %>%
     by = c(company, year)
     )
 ```
-no longer grouped by company on the way out
+
+Notice this is longer grouped by company on the way out. It does the **one operation** then drops off.
 
 1. .by is per-operation grouping
 2. group_by is persistent grouping
 
 bythe one operation (summarize) then drop off
 bare tibble -> transaction -> always get a bare tibble not a grouped data frame
-don't have to remember ungroup or specify groups = drop
 
 - show lines with more calls (mutate)
 
@@ -109,12 +151,9 @@ summarize
 filter
 slice_*
 
-what happens to group_by?
+## What happens to group_by?
 
-it's not going away? not depricated or even superceded (discovered something better)
-
-you don't have to remember what will be taken off (outer most) and the order doesnt' matter
-be more explict 
+It's not going away! It is not deprecated or even superseded.
 
 Learn more
 
