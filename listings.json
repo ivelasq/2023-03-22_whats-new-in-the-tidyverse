@@ -2,10 +2,12 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/intro/index.html",
       "/posts/tidyverse-2-0-0/index.html",
       "/posts/dplyr-arrange/index.html",
       "/posts/dplyr-joins/index.html",
       "/posts/dplyr-per-operation-grouping/index.html",
+      "/posts/dplyr-case-when-case-match-consecutive-id/index.html",
       "/posts/tidyr-unnest-wider-unnest-longer-improvements/index.html",
       "/posts/tidyr-separate-family/index.html",
       "/posts/purrr-mapping/index.html",
