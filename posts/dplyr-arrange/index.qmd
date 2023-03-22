@@ -1,5 +1,6 @@
 ---
-title: "dplyr 1.1.0"
+title: "pick(), reframe(), and arrange()"
+subtitle: "dplyr 1.1.0"
 date: 2023-01-29
 image: "dplyr-pick-reframe-arrange.png"
 image-alt: "dplyr 1.1.0. Image of two benchmark comparisons arranging a vector in the old and new dplyr."
@@ -74,11 +75,11 @@ df |>
 
 However, this raised some concerns.
 
-* Increases the chance for accidental bugs
-* Is against the spirit of a “summary,” which implies 1 row per group
-* Makes translation to dbplyr very difficult
+-   Increases the chance for accidental bugs
+-   Is against the spirit of a "summary," which implies 1 row per group
+-   Makes translation to dbplyr very difficult
 
-This feature has been walked back and summarize will throw a warning when either 0 or >1 rows are returned per group.
+This feature has been walked back and summarize will throw a warning when either 0 or \>1 rows are returned per group.
 
 As its replacement, welcome new function `reframe()`!
 
@@ -118,6 +119,6 @@ bench::system_time(df %>% arrange(x, locale = "fr"))
 
 ## Learn more
 
-* [tidyverse blog: dplyr 1.1.0: `pick()`, `reframe()`, and `arrange()`](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange)
-* [dplyr release notes](https://dplyr.tidyverse.org/news/index.html)
-* [New features in dplyr 1.1.0, and an introduction to ivs](https://www.youtube.com/watch?v=9LAML4Nr1II&t=1252s)
+-   [tidyverse blog: dplyr 1.1.0: `pick()`, `reframe()`, and `arrange()`](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange)
+-   [dplyr release notes](https://dplyr.tidyverse.org/news/index.html)
+-   [New features in dplyr 1.1.0, and an introduction to ivs](https://www.youtube.com/watch?v=9LAML4Nr1II&t=1252s)
