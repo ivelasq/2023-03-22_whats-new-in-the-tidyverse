@@ -1,0 +1,212 @@
+---
+title: "*_join()"
+subtitle: "dplyr 1.1.0"
+date: 2023-01-29
+categories:
+   - "dplyr"
+image: "dplyr-join.png"
+image-alt: "Text that says dplyr joins. An image of a line plot with lines of varying widths."
+description: "dplyr 1.1.0 has relaxed assumptions for non-equi joins."
+---
+
+Install dplyr 1.1.0 with:
+
+```{r}
+#| eval: false
+pak::pak("cran/dplyr@1.1.0")
+```
+
+Load the package with:
+
+```{r}
+#| message: false
+library(dplyr)
+```
+
+Let's create some data. In `transactions`, we have company IDs, years, and revenue. In `companies`, we have the company IDs and full company names.
+
+```{r}
+transactions <- tibble(
+  company = c("A", "A", "B", "B"),
+  year = c(2019, 2020, 2021, 2023),
+  revenue = c(50, 4, 10, 12)
+)
+
+companies <- tibble(id = c("A", "B"),
+                    name = c("Patagonia", "RStudio"))
+```
+
+## `join_by()`
+
+Say you want to join these two tables. You've been able to do this in dplyr:
+
+```{r}
+transactions |> 
+  inner_join(companies, by = c(company = "id"))
+```
+
+This is a bit odd:
+
+* Using `=` not `==`
+* Using `c()`
+* `"id"` has to be in quotes
+
+Welcome `join_by()`!
+
+```{r}
+transactions |> 
+  inner_join(companies, by = join_by(company == id))
+```
+
+This is a much more natural way of expressing this join.
+
+## Multiple matches
+
+RStudio became Posit in 2023. Now, let's add a column to track the change:
+
+```{r}
+companies <- tibble(
+  id = c("A", "B", "B"),
+  since = c(1973, 2009, 2022),
+  name = c("Patagonia", "RStudio", "Posit")
+)
+```
+
+What happens when we try to join the tables together?
+
+```{r}
+#| warning: true
+faulty <-
+  transactions |> 
+  inner_join(companies, by = join_by(company == id))
+```
+
+In 2021, it joined `B` with both `RStudio` and `Posit`, creating multiple matches. We want to match with RStudio, but not with Posit (because the name hasn’t changed yet).
+
+## Inequality joins
+
+dplyr 1.1.0 has inequality joins: join expressions containing one of the following the inequality conditions `>=`, `>`, `<=`, or `<`.
+
+You can think through the logic of what you would like with the `year` and `since` columns:
+
+```{r}
+# Only want a match if `year` is *after* the name change
+# `year[i] >= since`?
+2021 >= 2009
+2021 >= 2022
+```
+
+Now, you can add an inequality condition to `join_by()`:
+
+```r
+`join_by(company == id, year >= since)
+```
+
+Running it with the inequality join:
+
+```{r}
+transactions |>
+  inner_join(companies, join_by(company == id, year >= since))
+```
+
+You're down to five! But, in 2023, you still have two matches. This is because the logic is true but not complete:
+
+```{r}
+2023 >= 2009
+2021 >= 2022
+```
+
+## Rolling joins
+
+You can use rolling joins to find the 'closest' inequality match.
+
+You prefer the Posit match over the RStudio match because 2022 is *closer* to the transaction year of 2023 than 2009 is. Wrap something in `closest()` to express this:
+
+```{r}
+transactions |>
+  inner_join(companies, join_by(company == id, closest(year >= since)))
+```
+
+> `closest(year >= since)` finds all of the matches in `since` for a particular year, and then filters them down to only the closest match to that year. 
+
+## Unmatched rows
+
+Say you add a new company to `transactions` but forget to add them to `companies`:
+
+```{r}
+transactions <- transactions |>
+  tibble::add_row(company = "C", year = 2023, revenue = 15)
+
+transactions
+```
+
+When you run your join, company C will disappear:
+
+```{r}
+transactions |>
+  inner_join(
+    companies, 
+    join_by(company == id, closest(year >= since))
+  )
+```
+
+You can now catch this problem automatically by using a new quality control argument, `unmatched`:
+
+```{r}
+transactions |>
+  inner_join(
+    companies, 
+    join_by(company == id, closest(year >= since)),
+    unmatched = "error"
+  )
+```
+
+::: {.callout-tip}
+Have you been wondering why Davis is using an `inner_join()` instead of a `left_join()`? You’d use a left_join() is to ensure that rows from x are always retained, so it wouldn’t make sense to error when rows from x are also unmatched. In an inner_join(), both inputs can potentially drop rows, so `unmatched = "error"` checks for unmatched rows in both inputs.
+:::
+
+## Overlap joins
+
+These are special cases of inequality joins popular in time series and genomics.
+
+* `join_by(id, between(date, y_lower, y_upper))`: You have a date in one column in one table and a range of upper/lower bounds in the other table and want to match when values are in the range in the other table.
+* `join_by(id, overlaps(x_lower, x_upper, y_lower, y_upper))`: Now, you have two sets of ranges and if they overlap at all, they match.
+* `join_by(id, within(x_lower, x_upper, y_lower, y_upper))` or has to be completely inside the lower and upper of the other table
+
+## Cross joins
+
+Cross joins match each row in x to every row in y, giving you the full Cartesian production.
+
+```{r}
+characters <-
+  tibble::tribble(
+    ~person,         ~title,
+     "Shiv",    "President",
+  "Kendall",  "Interim CEO",
+    "Logan",          "CEO",
+      "Tom", "Head of News",
+    "Roman",          "COO"
+  )
+
+alliances <-
+  tibble::tribble(
+      ~person, ~allies,
+       "Shiv",   "Tom",
+    "Kendall",  "Greg",
+      "Roman",  "Geri"
+    )
+
+cross_join(characters, alliances)
+```
+
+
+::: {.callout-tip}
+`cross_join()` achieves the same effect as `tidyr::crossing()` but dplyr is always about data frames whereas `tidyr::crossing()` is more for individual data.
+:::
+
+## Learn more
+
+-   [tidyverse blog: dplyr 1.1.0: `pick()`, `reframe()`, and `arrange()`](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange)
+-   [dplyr release notes](https://dplyr.tidyverse.org/news/index.html)
+-   [New features in dplyr 1.1.0, and an introduction to ivs](https://www.youtube.com/watch?v=9LAML4Nr1II)
+

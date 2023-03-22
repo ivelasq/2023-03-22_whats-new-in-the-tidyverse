@@ -1,0 +1,14 @@
+{
+  "hash": "927234ff85ac5dc812e6c2aa5b4b8c3d",
+  "result": {
+    "markdown": "---\ntitle: \"*_join()\"\nsubtitle: \"dplyr 1.1.0\"\ncategories:\n   - \"dplyr\"\nimage: \"dplyr-join.png\"\nimage-alt: \"Text that says Joins dplyr An image of a line plot with lines of varying widths.\"\ndescription: \"ggplot2 3.4.0 introduces a new linewidth aesthetic.\"\ndate: 2022-11-07\n---\n\n\n<html>\n<head>\n<style type=\"text/css\">\n.number{\n    color: rgb(21,20,181) ;\n}\n\n.functioncall{\n    color: black ;\n}\n\n.string{\n    color: rgb(153,153,255) ;\n}\n\n.keyword{\n    color: black;\n}\n\n.argument{\n    color: rgb( 177,63,5) ;\n}\n\n.comment{\n    color: rgb( 204,204,204) ;\n}\n\n.roxygencomment{\n    color: rgb(0,151,255);\n}\n\n.formalargs{\n    color: rgb(18,182,18);\n}\n\n.eqformalargs{\n    color: rgb(18,182,18);\n}\n\n.assignement{\n    color: rgb(55,55,98);\n}\n\n.package{\n    color: rgb(150,182,37);\n}\n\n.slot{\n    font-style:italic;\n}\n\n.symbol{\n    color: black ;\n}\n\n.prompt{\n    color: black ;\n}\n\n.line{\n    color: gray ;   \n}\n</style>\n</head>\n<body>\n<pre>\n<span class=\"functioncall\">library</span><span class=\"keyword\">(</span><span class=\"symbol\">stringr</span><span class=\"keyword\">)</span>\n\n<span class=\"functioncall\">str_view</span><span class=\"keyword\">(</span><span class=\"string\">\"\\t\"</span><span class=\"keyword\">)</span>\n</pre>\n</body>\n</html>",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
