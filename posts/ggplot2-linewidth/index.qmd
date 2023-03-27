@@ -15,6 +15,7 @@ Install ggplot2 3.4.0 with:
 #| eval: false
 pak::pak("cran/ggplot2@3.4.0")
 ```
+
 Load the package with:
 
 ```{r}
@@ -23,10 +24,9 @@ library(ggplot2)
 
 ## linewidth
 
-`linewidth` will take over sizing of the width of lines - something that was  handled previously by `size`.
+`linewidth` will take over sizing of the width of lines - something that was handled previously by `size`.
 
-::: {.panel-tabset}
-
+::: panel-tabset
 ## Before
 
 ```{r}
@@ -68,7 +68,6 @@ ggplot(airquality) +
   geom_line(aes(Day, Temp, linewidth = Month, group = Month)) +
   scale_linewidth(range = c(0.5, 3))
 ```
-
 :::
 
 You will get a deprecation message if you try to use `size` when you should be using `linewidth`.
@@ -109,9 +108,10 @@ p2 <- tn |>
 
 p1/p2
 ```
+
 The switch to `linewidth` goes beyond aesthetics and targets everything that used size to target line width.
 
 ### Learn more
 
-* [tidyverse blog: ggplot2 3.4.0](https://www.tidyverse.org/blog/2022/11/ggplot2-3-4-0/)
-* [ggplot2 release notes](https://ggplot2.tidyverse.org/news/index.html)
+-   [tidyverse blog: ggplot2 3.4.0](https://www.tidyverse.org/blog/2022/11/ggplot2-3-4-0/)
+-   [ggplot2 release notes](https://ggplot2.tidyverse.org/news/index.html)

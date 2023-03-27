@@ -127,6 +127,8 @@ vt_census <- tidycensus::get_decennial(
   year = 2020
 )
 
+vt_census
+
 vt_census |>
   select(NAME) |> 
   separate_wider_regex(
@@ -140,7 +142,6 @@ vt_census |>
     )
   )
 ```
-
 
 ### Learn more
 

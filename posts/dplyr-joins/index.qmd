@@ -102,6 +102,13 @@ Warning in inner_join(transactions, companies, by = join_by(company == id)): Eac
 ℹ If multiple matches are expected, set `multiple = "all"` to silence this warning.
 ```
 
+::: callout-important
+## 2023-03-22 Update
+
+On March 22nd, Davis Vaughn announced [dplyr 1.1.1](https://www.tidyverse.org/blog/2023/03/dplyr-1-1-1/). The error message that let you know when performed a join where a row from `x` matched more than one row from `y` is now removed. The tidyverse team adjusted it in such a way that "it now only catches the most
+dangerous type of join (a many-to-many join), meaning that you should see the warning *much* less often."
+:::
+
 ## Inequality joins
 
 dplyr 1.1.0 has inequality joins: join expressions containing one of the following the inequality conditions `>=`, `>`, `<=`, or `<`.
@@ -182,7 +189,7 @@ transactions |>
 ```
 
 ::: callout-tip
-Have you been wondering why Davis is using an `inner_join()` instead of a `left_join()`? You'd use a `left_join()` is to ensure that rows from x are always retained, so it wouldn't make sense to error when rows from x are also unmatched. In an inner_join(), both inputs can potentially drop rows, so `unmatched = "error"` checks for unmatched rows in both inputs.
+Have you been wondering why Davis is using an `inner_join()` instead of a `left_join()`? You'd use a `left_join()` is to ensure that rows from x are always retained, so it wouldn't make sense to error when rows from x are also unmatched. In an inner join, both inputs can potentially drop rows, so `unmatched = "error"` checks for unmatched rows in both inputs.
 :::
 
 ## Overlap joins

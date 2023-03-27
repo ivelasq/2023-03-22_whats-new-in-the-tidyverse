@@ -1,6 +1,6 @@
 ---
 title: "Mapping"
-subtitle: "purrr 1.1.0"
+subtitle: "purrr 1.0.0"
 date: 2022-12-20
 image: "purrr-mapping.png"
 image-alt: "Text that says purrr mapping. A screenshot of a purrr progress bar with saving plots as the identifier."

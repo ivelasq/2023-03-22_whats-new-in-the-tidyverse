@@ -77,7 +77,6 @@ The team edited the `map_*` family to be consistent with general tidyverse coerc
 ## Before
 
 ```{r}
-#| warning: false
 map_chr(1:4, \(x) x + 1)
 ```
 

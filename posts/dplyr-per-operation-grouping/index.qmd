@@ -49,9 +49,12 @@ transactions <-
 Let's say you want revenue by company and year:
 
 ```{r}
-transactions |>
+transactions_grouped <-
+  transactions |>
   group_by(company, year) |>
   mutate(total = sum(revenue))
+
+transactions_grouped
 ```
 
 Notice the message that says `Groups: company, year [4]`. `group_by()` provides persistent grouping (lasts for more than one operation).
