@@ -1,75 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/about.html</loc>
-    <lastmod>2023-03-28T04:03:08.984Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/about.html</loc>
+    <lastmod>2023-03-28T04:08:15.645Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/colophon.html</loc>
-    <lastmod>2023-03-28T04:03:10.752Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/colophon.html</loc>
+    <lastmod>2023-03-28T04:08:17.965Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/tidyverse-2-0-0/index.html</loc>
-    <lastmod>2023-03-28T04:03:11.548Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/tidyverse-2-0-0/index.html</loc>
+    <lastmod>2023-03-28T04:08:18.861Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/purrr-mapping/index.html</loc>
-    <lastmod>2023-03-28T04:03:12.340Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/purrr-mapping/index.html</loc>
+    <lastmod>2023-03-28T04:08:19.721Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/ggplot2-linewidth/index.html</loc>
-    <lastmod>2023-03-28T04:03:13.128Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/ggplot2-linewidth/index.html</loc>
+    <lastmod>2023-03-28T04:08:20.609Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/dplyr-arrange/index.html</loc>
-    <lastmod>2023-03-28T04:03:13.920Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/dplyr-arrange/index.html</loc>
+    <lastmod>2023-03-28T04:08:21.529Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/purrr-flattening-simplification/index.html</loc>
-    <lastmod>2023-03-28T04:03:14.716Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/purrr-flattening-simplification/index.html</loc>
+    <lastmod>2023-03-28T04:08:22.421Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/purrr-keep-at-discard-at/index.html</loc>
-    <lastmod>2023-03-28T04:03:15.472Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/purrr-keep-at-discard-at/index.html</loc>
+    <lastmod>2023-03-28T04:08:23.277Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/intro/index.html</loc>
-    <lastmod>2023-03-28T04:03:16.280Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/intro/index.html</loc>
+    <lastmod>2023-03-28T04:08:24.165Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/dplyr-joins/index.html</loc>
-    <lastmod>2023-03-28T04:03:17.140Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/dplyr-joins/index.html</loc>
+    <lastmod>2023-03-28T04:08:25.105Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/tidyr-unnest-wider-unnest-longer-improvements/index.html</loc>
-    <lastmod>2023-03-28T04:03:17.908Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/tidyr-unnest-wider-unnest-longer-improvements/index.html</loc>
+    <lastmod>2023-03-28T04:08:25.969Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/dplyr-per-operation-grouping/index.html</loc>
-    <lastmod>2023-03-28T04:03:18.772Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/dplyr-per-operation-grouping/index.html</loc>
+    <lastmod>2023-03-28T04:08:26.961Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/dplyr-case-when-case-match-consecutive-id/index.html</loc>
-    <lastmod>2023-03-28T04:03:19.588Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/dplyr-case-when-case-match-consecutive-id/index.html</loc>
+    <lastmod>2023-03-28T04:08:27.861Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/ggplot2-errors/index.html</loc>
-    <lastmod>2023-03-28T04:03:20.344Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/ggplot2-errors/index.html</loc>
+    <lastmod>2023-03-28T04:08:28.701Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/stringr-new-str-funs/index.html</loc>
-    <lastmod>2023-03-28T04:03:21.180Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/stringr-new-str-funs/index.html</loc>
+    <lastmod>2023-03-28T04:08:29.621Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/purrr-breaking-changes/index.html</loc>
-    <lastmod>2023-03-28T04:03:22.032Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/purrr-breaking-changes/index.html</loc>
+    <lastmod>2023-03-28T04:08:30.565Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/posts/tidyr-separate-family/index.html</loc>
-    <lastmod>2023-03-28T04:03:22.804Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/posts/tidyr-separate-family/index.html</loc>
+    <lastmod>2023-03-28T04:08:31.425Z</lastmod>
   </url>
   <url>
-    <loc>https://ivelasq.quarto.pub/whats-new-in-the-tidyverse/index.html</loc>
-    <lastmod>2023-03-28T04:03:23.292Z</lastmod>
+    <loc>https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/index.html</loc>
+    <lastmod>2023-03-28T04:08:31.957Z</lastmod>
   </url>
 </urlset>
