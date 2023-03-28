@@ -4,7 +4,7 @@ project:
 
 website:
   title: "What's new in the tidyverse"
-  site-url: "https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse/"
+  site-url: "https://ivelasq.github.io/2023-03-22_whats-new-in-the-tidyverse"
   description: "Talk for R-Ladies Rome"
   twitter-card:
     title: "What's new in the tidyverse"
@@ -12,6 +12,10 @@ website:
     image: profile2.png
     creator: "@ivelasq3"
     site: "@ivelasq3"
+  open-graph:
+    title: "What's new in the tidyverse"
+    description: "Talk for R-Ladies Rome"
+    image: profile2.png
   navbar:
     pinned: true
     right:
