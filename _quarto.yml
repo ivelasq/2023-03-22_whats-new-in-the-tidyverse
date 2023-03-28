@@ -6,8 +6,8 @@ website:
   title: "What's new in the tidyverse"
   site-url: "https://ivelasq.quarto.pub/whats-new-in-the-tidyverse"
   description: "Talk for R-Ladies Rome"
-  twitter-card: 
-    image: profile2.png
+  twitter-card:
+    image: profile.png
     creator: "@ivelasq3"
     site: "@ivelasq3"
   navbar:
@@ -37,6 +37,7 @@ format:
     code-copy: true
     code-overflow: wrap
     code-link: true
+    resources: profile2.png
 editor: source
 
 execute: 
