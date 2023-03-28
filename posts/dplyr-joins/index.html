@@ -185,7 +185,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">*_join()</h1>
+<h1 class="title"><code>*_join()</code></h1>
 <p class="subtitle lead">dplyr 1.1.0</p>
   <div class="quarto-categories">
     <div class="quarto-category">dplyr</div>
@@ -327,6 +327,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>Warning in inner_join(transactions, companies, by = join_by(company == id)): Each row in `x` is expected to match at most 1 row in `y`.
 ℹ Row 3 of `x` matches multiple rows.
 ℹ If multiple matches are expected, set `multiple = "all"` to silence this warning.</code></pre>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+2023-03-22 Update
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On March 22nd, Davis Vaughn announced <a href="https://www.tidyverse.org/blog/2023/03/dplyr-1-1-1/">dplyr 1.1.1</a>. The error message that let you know when performed a join where a row from <code>x</code> matched more than one row from <code>y</code> is now removed. The tidyverse team adjusted it in such a way that “it now only catches the most dangerous type of join (a many-to-many join), meaning that you should see the warning <em>much</em> less often.”</p>
+</div>
+</div>
 </section>
 <section id="inequality-joins" class="level2">
 <h2 class="anchored" data-anchor-id="inequality-joins">Inequality joins</h2>
@@ -463,7 +476,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Have you been wondering why Davis is using an <code>inner_join()</code> instead of a <code>left_join()</code>? You’d use a <code>left_join()</code> is to ensure that rows from x are always retained, so it wouldn’t make sense to error when rows from x are also unmatched. In an inner_join(), both inputs can potentially drop rows, so <code>unmatched = "error"</code> checks for unmatched rows in both inputs.</p>
+<p>Have you been wondering why Davis is using an <code>inner_join()</code> instead of a <code>left_join()</code>? You’d use a <code>left_join()</code> is to ensure that rows from x are always retained, so it wouldn’t make sense to error when rows from x are also unmatched. In an inner join, both inputs can potentially drop rows, so <code>unmatched = "error"</code> checks for unmatched rows in both inputs.</p>
 </div>
 </div>
 </section>
@@ -537,7 +550,7 @@ Tip
 <section id="learn-more" class="level2">
 <h2 class="anchored" data-anchor-id="learn-more">Learn more</h2>
 <ul>
-<li><a href="https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange">tidyverse blog: dplyr 1.1.0: <code>pick()</code>, <code>reframe()</code>, and <code>arrange()</code></a></li>
+<li><a href="https://www.tidyverse.org/blog/2023/01/dplyr-1-1-0-joins/">tidyverse blog: dplyr 1.1.0 joins</a></li>
 <li><a href="https://dplyr.tidyverse.org/news/index.html">dplyr release notes</a></li>
 <li><a href="https://www.youtube.com/watch?v=9LAML4Nr1II">New features in dplyr 1.1.0, and an introduction to ivs</a></li>
 </ul>
