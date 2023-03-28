@@ -32,7 +32,7 @@ A new family of `separate_*()` functions supersedes `separate()`, `separate_rows
 ## Before
 
 |                                  | Make columns                     | Make rows         |
-|----------------------------|----------------------|-----------------------|
+|----------------------------------|----------------------------------|-------------------|
 | Separate with delimiter          | `separate(sep = string)`         | `separate_rows()` |
 | Separate by position             | `separate(sep = integer_vector)` | N/A               |
 | Separate with regular expression | `extract()`                      |                   |
@@ -40,7 +40,7 @@ A new family of `separate_*()` functions supersedes `separate()`, `separate_rows
 ## After
 
 |                                  | Make columns                | Make rows                    |
-|---------------------|----------------------------|-----------------------|
+|----------------------------------|-----------------------------|------------------------------|
 | Separate with delimiter          | `separate_wider_delim()`    | `separate_longer_delim()`    |
 | Separate by position             | `separate_wider_position()` | `separate_longer_position()` |
 | Separate with regular expression | `separate_wider_regex()`    |                              |

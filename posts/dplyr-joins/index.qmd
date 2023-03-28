@@ -232,6 +232,6 @@ cross_join(characters, alliances)
 
 ## Learn more
 
--   [tidyverse blog: dplyr 1.1.0: `pick()`, `reframe()`, and `arrange()`](https://www.tidyverse.org/blog/2023/02/dplyr-1-1-0-pick-reframe-arrange/#arrange)
+-   [tidyverse blog: dplyr 1.1.0 joins](https://www.tidyverse.org/blog/2023/01/dplyr-1-1-0-joins/)
 -   [dplyr release notes](https://dplyr.tidyverse.org/news/index.html)
 -   [New features in dplyr 1.1.0, and an introduction to ivs](https://www.youtube.com/watch?v=9LAML4Nr1II)
