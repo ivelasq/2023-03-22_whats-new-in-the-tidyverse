@@ -14,7 +14,7 @@ website:
     site: "@ivelasq3"
   open-graph:
     title: "What's new in the tidyverse"
-    description: "Talk for R-Ladies Rome"
+    description: "2023-03-22 R-Ladies Rome Presentation"
     image: profile2.png
   navbar:
     pinned: true
